@@ -1,0 +1,542 @@
+🏗 PLATFORM ARCHITECTURE STRUCTURE
+
+Modules:
+
+Customer App (Web + Mobile)
+
+Tailor Panel (Web)
+
+Delivery Partner App (Mobile-first)
+
+Admin Panel (Web Dashboard)
+
+Shared System Engine (Order State Machine)
+
+🔵 CUSTOMER APP – COMPLETE SCREEN FLOW
+1️⃣ Entry Layer
+Screens:
+
+Splash Screen
+
+Location Check Screen (State + Pincode mandatory)
+
+Login / Signup
+
+OTP Verification
+
+Onboarding (How it works – 3 screens)
+
+2️⃣ Home Dashboard
+
+Sections:
+
+Stitching Services (Marketplace)
+
+Readymade Store (E-commerce)
+
+Saved Measurements
+
+Active Orders
+
+Offers & Banners
+
+Help & Support
+
+Bottom Navigation:
+
+Home | Orders | Store | Profile
+
+🧵 STITCHING SERVICE FLOW (Detailed)
+Step 1: Service Selection
+
+Screens:
+
+Service Categories (Kurti / Suit / Blouse / Salwar etc.)
+
+Service Detail Page:
+
+Base price
+
+Delivery type selector
+
+Fabric source selector
+
+Design upload option
+
+Notes field
+
+Step 2: Measurement Module
+Screen: Choose Measurement Option
+
+Self Enter
+
+Upload Slip
+
+Saved Profile
+
+Request Platform Measurement (future scalable option)
+
+Self Entry Screen
+
+Fields:
+
+Chest
+
+Waist
+
+Hip
+
+Shoulder
+
+Length
+
+Sleeve length
+
+Extra notes
+
+→ Save Profile Option
+→ Continue
+
+Upload Slip Screen
+
+Upload image
+
+Add note
+
+Continue
+
+Step 3: Address Layer
+
+Screens:
+
+Pickup Address
+
+Delivery Address
+
+Add new address
+
+Select saved address
+
+Step 4: Order Summary Screen
+
+Shows:
+
+Service
+
+Delivery type
+
+Measurement method
+
+Fabric source
+
+Price breakdown
+
+GST
+
+Total
+
+Estimated delivery date
+
+CTA:
+Proceed to Payment
+
+Step 5: Payment Layer
+
+Razorpay integration
+
+Payment success screen
+
+Order ID generation
+
+Tracking page auto-open
+
+📦 ORDER TRACKING FLOW (Real-Time)
+
+Single dynamic tracking screen:
+
+Status Timeline:
+
+ORDER_PLACED
+PICKUP_ASSIGNED
+PICKUP_IN_PROGRESS
+FABRIC_PICKED
+TAILOR_ASSIGNED
+WITH_TAILOR
+CUTTING
+STITCHING
+HEMMING
+IRONING
+READY_FOR_DISPATCH
+DELIVERY_ASSIGNED
+OUT_FOR_DELIVERY
+DELIVERED
+
+Each stage:
+
+Date
+
+Time
+
+Notification trigger
+
+🛠 POST DELIVERY FLOW
+
+After Delivered:
+
+Screens:
+
+Rate & Review
+
+Report Issue
+
+Request Alteration (within 30 days)
+
+Reorder button
+
+🛍 E-COMMERCE STORE FLOW
+Store Screens:
+
+Category Listing
+
+Product Listing
+
+Filter (Size, Color, Price)
+
+Product Detail
+
+Add to Cart
+
+Checkout
+
+Payment (COD / Razorpay)
+
+Order Tracking (Separate from stitching)
+
+Separate order history tab.
+
+👤 CUSTOMER PROFILE SCREENS
+
+Personal Info
+
+Saved Measurements
+
+Saved Addresses
+
+Order History
+
+Wallet (future)
+
+Notifications
+
+Terms & Policies
+
+Logout
+
+🟣 TAILOR PANEL – COMPLETE FLOW
+1️⃣ Registration Flow
+
+Screens:
+
+Basic Details
+
+Document Upload
+
+Portfolio Upload
+
+Bank Details
+
+Services Selection
+
+Availability Schedule
+
+Submit
+
+Status Screen (Pending Approval)
+
+2️⃣ Tailor Dashboard
+
+Sections:
+
+New Orders
+
+In Progress
+
+Completed
+
+Earnings
+
+Performance Score
+
+Alerts
+
+3️⃣ Order Detail Screen
+
+Shows:
+
+Service type
+
+Design image
+
+Measurement data
+
+Fabric info
+
+Deadline
+
+Payment earning
+
+Buttons:
+
+Accept | Reject
+
+4️⃣ Work Progress Screens
+
+After accepting:
+
+Status update buttons:
+
+Fabric Received
+Cutting
+Stitching
+Hemming
+Ironing
+Upload Photos
+Ready for Dispatch
+
+Each status triggers admin notification.
+
+5️⃣ Earnings Module
+
+Total earnings
+
+Pending payout
+
+15-day payout cycle info
+
+Transaction history
+
+6️⃣ Profile Management
+
+Availability toggle
+
+Portfolio update
+
+Service areas
+
+Bank update
+
+Restrictions enforced:
+
+No pricing edit
+
+No customer contact access
+
+🟢 DELIVERY PARTNER APP FLOW
+
+Mobile-first UX.
+
+1️⃣ Login
+
+OTP login
+
+Availability toggle (Online/Offline)
+
+2️⃣ Dashboard
+
+Sections:
+
+Today’s Tasks
+
+Upcoming Tasks
+
+Earnings
+
+History
+
+3️⃣ Task Detail Screen
+
+Shows:
+
+Pickup address
+
+Drop address
+
+Call button (customer only for pickup)
+
+Navigation link
+
+Status buttons:
+
+On the Way
+Reached
+Picked Up
+Delivered to Tailor
+
+Final Delivery Task
+
+Collected from Tailor
+Out for Delivery
+Delivered
+Upload proof photo
+
+Earnings Screen
+
+Daily earnings
+
+Weekly summary
+
+Payout status
+
+🔴 ADMIN PANEL – ENTERPRISE STRUCTURE
+
+Admin is the system brain.
+
+1️⃣ Admin Dashboard
+
+Widgets:
+
+Total Orders
+
+Active Orders
+
+Revenue
+
+Tailor Performance
+
+Delivery Partner Efficiency
+
+Area heatmap
+
+2️⃣ Order Management Module
+
+Order table:
+
+Filters:
+
+Status
+
+Area
+
+Delivery type
+
+Tailor
+
+Date
+
+Order detail page:
+
+Customer info
+
+Payment info
+
+Measurement
+
+Assign Delivery Partner
+
+Assign Tailor
+
+Reassign
+
+Cancel (if eligible)
+
+Quality check approve
+
+3️⃣ Tailor Management
+
+Application review
+
+Document viewer
+
+Approve/Reject
+
+Set commission
+
+Ban/Suspend
+
+Performance analytics
+
+4️⃣ Delivery Partner Management
+
+Add/Remove
+
+Assign manually
+
+Track live (if GPS enabled)
+
+Manage payouts
+
+5️⃣ Pricing Control Module
+
+Service categories
+
+Base pricing
+
+Delivery tier pricing
+
+Commission % settings
+
+6️⃣ E-commerce Control
+
+Product CRUD
+
+Inventory
+
+Discount engine
+
+COD enable toggle
+
+Courier integration status
+
+7️⃣ Finance Module
+
+Razorpay logs
+
+Tailor payout batch processing
+
+Delivery payout batch
+
+GST reports
+
+Refund logs
+
+8️⃣ CMS & Communication
+
+Banner control
+
+Notification broadcast
+
+SMS trigger control
+
+Legal content pages
+
+🧠 SYSTEM LOGIC – INDUSTRY LEVEL
+
+Central Order State Machine
+
+Only Admin can:
+
+Assign tailor
+
+Assign delivery
+
+Approve quality
+
+Process payout
+
+Customers cannot:
+
+Cancel after pickup
+
+Contact tailor directly
+
+Tailors cannot:
+
+Access customer phone
+
+Change price
+
+Delivery cannot:
+
+See stitching price
+
+Everything controlled centrally.

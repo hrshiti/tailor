@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Inter", system-ui, sans-serif;
+    --color-primary: #1e3932;
+    --color-secondary: #d4e9e2;
+    --color-accent: #00754a;
+}
+
+body {
+    @apply bg-gray-50 text-gray-900 font-sans antialiased;
+}
+
+/* Custom Utilities */
+.wavy-bg {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%231e3932' fill-opacity='1' d='M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,202.7C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+}
+
+/* Safe Area for Mobile Notch */
+.pt-safe {
+    padding-top: env(safe-area-inset-top, 20px);
+}
+
+.pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+/* Hide Scrollbar for horizontal scrolling if needed */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

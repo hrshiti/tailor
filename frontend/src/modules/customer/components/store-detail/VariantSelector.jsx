@@ -1,0 +1,73 @@
+import React, { useState } from 'react';
+import { cn } from '../../../../utils/cn';
+import { Ruler } from 'lucide-react';
+
+const VariantSelector = ({ sizes, colors, onSizeSelect, onColorSelect }) => {
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(null);
+
+    const handleSize = (s) => {
+        setSelectedSize(s);
+        onSizeSelect(s);
+    };
+
+    const handleColor = (c) => {
+        setSelectedColor(c);
+        onColorSelect(c);
+    }
+
+    return (
+        <div className="mb-6 space-y-6">
+            {/* Size Selector */}
+            <div>
+                <div className="flex justify-between items-center mb-3">
+                    <h3 className="text-sm font-bold text-gray-900">Select Size</h3>
+                    <button className="text-xs font-semibold text-[#1e3932] flex items-center gap-1 hover:underline">
+                        <Ruler size={12} /> Size Chart
+                    </button>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                    {sizes.map((size) => (
+                        <button
+                            key={size}
+                            onClick={() => handleSize(size)}
+                            className={cn(
+                                "w-10 h-10 rounded-full border flex items-center justify-center text-xs font-semibold transition-all",
+                                selectedSize === size
+                                    ? "bg-[#1e3932] text-white border-[#1e3932] shadow-md scale-105"
+                                    : "bg-white text-gray-700 border-gray-200 hover:border-gray-400"
+                            )}
+                        >
+                            {size}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {/* Color Selector */}
+            <div>
+                <h3 className="text-sm font-bold text-gray-900 mb-3">Select Color</h3>
+                <div className="flex flex-wrap gap-4">
+                    {colors.map((color) => (
+                        <button
+                            key={color.name}
+                            onClick={() => handleColor(color.name)}
+                            className={cn(
+                                "w-8 h-8 rounded-full border-2 transition-all relative",
+                                selectedColor === color.name ? "border-[#1e3932] scale-110 ring-2 ring-offset-2 ring-[#1e3932]" : "border-gray-200 hover:scale-105"
+                            )}
+                            style={{ backgroundColor: color.hex }}
+                            title={color.name}
+                        >
+                            {selectedColor === color.name && (
+                                <span className="absolute inset-0 flex items-center justify-center text-white/80 drop-shadow-sm text-xs">✓</span>
+                            )}
+                        </button>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default VariantSelector;
