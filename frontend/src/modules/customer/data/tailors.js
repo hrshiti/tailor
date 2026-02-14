@@ -1,10 +1,3 @@
-import tailor1 from '../../../assets/tailor1.jpeg';
-import tailor2 from '../../../assets/tailor2.jpeg';
-import tailor3 from '../../../assets/tailor3.jpeg';
-import tailor4 from '../../../assets/tailor4.jpeg';
-import tailor5 from '../../../assets/tailor5.jpeg';
-import taailorimg from '../../../assets/taailorimg.jpeg';
-
 export const TAILORS = [
     {
         id: 1,
@@ -13,7 +6,7 @@ export const TAILORS = [
         rating: 4.9,
         reviews: 120,
         distance: "1.2 km",
-        image: tailor1,
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400',
         about: "Expert in bridal wear with over 25 years of experience. Specialized in intricate embroidery and perfect fitting lehengas.",
         experience: "25 Years",
         timings: "10:00 AM - 9:00 PM",
@@ -26,7 +19,7 @@ export const TAILORS = [
         rating: 4.8,
         reviews: 85,
         distance: "2.5 km",
-        image: tailor2,
+        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400',
         about: "Modern cuts and contemporary styles for the professional woman. We ensure a sharp, smart fit every time.",
         experience: "12 Years",
         timings: "09:00 AM - 8:00 PM",
@@ -39,7 +32,7 @@ export const TAILORS = [
         rating: 4.7,
         reviews: 200,
         distance: "0.8 km",
-        image: tailor3,
+        image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400',
         about: "Specializing in trendy and traditional blouse designs with perfect fitting.",
         experience: "8 Years",
         timings: "10:00 AM - 7:00 PM",
@@ -52,7 +45,7 @@ export const TAILORS = [
         rating: 4.6,
         reviews: 50,
         distance: "3.0 km",
-        image: tailor4,
+        image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400',
         about: "The best place for men's ethnic wear. Custom tailored kurta pajamas and sherwanis.",
         experience: "15 Years",
         timings: "11:00 AM - 9:00 PM",
@@ -65,7 +58,7 @@ export const TAILORS = [
         rating: 4.9,
         reviews: 150,
         distance: "1.5 km",
-        image: tailor5,
+        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400',
         about: "Premium formal wear stitching. Suits, blazers, and trousers with Italian fits.",
         experience: "18 Years",
         timings: "09:30 AM - 8:30 PM",
@@ -78,7 +71,7 @@ export const TAILORS = [
         rating: 4.5,
         reviews: 95,
         distance: "4.2 km",
-        image: taailorimg,
+        image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
         about: "We bring the latest western fashion trends to your custom measurements.",
         experience: "6 Years",
         timings: "10:00 AM - 8:00 PM",
@@ -91,7 +84,7 @@ export const TAILORS = [
         rating: 4.7,
         reviews: 130,
         distance: "2.1 km",
-        image: tailor1,
+        image: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&q=80&w=400',
         about: "Classic men's tailoring for the gentleman who appreciates quality.",
         experience: "20 Years",
         timings: "10:00 AM - 9:00 PM",
@@ -104,7 +97,7 @@ export const TAILORS = [
         rating: 4.4,
         reviews: 40,
         distance: "0.5 km",
-        image: tailor2,
+        image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400',
         about: "Quick fixes, alterations, and repairs. Don't throw it away, let us fix it.",
         experience: "5 Years",
         timings: "09:00 AM - 6:00 PM",

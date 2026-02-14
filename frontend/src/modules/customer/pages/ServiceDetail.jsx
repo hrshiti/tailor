@@ -9,18 +9,7 @@ import DesignUpload from '../components/service-detail/DesignUpload';
 import PriceSummary from '../components/service-detail/PriceSummary';
 import useCheckoutStore from '../../../store/checkoutStore';
 
-// Mock Data for a single service
-const serviceData = {
-    id: 1,
-    title: 'Custom Kurti Stitching',
-    category: 'Ethnic Wear',
-    basePrice: 499,
-    rating: 4.8,
-    reviews: 124,
-    image: 'https://images.unsplash.com/photo-1583391733958-e02376e9ced3?auto=format&fit=crop&q=80&w=800',
-    deliveryTime: '3-15 Days',
-    description: 'Get a perfectly stitched Kurti with your choice of neck design, sleeve style, and length. Lining is included for cotton fabrics.'
-};
+import { SERVICES } from '../data/services';
 
 const FAQItem = ({ question, answer }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -42,6 +31,9 @@ const ServiceDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const initializeCheckout = useCheckoutStore(state => state.initializeCheckout);
+
+    // Dynamic data fetching
+    const serviceData = SERVICES.find(s => s.id === parseInt(id)) || SERVICES[0];
 
     // State for configuration
     const [deliveryType, setDeliveryType] = useState('standard'); // standard, express, premium

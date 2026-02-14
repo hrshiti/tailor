@@ -1,17 +1,3 @@
-import img1 from '../../../assets/img1.jpeg';
-import img2 from '../../../assets/img2.jpeg';
-import img3 from '../../../assets/img3.jpeg';
-import img4 from '../../../assets/img4.jpeg';
-import img5 from '../../../assets/img5.jpeg';
-import img6 from '../../../assets/img6.jpeg';
-import img8 from '../../../assets/img8.avif';
-import img10 from '../../../assets/img10.webp';
-import img11 from '../../../assets/img11.jpeg';
-import img12 from '../../../assets/img12.jpeg';
-import img13 from '../../../assets/img13.jpeg';
-import img14 from '../../../assets/img14.jpeg';
-import img15 from '../../../assets/img15.jpeg';
-
 export const PRODUCTS = [
     {
         id: 1,
@@ -25,8 +11,11 @@ export const PRODUCTS = [
         discount: 50,
         codAvailable: true,
         inStock: true,
-        images: [img1, img2],
-        image: img1,
+        images: [
+            'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800',
+            'https://images.unsplash.com/photo-1622123512803-51b816a75f28?w=800'
+        ],
+        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800',
         sizes: ["S", "M", "L", "XL", "XXL"],
         colors: [
             { name: "Ruby Red", hex: "#e11d48" }
@@ -50,8 +39,8 @@ export const PRODUCTS = [
         discount: 37,
         codAvailable: true,
         inStock: true,
-        images: [img3, img4],
-        image: img3,
+        images: ['https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800'],
+        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800',
         sizes: ["M", "L", "XL"],
         colors: [
             { name: "Purple", hex: "#7e22ce" },
@@ -76,8 +65,8 @@ export const PRODUCTS = [
         discount: 24,
         codAvailable: true,
         inStock: true,
-        images: [img5, img6],
-        image: img5,
+        images: ['https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800'],
+        image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800',
         sizes: ["XS", "S", "M", "L"],
         colors: [
             { name: "Pink Floral", hex: "#fce7f3" }
@@ -99,8 +88,8 @@ export const PRODUCTS = [
         discount: 34,
         codAvailable: false,
         inStock: true,
-        images: [img8, img10],
-        image: img8,
+        images: ['https://images.unsplash.com/photo-1610419266710-d8e7c2e3640c?w=800'],
+        image: 'https://images.unsplash.com/photo-1610419266710-d8e7c2e3640c?w=800',
         sizes: ["Free Size"],
         colors: [
             { name: "Royal Blue", hex: "#1e3a8a" }
@@ -122,8 +111,8 @@ export const PRODUCTS = [
         discount: 38,
         codAvailable: true,
         inStock: true,
-        images: [img11],
-        image: img11,
+        images: ['https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800'],
+        image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800',
         sizes: ["S", "M", "L"],
         colors: [
             { name: "White", hex: "#ffffff" }
@@ -145,8 +134,8 @@ export const PRODUCTS = [
         discount: 30,
         codAvailable: true,
         inStock: true,
-        images: [img12],
-        image: img12,
+        images: ['https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800'],
+        image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800',
         sizes: ["Semi-Stitched"],
         colors: [
             { name: "Maroon", hex: "#7f1d1d" }
@@ -168,8 +157,8 @@ export const PRODUCTS = [
         discount: 37,
         codAvailable: true,
         inStock: true,
-        images: [img13],
-        image: img13,
+        images: ['https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800'],
+        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800',
         sizes: ["M", "L", "XL", "XXL"],
         colors: [
             { name: "Indigo", hex: "#312e81" }
@@ -191,8 +180,8 @@ export const PRODUCTS = [
         discount: 40,
         codAvailable: true,
         inStock: true,
-        images: [img14, img15],
-        image: img14,
+        images: ['https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800'],
+        image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800',
         sizes: ["UK 4", "UK 5", "UK 6", "UK 7"],
         colors: [
             { name: "Beige", hex: "#d6cfc7" }
@@ -201,5 +190,41 @@ export const PRODUCTS = [
             { title: "Material", content: "Synthetic Leather" },
             { title: "Heel Height", content: "2 inches" }
         ]
+    },
+    {
+        id: 101,
+        title: 'Custom Bridal Lehenga',
+        name: 'Custom Bridal Lehenga',
+        price: 15499,
+        originalPrice: 18999,
+        discount: 18,
+        image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800',
+        images: ['https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800'],
+        rating: 4.9,
+        reviews: 45,
+        category: 'Festive',
+        inStock: true,
+        codAvailable: true,
+        sizes: ["Custom"],
+        colors: [{ name: "Red", hex: "#ef4444" }],
+        details: [{ title: "Work", content: "Heavy Zardosi" }]
+    },
+    {
+        id: 102,
+        title: 'Embroidered Blouse',
+        name: 'Embroidered Blouse',
+        price: 2499,
+        originalPrice: 3499,
+        discount: 28,
+        image: 'https://images.unsplash.com/photo-1622123512803-51b816a75f28?w=800',
+        images: ['https://images.unsplash.com/photo-1622123512803-51b816a75f28?w=800'],
+        rating: 4.7,
+        reviews: 28,
+        category: 'Accessories',
+        inStock: true,
+        codAvailable: true,
+        sizes: ["S", "M", "L"],
+        colors: [{ name: "Gold", hex: "#fbbf24" }],
+        details: [{ title: "Fabric", content: "Silk" }]
     }
 ];

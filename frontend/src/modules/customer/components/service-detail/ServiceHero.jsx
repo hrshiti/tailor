@@ -10,6 +10,9 @@ const ServiceHero = ({ service }) => {
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                        e.target.src = "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800";
+                    }}
                 />
                 <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-sm cursor-pointer hover:bg-white transition-colors">
                     <Share2 size={18} className="text-gray-700" />

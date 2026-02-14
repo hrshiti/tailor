@@ -2,68 +2,7 @@ import React from 'react';
 import { Clock, CheckCircle2, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const mockServices = [
-    {
-        id: 1,
-        title: 'Custom Kurti Stitching',
-        description: 'Perfect fit with your choice of neck & sleeve design. Includes lining.',
-        price: 499,
-        rating: 4.8,
-        image: 'https://images.unsplash.com/photo-1583391733958-e02376e9ced3?auto=format&fit=crop&q=80&w=800', // Woman in Kurti/Ethnic wear
-        tags: ['Popular', 'Express'],
-        deliveryTime: '3-5 Days'
-    },
-    {
-        id: 2,
-        title: 'Designer Blouse',
-        description: 'Intricate embroidery, padding options, and latkan customization.',
-        price: 899,
-        rating: 4.9,
-        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800', // Saree Blouse detail
-        tags: ['Wedding', 'Handwork'],
-        deliveryTime: '5-7 Days'
-    },
-    {
-        id: 3,
-        title: 'Salwar Kameez Set',
-        description: 'Complete set stitching with salwar, pants, or palazzo options.',
-        price: 1200,
-        rating: 4.7,
-        image: 'https://images.unsplash.com/photo-1631233085523-8890250df044?auto=format&fit=crop&q=80&w=800', // Salwar Kameez
-        tags: ['New'],
-        deliveryTime: '4-6 Days'
-    },
-    {
-        id: 4,
-        title: 'Lehenga Choli',
-        description: 'Heavy bridal & party wear lehenga stitching with can-can.',
-        price: 2500,
-        rating: 5.0,
-        image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800', // Lehenga
-        tags: ['Premium', 'Bridal'],
-        deliveryTime: '7-10 Days'
-    },
-    {
-        id: 5,
-        title: 'Anarkali Suit',
-        description: 'Flowy floor-length Anarkali stitching with custom flair.',
-        price: 1800,
-        rating: 4.8,
-        image: 'https://images.unsplash.com/photo-1579782539097-f5dc9e843285?auto=format&fit=crop&q=80&w=800', // Anarkali
-        tags: ['Trending'],
-        deliveryTime: '6-8 Days'
-    },
-    {
-        id: 6,
-        title: 'Gown Stitching',
-        description: 'Western or Indo-western gown stitching for parties.',
-        price: 2200,
-        rating: 4.6,
-        image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&q=80&w=800', // Gown
-        tags: ['Party Wear'],
-        deliveryTime: '6-8 Days'
-    }
-];
+import { SERVICES } from '../../data/services';
 
 const ServiceCard = ({ service }) => {
     const navigate = useNavigate();
@@ -101,7 +40,7 @@ const ServiceCard = ({ service }) => {
             <div className="p-4 flex flex-col flex-1">
                 <div className="flex justify-between items-start mb-1">
                     <h3 className="font-bold text-gray-900 group-hover:text-[#1e3932] transition-colors line-clamp-1">{service.title}</h3>
-                    <span className="font-bold text-[#1e3932]">₹{service.price}</span>
+                    <span className="font-bold text-[#1e3932]">₹{service.basePrice}</span>
                 </div>
 
                 <p className="text-xs text-gray-500 line-clamp-2 mb-3 flex-1">{service.description}</p>
@@ -143,7 +82,7 @@ const ServicesGrid = () => {
         <div className="p-4">
             <h2 className="text-lg font-bold text-gray-900 mb-4">All Services</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {mockServices.map(service => (
+                {SERVICES.map(service => (
                     <ServiceCard key={service.id} service={service} />
                 ))}
             </div>

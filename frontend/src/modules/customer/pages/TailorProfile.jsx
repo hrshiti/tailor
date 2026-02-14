@@ -5,9 +5,6 @@ import ProductCard from '../components/store/ProductCard';
 
 import { TAILORS } from '../data/tailors';
 
-import img12 from '../../../assets/img12.jpeg';
-import img13 from '../../../assets/img13.jpeg';
-
 // Mock Products for the tailor (keep this local for now or move to data file)
 const TAILOR_PRODUCTS = [
     {
@@ -17,7 +14,7 @@ const TAILOR_PRODUCTS = [
         price: 15499,
         originalPrice: 18999,
         discount: 18,
-        image: img12,
+        image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800',
         rating: 4.9
     },
     {
@@ -27,7 +24,7 @@ const TAILOR_PRODUCTS = [
         price: 2499,
         originalPrice: 3499,
         discount: 28,
-        image: img13,
+        image: 'https://images.unsplash.com/photo-1622123512803-51b816a75f28?w=800',
         rating: 4.7
     }
 ];
