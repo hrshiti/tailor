@@ -23,11 +23,12 @@ const mockActiveOrder = {
 
 const Home = () => {
     return (
-        <div className="min-h-screen bg-gray-50 pb-24 font-sans">
+        <div className="min-h-screen bg-white pb-24 font-sans selection:bg-[#1e3932] selection:text-white">
+            <div className="fixed inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-green-50/50 via-white to-white -z-10" />
+
 
             {/* 1. Header & Location */}
             <HomeHeader user={mockUser} />
-            <LocationBar />
 
             {/* 2. Hero / Promo Section */}
             <PromoBanner />

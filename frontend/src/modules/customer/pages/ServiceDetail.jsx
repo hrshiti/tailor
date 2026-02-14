@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
 import ServiceHero from '../components/service-detail/ServiceHero';
 import DeliverySelector from '../components/service-detail/DeliverySelector';
@@ -7,6 +7,7 @@ import MeasurementSelector from '../components/service-detail/MeasurementSelecto
 import FabricSelector from '../components/service-detail/FabricSelector';
 import DesignUpload from '../components/service-detail/DesignUpload';
 import PriceSummary from '../components/service-detail/PriceSummary';
+import useCheckoutStore from '../../../store/checkoutStore';
 
 // Mock Data for a single service
 const serviceData = {
@@ -39,11 +40,14 @@ const FAQItem = ({ question, answer }) => {
 
 const ServiceDetail = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const initializeCheckout = useCheckoutStore(state => state.initializeCheckout);
 
     // State for configuration
     const [deliveryType, setDeliveryType] = useState('standard'); // standard, express, premium
     const [measurementType, setMeasurementType] = useState(null); // saved, new, upload
     const [fabricSource, setFabricSource] = useState('customer'); // customer, platform
+    const [measurements, setMeasurements] = useState(null);
 
     // Pricing Logic
     const getDeliveryPrice = () => {
@@ -57,6 +61,31 @@ const ServiceDetail = () => {
         if (deliveryType === 'premium') return 7;
         return 15; // standard
     }
+
+    const handleProceed = () => {
+        const basePrice = serviceData.basePrice;
+        const deliveryPrice = getDeliveryPrice();
+        const taxes = Math.round((basePrice + deliveryPrice) * 0.05);
+        const total = basePrice + deliveryPrice + taxes;
+
+        initializeCheckout({
+            service: serviceData,
+            config: {
+                deliveryType,
+                fabricSource,
+                measurements
+            },
+            pricing: {
+                base: basePrice,
+                delivery: deliveryPrice,
+                taxes,
+                total,
+                deliveryDays: getDeliveryDays()
+            }
+        });
+
+        navigate('/checkout/address');
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 pb-32 font-sans">
@@ -79,7 +108,14 @@ const ServiceDetail = () => {
                     <DeliverySelector selected={deliveryType} onSelect={setDeliveryType} />
 
                     {/* 4. Measurement Selection */}
-                    <MeasurementSelector selectedType={measurementType} onSelectType={setMeasurementType} />
+                    <MeasurementSelector
+                        selectedType={measurementType}
+                        onSelectType={setMeasurementType}
+                        onMeasurementComplete={(data) => {
+                            console.log('Measurement Data Captured:', data);
+                            setMeasurements(data);
+                        }}
+                    />
 
                     {/* 5. Fabric Source */}
                     <FabricSelector selected={fabricSource} onSelect={setFabricSource} />
@@ -119,6 +155,7 @@ const ServiceDetail = () => {
                         basePrice={serviceData.basePrice}
                         deliveryPrice={getDeliveryPrice()}
                         deliveryDays={getDeliveryDays()}
+                        onProceed={handleProceed}
                     />
                 </div>
 

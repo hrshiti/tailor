@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { Heart, ShoppingCart, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../../utils/cn';
+import useWishlistStore from '../../../../store/wishlistStore';
 
 const ProductCard = ({ product }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const { toggleWishlist, isInWishlist } = useWishlistStore(state => state);
+    const isWishlisted = isInWishlist(product.id);
+
     return (
         <div
             className="group relative bg-white border border-gray-100 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-[#1e3932]/20 shadow-sm"
@@ -20,11 +24,17 @@ const ProductCard = ({ product }) => {
 
             {/* Wishlist Icon */}
             <button
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleWishlist(product);
+                }}
                 className={cn(
-                    "absolute top-2 right-2 z-20 p-1.5 rounded-full bg-white/90 shadow-sm text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 duration-300",
+                    "absolute top-2 right-2 z-20 p-1.5 rounded-full bg-white/90 shadow-sm transition-colors opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 duration-300",
+                    isWishlisted ? "text-red-500 opacity-100 translate-y-0" : "text-gray-400 hover:text-red-500"
                 )}
             >
-                <Heart className="h-4 w-4" />
+                <Heart className={cn("h-4 w-4", isWishlisted && "fill-current")} />
             </button>
 
             {/* Image Link */}

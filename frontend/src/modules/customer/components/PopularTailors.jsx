@@ -65,7 +65,8 @@ const PopularTailors = () => {
 
             <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 no-scrollbar snap-x snap-mandatory">
                 {tailors.map((tailor) => (
-                    <div
+                    <Link
+                        to={`/tailor/${tailor.id}`}
                         key={tailor.id}
                         className="flex-shrink-0 w-32 snap-start group cursor-pointer"
                     >
@@ -88,15 +89,15 @@ const PopularTailors = () => {
                         </div>
 
                         <div className="text-center">
-                            <h3 className="text-sm font-bold text-gray-900 truncate leading-tight">{tailor.name}</h3>
-                            <p className="text-[10px] text-[#1e3932] font-medium truncate mt-0.5">{tailor.specialty}</p>
+                            <h3 className="text-sm font-bold text-gray-900 truncate leading-tight group-hover:text-[#1e3932] transition-colors">{tailor.name}</h3>
+                            <p className="text-[10px] text-gray-500 font-medium truncate mt-0.5">{tailor.specialty}</p>
 
                             <div className="flex items-center justify-center gap-1 mt-1 text-[10px] text-gray-400">
                                 <MapPin size={10} />
                                 <span>{tailor.distance}</span>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

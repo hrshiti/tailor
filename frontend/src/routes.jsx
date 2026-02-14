@@ -16,6 +16,14 @@ import StorePage from './modules/customer/pages/Store'; // NEW
 import StoreProductDetail from './modules/customer/pages/StoreProductDetail'; // NEW
 import OrdersPage from './modules/customer/pages/Orders'; // NEW
 import ProfilePage from './modules/customer/pages/Profile'; // NEW
+import EditProfile from './modules/customer/pages/EditProfile'; // NEW
+import CheckoutAddress from './modules/customer/pages/CheckoutAddress'; // NEW
+import CheckoutSummary from './modules/customer/pages/CheckoutSummary'; // NEW
+import OrderSuccess from './modules/customer/pages/OrderSuccess'; // NEW
+import OrderTracking from './modules/customer/pages/OrderTracking'; // NEW
+import CartPage from './modules/customer/pages/Cart'; // NEW
+import WishlistPage from './modules/customer/pages/Wishlist'; // NEW
+import TailorProfile from './modules/customer/pages/TailorProfile'; // NEW
 
 // Tailor Pages
 import TailorDashboard from './modules/tailor/pages/Dashboard';
@@ -25,6 +33,8 @@ import DeliveryDashboard from './modules/delivery/pages/Dashboard';
 
 // Admin Pages
 import AdminDashboard from './modules/admin/pages/Dashboard';
+
+import ReferEarn from './modules/customer/pages/ReferEarn'; // NEW
 
 const AppRoutes = () => {
     return (
@@ -45,8 +55,18 @@ const AppRoutes = () => {
             <Route path="/store/product/:id" element={<StoreProductDetail />} />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/edit" element={<EditProfile />} />
+            <Route path="/refer" element={<ReferEarn />} />
+            <Route path="/tailor/:id" element={<TailorProfile />} />
 
-            {/* Tailor Routes */}
+            {/* Checkout Flow */}
+            <Route path="/checkout/address" element={<CheckoutAddress />} />
+            <Route path="/checkout/summary" element={<CheckoutSummary />} />
+            <Route path="/checkout/success" element={<OrderSuccess />} />
+            <Route path="/orders/:id/track" element={<OrderTracking />} />
+
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/tailor" element={<TailorDashboard />} />
 
             {/* Delivery Routes */}

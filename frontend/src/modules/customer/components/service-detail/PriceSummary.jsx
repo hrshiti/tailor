@@ -1,7 +1,9 @@
 import React from 'react';
 import { ArrowRight, Info } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const PriceSummary = ({ basePrice, deliveryPrice, deliveryDays }) => {
+const PriceSummary = ({ basePrice, deliveryPrice, deliveryDays, onProceed }) => {
+    const navigate = useNavigate();
     const total = basePrice + deliveryPrice;
     const taxes = Math.round(total * 0.05); // 5% GST estimate
     const grandTotal = total + taxes;
@@ -47,7 +49,10 @@ const PriceSummary = ({ basePrice, deliveryPrice, deliveryDays }) => {
                     </p>
                 </div>
 
-                <button className="bg-[#1e3932] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-[#152e28] active:scale-95 transition-all flex items-center justify-center gap-2">
+                <button
+                    onClick={onProceed ? onProceed : () => navigate('/checkout/address')}
+                    className="bg-[#1e3932] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-[#152e28] active:scale-95 transition-all flex items-center justify-center gap-2"
+                >
                     Proceed to Checkout <ArrowRight size={16} />
                 </button>
             </div>

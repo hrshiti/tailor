@@ -1,6 +1,6 @@
 import React from 'react';
 import { Ruler } from 'lucide-react';
-import { cn } from '../../../../../../utils/cn';
+import { cn } from '../../../../../utils/cn';
 
 const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 const COLORS = ['#000', '#fff', '#ff0000', '#00ff00', '#0000ff', '#ffff00'];

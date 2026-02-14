@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { cn } from '../../../../../../utils/cn';
+import { cn } from '../../../../../utils/cn';
 
 const AccordionItem = ({ title, content, isOpen, onClick }) => {
     const [open, setOpen] = useState(isOpen);

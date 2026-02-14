@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Truck, Search } from 'lucide-react';
-import { cn } from '../../../../../../utils/cn';
+import { cn } from '../../../../../utils/cn';
 
 const DeliveryCheck = () => {
     const [pincode, setPincode] = useState('');

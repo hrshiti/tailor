@@ -13,14 +13,12 @@ const StorePage = () => {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [filters, setFilters] = useState({});
     const [activeCategory, setActiveCategory] = useState("All");
+    const [searchQuery, setSearchQuery] = useState("");
 
     return (
         <div className="min-h-screen bg-gray-50 pb-24 font-sans">
             {/* 1. Sticky Header */}
-            <StoreHeader />
-
-            {/* 2. Location (Standard Bar reused) */}
-            <LocationBar />
+            <StoreHeader searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
             {/* 3. Categories */}
             <CategoryScroll
@@ -35,11 +33,15 @@ const StorePage = () => {
                 Let's make it sticky but with top-16 approx.
             */}
             <div className="sticky top-[60px] z-30 bg-white shadow-sm">
-                <SearchFilterBar onOpenFilter={() => setIsFilterOpen(true)} />
+                <SearchFilterBar
+                    onOpenFilter={() => setIsFilterOpen(true)}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                />
             </div>
 
             {/* 5. Product Grid (Infinite Scroll) */}
-            <ProductGrid filters={filters} category={activeCategory} />
+            <ProductGrid filters={filters} category={activeCategory} searchQuery={searchQuery} />
 
             {/* 6. Recently Viewed */}
             <RecentlyViewed />
