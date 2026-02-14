@@ -32,7 +32,7 @@ const Login = () => {
     return (
         <div className="w-full">
             <h2 className="text-2xl font-bold text-center text-[#1e3932] mb-2">Welcome Back</h2>
-            <p className="text-center text-gray-500 mb-8">Sign in to continue to TailorHub</p>
+            <p className="text-center text-gray-500 mb-8">Sign in to continue to SilaiWala</p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 {error && (

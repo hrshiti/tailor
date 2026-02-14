@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const ReferEarn = () => {
     const navigate = useNavigate();
-    const referralCode = "GENZO2026";
+    const referralCode = "SILAIWALA2026";
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(referralCode);
@@ -84,7 +84,7 @@ const ReferEarn = () => {
                         </div>
                         <div>
                             <h4 className="font-bold text-sm mb-1">Get Reward</h4>
-                            <p className="text-xs text-gray-500 leading-relaxed">Once the order is delivered, ₹200 will be credited to your Genzo Wallet.</p>
+                            <p className="text-xs text-gray-500 leading-relaxed">Once the order is delivered, ₹200 will be credited to your SilaiWala Wallet.</p>
                         </div>
                     </div>
                 </div>

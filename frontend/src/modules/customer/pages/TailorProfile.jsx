@@ -3,36 +3,12 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Clock, Award, Phone } from 'lucide-react';
 import ProductCard from '../components/store/ProductCard';
 
-// Mock Data (matches PopularTailors.jsx)
-const TAILORS = [
-    {
-        id: 1,
-        name: "Masterji Ahmed",
-        specialty: "Bridal Specialist",
-        rating: 4.9,
-        reviews: 120,
-        distance: "1.2 km",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=400",
-        about: "Expert in bridal wear with over 20 years of experience. specialized in intricate embroidery and perfect fitting lehengas.",
-        experience: "25 Years",
-        timings: "10:00 AM - 9:00 PM"
-    },
-    {
-        id: 2,
-        name: "Fashion Hub",
-        specialty: "Suit Expert",
-        rating: 4.8,
-        reviews: 85,
-        distance: "2.5 km",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&h=400",
-        about: "Modern cuts and contemporary styles for the professional woman. We ensure a sharp, smart fit every time.",
-        experience: "12 Years",
-        timings: "09:00 AM - 8:00 PM"
-    },
-    // ... others fallback
-];
+import { TAILORS } from '../data/tailors';
 
-// Mock Products for the tailor
+import img12 from '../../../assets/img12.jpeg';
+import img13 from '../../../assets/img13.jpeg';
+
+// Mock Products for the tailor (keep this local for now or move to data file)
 const TAILOR_PRODUCTS = [
     {
         id: 101,
@@ -41,7 +17,7 @@ const TAILOR_PRODUCTS = [
         price: 15499,
         originalPrice: 18999,
         discount: 18,
-        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?q=80&w=400&auto=format&fit=crop',
+        image: img12,
         rating: 4.9
     },
     {
@@ -51,7 +27,7 @@ const TAILOR_PRODUCTS = [
         price: 2499,
         originalPrice: 3499,
         discount: 28,
-        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=400&auto=format&fit=crop',
+        image: img13,
         rating: 4.7
     }
 ];

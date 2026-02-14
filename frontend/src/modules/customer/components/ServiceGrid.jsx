@@ -2,33 +2,38 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Star } from 'lucide-react';
 
+import img1 from '../../../assets/img1.jpeg';
+import img3 from '../../../assets/img3.jpeg';
+import img5 from '../../../assets/img5.jpeg';
+import img8 from '../../../assets/img8.avif';
+
 const services = [
     {
         id: 1,
         title: 'Kurti Stitching',
         price: '₹499',
-        image: 'https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?auto=format&fit=crop&q=80&w=400',
+        image: img1,
         rating: 4.8
     },
     {
         id: 2,
         title: 'Salwar Kameez',
         price: '₹899',
-        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=400',
+        image: img3,
         rating: 4.9
     },
     {
         id: 3,
         title: 'Blouse Design',
         price: '₹599',
-        image: 'https://images.unsplash.com/photo-1596482811366-419b6f3c05c0?auto=format&fit=crop&q=80&w=400', // Replaced with a more generic fabric/fashion image
+        image: img5,
         rating: 4.7
     },
     {
         id: 4,
         title: 'Alterations',
         price: '₹99',
-        image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=400',
+        image: img8,
         rating: 4.6
     }
 ];

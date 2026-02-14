@@ -135,7 +135,7 @@ const EditProfile = () => {
                         )}
                     </button>
                     <p className="text-[10px] text-gray-400 text-center mt-4">
-                        Genzo protects your data privacy as per our <span className="underline">Terms of Service</span>.
+                        SilaiWala protects your data privacy as per our <span className="underline">Terms of Service</span>.
                     </p>
                 </div>
             </form>

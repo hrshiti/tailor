@@ -24,6 +24,7 @@ import OrderTracking from './modules/customer/pages/OrderTracking'; // NEW
 import CartPage from './modules/customer/pages/Cart'; // NEW
 import WishlistPage from './modules/customer/pages/Wishlist'; // NEW
 import TailorProfile from './modules/customer/pages/TailorProfile'; // NEW
+import TailorListing from './modules/customer/pages/TailorListing'; // NEW
 
 // Tailor Pages
 import TailorDashboard from './modules/tailor/pages/Dashboard';
@@ -58,6 +59,7 @@ const AppRoutes = () => {
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/refer" element={<ReferEarn />} />
             <Route path="/tailor/:id" element={<TailorProfile />} />
+            <Route path="/tailors" element={<TailorListing />} />
 
             {/* Checkout Flow */}
             <Route path="/checkout/address" element={<CheckoutAddress />} />

@@ -1,14 +1,21 @@
 import React, { useRef } from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
+import img1 from '../../../../assets/img1.jpeg';
+import img3 from '../../../../assets/img3.jpeg';
+import img5 from '../../../../assets/img5.jpeg';
+import img8 from '../../../../assets/img8.avif';
+import img11 from '../../../../assets/img11.jpeg';
+import img12 from '../../../../assets/img12.jpeg';
+import img14 from '../../../../assets/img14.jpeg';
 
 const CATEGORIES = [
-    { id: 1, name: 'Kurtis', image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?q=80&w=200&auto=format&fit=crop' },
-    { id: 2, name: 'Suits', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=200&auto=format&fit=crop' },
-    { id: 3, name: 'Dresses', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=200&auto=format&fit=crop' },
-    { id: 4, name: 'Ethnic Wear', image: 'https://images.unsplash.com/photo-1610419266710-d8e7c2e3640c?q=80&w=200&auto=format&fit=crop' },
-    { id: 5, name: 'Casual', image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=200&auto=format&fit=crop' },
-    { id: 6, name: 'Festive', image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=200&auto=format&fit=crop' }, // Jewelry/Festive
-    { id: 7, name: 'Sale', image: 'https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?q=80&w=200&auto=format&fit=crop', isSale: true },
+    { id: 1, name: 'Kurtis', image: img1 },
+    { id: 2, name: 'Suits', image: img3 },
+    { id: 3, name: 'Dresses', image: img5 },
+    { id: 4, name: 'Ethnic Wear', image: img8 },
+    { id: 5, name: 'Casual', image: img11 },
+    { id: 6, name: 'Festive', image: img12 },
+    { id: 7, name: 'Sale', image: img14, isSale: true },
 ];
 
 const CategoryScroll = ({ activeCategory, onSelectCategory }) => {

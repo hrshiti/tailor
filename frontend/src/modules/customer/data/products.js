@@ -1,8 +1,22 @@
+import img1 from '../../../assets/img1.jpeg';
+import img2 from '../../../assets/img2.jpeg';
+import img3 from '../../../assets/img3.jpeg';
+import img4 from '../../../assets/img4.jpeg';
+import img5 from '../../../assets/img5.jpeg';
+import img6 from '../../../assets/img6.jpeg';
+import img8 from '../../../assets/img8.avif';
+import img10 from '../../../assets/img10.webp';
+import img11 from '../../../assets/img11.jpeg';
+import img12 from '../../../assets/img12.jpeg';
+import img13 from '../../../assets/img13.jpeg';
+import img14 from '../../../assets/img14.jpeg';
+import img15 from '../../../assets/img15.jpeg';
+
 export const PRODUCTS = [
     {
         id: 1,
         title: 'Embroidered Anarkali Kurti',
-        name: 'Embroidered Anarkali Kurti', // For compatibility
+        name: 'Embroidered Anarkali Kurti',
         price: 1499,
         originalPrice: 2999,
         category: 'Kurtis',
@@ -11,14 +25,10 @@ export const PRODUCTS = [
         discount: 50,
         codAvailable: true,
         inStock: true,
-        images: [
-            'https://images.unsplash.com/photo-1583391733956-6c78276477e2?q=80&w=800&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=800&auto=format&fit=crop'
-        ],
-        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?q=80&w=400&auto=format&fit=crop', // For grid thumbnail
+        images: [img1, img2],
+        image: img1,
         sizes: ["S", "M", "L", "XL", "XXL"],
         colors: [
-            { name: "Teal Green", hex: "#1e3932" },
             { name: "Ruby Red", hex: "#e11d48" }
         ],
         details: [
@@ -40,15 +50,12 @@ export const PRODUCTS = [
         discount: 37,
         codAvailable: true,
         inStock: true,
-        images: [
-            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=800&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1631233085523-8890250df044?q=80&w=800&auto=format&fit=crop'
-        ],
-        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=400&auto=format&fit=crop',
+        images: [img3, img4],
+        image: img3,
         sizes: ["M", "L", "XL"],
         colors: [
-            { name: "Mustard", hex: "#facc15" },
-            { name: "White", hex: "#ffffff" }
+            { name: "Purple", hex: "#7e22ce" },
+            { name: "Teal", hex: "#14b8a6" }
         ],
         details: [
             { title: "Fabric", content: "Pure Cotton 60-60" },
@@ -69,10 +76,8 @@ export const PRODUCTS = [
         discount: 24,
         codAvailable: true,
         inStock: true,
-        images: [
-            'https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=800&auto=format&fit=crop'
-        ],
-        image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=400&auto=format&fit=crop',
+        images: [img5, img6],
+        image: img5,
         sizes: ["XS", "S", "M", "L"],
         colors: [
             { name: "Pink Floral", hex: "#fce7f3" }
@@ -94,10 +99,8 @@ export const PRODUCTS = [
         discount: 34,
         codAvailable: false,
         inStock: true,
-        images: [
-            'https://images.unsplash.com/photo-1610419266710-d8e7c2e3640c?q=80&w=800&auto=format&fit=crop'
-        ],
-        image: 'https://images.unsplash.com/photo-1610419266710-d8e7c2e3640c?q=80&w=400&auto=format&fit=crop',
+        images: [img8, img10],
+        image: img8,
         sizes: ["Free Size"],
         colors: [
             { name: "Royal Blue", hex: "#1e3a8a" }
@@ -119,10 +122,8 @@ export const PRODUCTS = [
         discount: 38,
         codAvailable: true,
         inStock: true,
-        images: [
-            'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=800&auto=format&fit=crop'
-        ],
-        image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=400&auto=format&fit=crop',
+        images: [img11],
+        image: img11,
         sizes: ["S", "M", "L"],
         colors: [
             { name: "White", hex: "#ffffff" }
@@ -144,10 +145,8 @@ export const PRODUCTS = [
         discount: 30,
         codAvailable: true,
         inStock: true,
-        images: [
-            'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop'
-        ],
-        image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=400&auto=format&fit=crop',
+        images: [img12],
+        image: img12,
         sizes: ["Semi-Stitched"],
         colors: [
             { name: "Maroon", hex: "#7f1d1d" }
@@ -169,10 +168,8 @@ export const PRODUCTS = [
         discount: 37,
         codAvailable: true,
         inStock: true,
-        images: [
-            'https://images.unsplash.com/photo-1583391733956-6c78276477e2?q=80&w=800&auto=format&fit=crop'
-        ],
-        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?q=80&w=400&auto=format&fit=crop',
+        images: [img13],
+        image: img13,
         sizes: ["M", "L", "XL", "XXL"],
         colors: [
             { name: "Indigo", hex: "#312e81" }
@@ -194,10 +191,8 @@ export const PRODUCTS = [
         discount: 40,
         codAvailable: true,
         inStock: true,
-        images: [
-            'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800&auto=format&fit=crop'
-        ],
-        image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=400&auto=format&fit=crop',
+        images: [img14, img15],
+        image: img14,
         sizes: ["UK 4", "UK 5", "UK 6", "UK 7"],
         colors: [
             { name: "Beige", hex: "#d6cfc7" }

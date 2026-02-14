@@ -2,55 +2,12 @@ import React from 'react';
 import { Star, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const tailors = [
-    {
-        id: 1,
-        name: "Masterji Ahmed",
-        specialty: "Bridal Specialist",
-        rating: 4.9,
-        reviews: 120,
-        distance: "1.2 km",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200&h=200",
-    },
-    {
-        id: 2,
-        name: "Fashion Hub",
-        specialty: "Suit Expert",
-        rating: 4.8,
-        reviews: 85,
-        distance: "2.5 km",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200&h=200",
-    },
-    {
-        id: 3,
-        name: "Priya Creations",
-        specialty: "Designer Blouses",
-        rating: 4.7,
-        reviews: 200,
-        distance: "0.8 km",
-        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200&h=200",
-    },
-    {
-        id: 4,
-        name: "Royal Stitch",
-        specialty: "Kurta Pajama",
-        rating: 4.6,
-        reviews: 50,
-        distance: "3.0 km",
-        image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200&h=200",
-    },
-    {
-        id: 5,
-        name: "Elite Tailors",
-        specialty: "Formal Wear",
-        rating: 4.9,
-        reviews: 150,
-        distance: "1.5 km",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200&h=200",
-    }
-];
+import { TAILORS } from '../data/tailors';
 
 const PopularTailors = () => {
+    // Show top 5
+    const tailors = TAILORS.slice(0, 5);
+
     return (
         <div className="px-4 py-2 mb-2">
             <div className="flex justify-between items-end mb-3">

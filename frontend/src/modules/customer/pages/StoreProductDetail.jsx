@@ -55,7 +55,7 @@ const StoreProductDetail = () => {
             try {
                 await navigator.share({
                     title: productData.title,
-                    text: `Check out this ${productData.title} on Genzo!`,
+                    text: `Check out this ${productData.title} on SilaiWala!`,
                     url: window.location.href,
                 });
             } catch (err) {
