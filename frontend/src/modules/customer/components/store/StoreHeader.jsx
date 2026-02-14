@@ -11,7 +11,7 @@ const StoreHeader = ({ searchQuery, setSearchQuery }) => {
 
     return (
         <header className="sticky top-0 z-50 bg-[#1e3932] shadow-md transition-all duration-300">
-            <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <div className="container mx-auto px-4 pb-3 pt-safe md:pt-3 flex items-center justify-between gap-4">
                 {/* Logo */}
                 <div className="flex-shrink-0">
                     <Link to="/" className="text-2xl font-bold text-white">

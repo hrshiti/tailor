@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowRight, Star } from 'lucide-react';
 
 import img1 from '../../../assets/img1.jpeg';
@@ -40,6 +40,7 @@ const services = [
 
 const ServiceGrid = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     return (
         <div className="px-4 py-4">
@@ -48,7 +49,7 @@ const ServiceGrid = () => {
                     <h2 className="text-lg font-bold text-gray-900">Popular Services</h2>
                     <p className="text-xs text-gray-500">Custom fitted for you</p>
                 </div>
-                <Link to="/services" className="text-xs font-semibold text-[#1e3932] flex items-center gap-1 hover:underline">
+                <Link to="/services" state={location.state} className="text-xs font-semibold text-[#1e3932] flex items-center gap-1 hover:underline">
                     View All <ArrowRight size={12} />
                 </Link>
             </div>
@@ -57,7 +58,7 @@ const ServiceGrid = () => {
                 {services.map((service) => (
                     <div
                         key={service.id}
-                        onClick={() => navigate(`/services/${service.id}`)}
+                        onClick={() => navigate(`/services/${service.id}`, { state: location.state })}
                         className="bg-white rounded-2xl p-2 shadow-sm border border-gray-100 group cursor-pointer hover:shadow-md transition-shadow"
                     >
                         <div className="aspect-[3/4] rounded-xl overflow-hidden mb-3 relative">

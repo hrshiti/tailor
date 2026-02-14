@@ -1,14 +1,16 @@
 import React from 'react';
 import { Clock, CheckCircle2, Star } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { SERVICES } from '../../data/services';
 
 const ServiceCard = ({ service }) => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleNavigate = () => {
-        navigate(`/services/${service.id}`);
+        // Forward existing state (like tailor selection) to the detail page
+        navigate(`/services/${service.id}`, { state: location.state });
     };
 
     return (

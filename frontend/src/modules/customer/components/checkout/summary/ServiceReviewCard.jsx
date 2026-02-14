@@ -43,6 +43,13 @@ const ServiceReviewCard = ({ service, config }) => {
                         <Calendar size={10} />
                         <span>Delivery by {dateString}</span>
                     </div>
+
+                    {service.tailorName && (
+                        <div className="pt-1 mt-1 border-t border-gray-50 flex items-center gap-1 text-[10px] text-[#1e3932] font-bold">
+                            <Scissors size={10} />
+                            <span>Tallored by: {service.tailorName}</span>
+                        </div>
+                    )}
                 </div>
             </div>
 

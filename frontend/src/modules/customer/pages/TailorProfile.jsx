@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Clock, Award, Phone } from 'lucide-react';
 import ProductCard from '../components/store/ProductCard';
+import useCheckoutStore from '../../../store/checkoutStore';
 
 import { TAILORS } from '../data/tailors';
 
@@ -32,6 +33,7 @@ const TAILOR_PRODUCTS = [
 const TailorProfile = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const setTailorInStore = useCheckoutStore(state => state.setTailor);
     const [tailor, setTailor] = useState(null);
 
     useEffect(() => {
@@ -88,7 +90,19 @@ const TailorProfile = () => {
                         <span className="block text-xs font-bold text-gray-900">Open</span>
                         <span className="text-[10px] text-gray-400 uppercase font-bold">Now</span>
                     </div>
-                    <button className="bg-[#1e3932] text-white p-3 rounded-xl shadow-lg shadow-[#1e3932]/20 flex flex-col items-center justify-center active:scale-95 transition-transform">
+                    <button
+                        onClick={() => {
+                            // Pre-select this tailor in the persistent store
+                            setTailorInStore(tailor.id, tailor.name);
+                            // Then navigate to services
+                            navigate('/services');
+                        }}
+                        className="bg-[#1e3932] text-white p-3 rounded-xl shadow-lg shadow-[#1e3932]/20 flex flex-col items-center justify-center active:scale-95 transition-transform"
+                    >
+                        <Award size={18} className="mb-1" />
+                        <span className="text-[10px] font-bold uppercase">Book Now</span>
+                    </button>
+                    <button className="bg-white text-[#1e3932] p-3 rounded-xl border border-[#1e3932]/20 shadow-sm flex flex-col items-center justify-center active:scale-95 transition-transform">
                         <Phone size={18} className="mb-1" />
                         <span className="text-[10px] font-bold uppercase">Call</span>
                     </button>

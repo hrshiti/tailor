@@ -25,6 +25,7 @@ import CartPage from './modules/customer/pages/Cart'; // NEW
 import WishlistPage from './modules/customer/pages/Wishlist'; // NEW
 import TailorProfile from './modules/customer/pages/TailorProfile'; // NEW
 import TailorListing from './modules/customer/pages/TailorListing'; // NEW
+import TailorSelection from './modules/customer/pages/TailorSelection'; // NEW
 
 // Tailor Pages
 import TailorDashboard from './modules/tailor/pages/Dashboard';
@@ -62,6 +63,7 @@ const AppRoutes = () => {
             <Route path="/tailors" element={<TailorListing />} />
 
             {/* Checkout Flow */}
+            <Route path="/checkout/tailor" element={<TailorSelection />} />
             <Route path="/checkout/address" element={<CheckoutAddress />} />
             <Route path="/checkout/summary" element={<CheckoutSummary />} />
             <Route path="/checkout/success" element={<OrderSuccess />} />

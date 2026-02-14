@@ -21,7 +21,7 @@ const HomeHeader = ({ user }) => {
         <div className="sticky top-0 z-40 bg-[#1e3932] rounded-b-[2rem] shadow-xl overflow-hidden">
             <div className="px-4 pb-4 pt-safe">
                 {/* Top Row: Greeting & Icons */}
-                <div className="flex justify-between items-center mb-6 pt-4">
+                <div className="flex justify-between items-center mb-6 pt-1">
                     <Link to="/profile" className="group">
                         <p className="text-xs text-gray-300 font-medium tracking-wide mb-0.5">Good Morning,</p>
                         <h1 className="text-2xl font-bold text-white flex items-center gap-2 group-hover:opacity-90 transition-opacity">

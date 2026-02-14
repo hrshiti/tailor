@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
 import ServiceHero from '../components/service-detail/ServiceHero';
 import DeliverySelector from '../components/service-detail/DeliverySelector';
@@ -30,7 +30,14 @@ const FAQItem = ({ question, answer }) => {
 const ServiceDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const initializeCheckout = useCheckoutStore(state => state.initializeCheckout);
+    const location = useLocation();
+    const { initializeCheckout, serviceDetails: storedDetails } = useCheckoutStore(state => state);
+
+    // Check if a tailor was pre-selected (priority to navigation state, then store)
+    const preSelectedTailor = {
+        tailorId: location.state?.tailorId || storedDetails?.tailorId,
+        tailorName: location.state?.tailorName || storedDetails?.tailorName
+    };
 
     // Dynamic data fetching
     const serviceData = SERVICES.find(s => s.id === parseInt(id)) || SERVICES[0];
@@ -73,10 +80,17 @@ const ServiceDetail = () => {
                 taxes,
                 total,
                 deliveryDays: getDeliveryDays()
-            }
+            },
+            tailorId: preSelectedTailor.tailorId || null,
+            tailorName: preSelectedTailor.tailorName || null
         });
 
-        navigate('/checkout/address');
+        // If no tailor is selected, go to tailor selection page
+        if (!preSelectedTailor.tailorId) {
+            navigate('/checkout/tailor');
+        } else {
+            navigate('/checkout/address');
+        }
     };
 
     return (
