@@ -14,10 +14,10 @@ const BookingStepper = ({ currentStepId }) => {
     const currentIndex = STEPS.findIndex(s => s.id === currentStepId);
 
     return (
-        <div className="w-full py-6 px-4 bg-white/50 backdrop-blur-sm border-b border-gray-100">
-            <div className="max-w-md mx-auto relative flex justify-between items-center">
+        <div className="w-full py-3 px-4 bg-white border-b border-gray-100 shadow-sm">
+            <div className="max-w-md mx-auto relative flex justify-between items-center px-2">
                 {/* Connecting Lines */}
-                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gray-100 -translate-y-1/2 z-0">
+                <div className="absolute top-[14px] left-8 right-8 h-0.5 bg-gray-100 z-0">
                     <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${(currentIndex / (STEPS.length - 1)) * 100}%` }}
@@ -26,35 +26,36 @@ const BookingStepper = ({ currentStepId }) => {
                 </div>
 
                 {/* Step Circles */}
-                {STEPS.map((step, index) => {
+                {STEPS.map((index_val, index) => {
+                    const step = STEPS[index];
                     const isCompleted = index < currentIndex;
                     const isActive = step.id === currentStepId;
                     const Icon = step.icon;
 
                     return (
-                        <div key={step.id} className="relative z-10 flex flex-col items-center gap-2">
+                        <div key={step.id} className="relative z-10 flex flex-col items-center gap-1.5">
                             <motion.div
                                 initial={false}
                                 animate={{
                                     backgroundColor: isCompleted || isActive ? '#1e3932' : '#ffffff',
                                     borderColor: isCompleted || isActive ? '#1e3932' : '#f3f4f6',
-                                    scale: isActive ? 1.1 : 1,
+                                    scale: isActive ? 1.05 : 1,
                                 }}
                                 className={cn(
-                                    "w-10 h-10 rounded-2xl border-2 flex items-center justify-center transition-all shadow-sm",
+                                    "w-7 h-7 rounded-lg border-2 flex items-center justify-center transition-all shadow-sm",
                                     isActive ? "ring-4 ring-[#1e3932]/10" : ""
                                 )}
                             >
                                 {isCompleted ? (
-                                    <Check size={18} className="text-white" />
+                                    <Check size={14} className="text-white" />
                                 ) : (
-                                    <Icon size={18} className={cn(
+                                    <Icon size={14} className={cn(
                                         isActive ? "text-white" : "text-gray-400"
                                     )} />
                                 )}
                             </motion.div>
                             <span className={cn(
-                                "text-[10px] font-black uppercase tracking-widest transition-colors",
+                                "text-[8px] font-black uppercase tracking-tighter transition-colors",
                                 isActive ? "text-[#1e3932]" : "text-gray-400"
                             )}>
                                 {step.label}

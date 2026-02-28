@@ -171,66 +171,66 @@ const ServiceDetail = () => {
             </div>
 
             {/* 7. LIVE BILL - Sticky Transparent Footer */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-2xl border-t border-gray-100 p-5 pb-safe animate-in slide-in-from-bottom duration-500">
+            <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-t border-gray-100 p-4 pb-safe animate-in slide-in-from-bottom duration-500">
                 <div className="max-w-md mx-auto">
-                    {/* Live Bill Header */}
-                    <div className="flex justify-between items-end mb-4">
-                        <div>
-                            <div className="flex items-center gap-2 mb-1">
-                                <span className="text-[10px] font-black text-[#1e3932] uppercase tracking-tighter">Live Bill Summary</span>
-                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    {/* Live Bill Header - Compact */}
+                    <div className="flex justify-between items-center mb-3">
+                        <div className="flex flex-col">
+                            <div className="flex items-center gap-1.5 mb-0.5">
+                                <span className="text-[9px] font-black text-[#1e3932] uppercase tracking-tighter">Live Bill</span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                             </div>
-                            <h4 className="text-2xl font-black text-gray-900 flex items-baseline gap-1">
+                            <h4 className="text-xl font-black text-gray-900 flex items-baseline gap-1 leading-none">
                                 ₹{total.toLocaleString()}
-                                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">All Inclusive</span>
+                                <span className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Incl. GST</span>
                             </h4>
                         </div>
                         <div className="text-right">
-                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-tighter">Est. Delivery</p>
-                            <div className="flex items-center justify-end gap-1 text-[#1e3932]">
-                                <Clock size={12} />
-                                <span className="text-xs font-bold">{getDeliveryDays()} Days</span>
+                            <p className="text-[8px] font-black text-gray-400 uppercase tracking-tighter mb-0.5">Est. Arrival</p>
+                            <div className="flex items-center justify-end gap-1 text-[#1e3932] bg-[#f2fcf9] px-2 py-0.5 rounded-lg border border-[#1e3932]/10">
+                                <Clock size={10} />
+                                <span className="text-[10px] font-black">{getDeliveryDays()} Days</span>
                             </div>
                         </div>
                     </div>
 
-                    {/* Quick Breakdown Drawer (Simulated) */}
-                    <div className="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
-                        <div className="shrink-0 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100 flex items-center gap-2">
-                            <Scissors size={10} className="text-gray-400" />
-                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-tighter">Stitching: ₹{basePrice}</span>
+                    {/* Quick Breakdown - Mini Tags */}
+                    <div className="flex gap-1.5 overflow-x-auto pb-3 no-scrollbar">
+                        <div className="shrink-0 bg-gray-50 px-2 py-1 rounded-md border border-gray-100 flex items-center gap-1.5">
+                            <Scissors size={8} className="text-gray-400" />
+                            <span className="text-[9px] font-black text-gray-500 uppercase">Stitching: ₹{basePrice}</span>
                         </div>
                         {fabricPrice > 0 && (
-                            <div className="shrink-0 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100 flex items-center gap-2">
-                                <ShoppingBag size={10} className="text-gray-400" />
-                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-tighter">Fabric: ₹{fabricPrice}</span>
+                            <div className="shrink-0 bg-gray-50 px-2 py-1 rounded-md border border-gray-100 flex items-center gap-1.5">
+                                <ShoppingBag size={8} className="text-gray-400" />
+                                <span className="text-[9px] font-black text-gray-500 uppercase">Fabric: ₹{fabricPrice}</span>
                             </div>
                         )}
                         {deliveryPrice > 0 && (
-                            <div className="shrink-0 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100 flex items-center gap-2">
-                                <Clock size={10} className="text-gray-400" />
-                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-tighter">Priority: ₹{deliveryPrice}</span>
+                            <div className="shrink-0 bg-gray-50 px-2 py-1 rounded-md border border-gray-100 flex items-center gap-1.5">
+                                <Clock size={8} className="text-gray-400" />
+                                <span className="text-[9px] font-black text-gray-500 uppercase">Express: ₹{deliveryPrice}</span>
                             </div>
                         )}
                     </div>
 
-                    {/* Primary Button */}
+                    {/* Primary Button - Slimmer */}
                     <button
                         onClick={handleProceed}
                         disabled={!measurementType}
                         className={cn(
-                            "w-full py-4 rounded-[1.5rem] font-black text-[13px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-xl",
-                            measurementType ? "bg-[#1e3932] text-white shadow-[#1e3932]/20 active:scale-95" : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                            "w-full py-3 rounded-xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-lg",
+                            measurementType ? "bg-[#1e3932] text-white shadow-[#1e3932]/20 active:scale-[0.98]" : "bg-gray-100 text-gray-400 cursor-not-allowed"
                         )}
                     >
                         {measurementType ? (
-                            <>Confirm Configuration <ChevronRight size={18} /></>
+                            <>Confirm Configuration <ChevronRight size={16} /></>
                         ) : (
-                            <>Selection Measurements to Proceed</>
+                            <>Enter Measurements to Proceed</>
                         )}
                     </button>
                     {measurementType && !measurements && measurementType !== 'saved' && (
-                        <p className="text-center text-[10px] text-amber-600 font-black uppercase mt-3 tracking-widest animate-pulse">Wait: Please complete measurement entry</p>
+                        <p className="text-center text-[8px] text-amber-600 font-black uppercase mt-2 tracking-widest">Action Required: Input details above</p>
                     )}
                 </div>
             </div>
