@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Search, Bell, ShoppingBag, X } from 'lucide-react';
-import { Input } from '../../../components/ui/Input';
+import { Search, Bell, ShoppingBag, X, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useCartStore from '../../../store/cartStore';
-import LocationBar from './LocationBar';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const HomeHeader = ({ user }) => {
     const [showNotifications, setShowNotifications] = useState(false);
@@ -18,82 +17,117 @@ const HomeHeader = ({ user }) => {
     const unreadCount = notifications.filter(n => n.unread).length;
 
     return (
-        <div className="sticky top-0 z-40 bg-[#1e3932] rounded-b-[2rem] shadow-xl overflow-hidden">
-            <div className="px-4 pb-4 pt-safe">
-                {/* Top Row: Greeting & Icons */}
-                <div className="flex justify-between items-center mb-6 pt-1">
-                    <Link to="/profile" className="group">
-                        <p className="text-xs text-gray-300 font-medium tracking-wide mb-0.5">Good Morning,</p>
-                        <h1 className="text-2xl font-bold text-white flex items-center gap-2 group-hover:opacity-90 transition-opacity">
-                            {user?.name || 'Guest User'} <span className="animate-wave">👋</span>
-                        </h1>
-                    </Link>
-                    <div className="flex gap-3 relative">
+        <div className="sticky top-0 z-[100] bg-white/80 backdrop-blur-2xl border-b border-gray-100/50 pt-2">
+            <div className="max-w-md mx-auto px-4 py-5 pt-safe">
+                {/* Top Row: Brand & Icons */}
+                <div className="flex justify-between items-center mb-5">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-[#1e3932] rounded-2xl flex items-center justify-center shadow-lg shadow-[#1e3932]/20 rotate-3">
+                            <span className="text-white font-black text-xl italic leading-none">T</span>
+                        </div>
+                        <div>
+                            <h1 className="text-xl font-black text-gray-900 leading-none">Tailor<span className="text-[#1e3932]">App</span></h1>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter mt-1">Modern Stitching</p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-2">
                         <button
                             onClick={() => setShowNotifications(!showNotifications)}
-                            className="relative p-2.5 bg-white/10 backdrop-blur-md rounded-full shadow-lg hover:bg-white/20 transition-all border border-white/5"
+                            className="relative p-2.5 bg-gray-50 rounded-2xl text-gray-400 border border-gray-100 hover:bg-white hover:text-[#1e3932] transition-all active:scale-90"
                         >
-                            <Bell size={20} className="text-white" />
-                            {unreadCount > 0 && <span className="absolute top-0 right-0 h-2.5 w-2.5 bg-rose-500 rounded-full border-2 border-[#1e3932]"></span>}
+                            <Bell size={20} />
+                            {unreadCount > 0 && (
+                                <span className="absolute top-2 right-2 h-2.5 w-2.5 bg-rose-500 rounded-full border-2 border-white animate-pulse shadow-sm"></span>
+                            )}
                         </button>
 
-                        {/* Notification Dropdown */}
-                        {showNotifications && (
-                            <div className="absolute top-14 right-0 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 z-50 animate-in slide-in-from-top-4 fade-in duration-300 origin-top-right">
-                                <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                                        <Bell size={14} className="fill-[#1e3932] text-[#1e3932]" /> Notifications
-                                    </h3>
-                                    <button onClick={() => setShowNotifications(false)} className="p-1 hover:bg-gray-100 rounded-full"><X size={14} className="text-gray-400" /></button>
-                                </div>
-                                <div className="space-y-3 max-h-64 overflow-y-auto pr-1 custom-scrollbar">
-                                    {notifications.map(n => (
-                                        <div key={n.id} className={`p-3 rounded-xl border transition-all ${n.unread ? 'bg-green-50 border-green-100' : 'bg-gray-50 border-gray-100 hover:bg-gray-100'}`}>
-                                            <div className="flex justify-between items-start mb-1">
-                                                <h4 className="text-xs font-bold text-gray-900">{n.title}</h4>
-                                                <span className="text-[9px] font-bold text-gray-400">{n.time}</span>
-                                            </div>
-                                            <p className="text-[10px] text-gray-500 leading-relaxed line-clamp-2">{n.message}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="mt-3 pt-3 text-center border-t border-gray-100">
-                                    <button className="text-[10px] font-bold text-[#1e3932] uppercase tracking-wider hover:underline">Mark all as read</button>
-                                </div>
-                            </div>
-                        )}
-
-                        <Link to="/cart" className="p-2.5 bg-white/10 backdrop-blur-md rounded-full shadow-lg hover:bg-white/20 transition-all border border-white/5 relative">
-                            <ShoppingBag size={20} className="text-white" />
+                        <Link
+                            to="/cart"
+                            className="p-2.5 bg-gray-50 rounded-2xl text-gray-400 border border-gray-100 hover:bg-white hover:text-[#1e3932] transition-all active:scale-90 relative"
+                        >
+                            <ShoppingBag size={20} />
                             {cartCount > 0 && (
-                                <span className="absolute -top-1 -right-1 h-5 w-5 bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-[#1e3932] shadow-sm">{cartCount}</span>
+                                <span className="absolute -top-1 -right-1 h-5 w-5 bg-[#1e3932] text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white shadow-md">
+                                    {cartCount}
+                                </span>
                             )}
                         </Link>
 
-                        <Link to="/profile" className="h-11 w-11 bg-white/10 backdrop-blur-md rounded-full overflow-hidden border-2 border-white/20 shadow-lg hover:border-white transition-colors">
-                            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name || 'User'}`} alt="Profile" className="w-full h-full object-cover" />
+                        <Link to="/profile" className="ml-1 active:scale-90 transition-transform">
+                            <div className="w-11 h-11 rounded-[1.25rem] border-2 border-[#1e3932]/10 p-0.5 overflow-hidden shadow-sm">
+                                <img
+                                    src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name || 'User'}`}
+                                    className="w-full h-full object-cover bg-gray-100 rounded-[1rem]"
+                                    alt="User"
+                                />
+                            </div>
                         </Link>
                     </div>
                 </div>
 
-                {/* Search Bar */}
-                <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
-                    <Input
-                        className="pl-10 h-12 rounded-2xl border-none shadow-sm bg-white/80 backdrop-blur-sm focus:bg-white transition-all text-base"
-                        placeholder="Search tailored styles, fabrics..."
+                {/* Search Bar - Modernized */}
+                <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <Search className="h-4 w-4 text-gray-400 group-focus-within:text-[#1e3932] transition-colors" />
+                    </div>
+                    <input
+                        type="text"
+                        placeholder="Search tailors, fabrics, designs..."
+                        className="w-full bg-gray-100 border border-transparent rounded-[1.25rem] py-3.5 pl-11 pr-4 text-sm font-medium focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#1e3932]/5 focus:border-[#1e3932]/20 transition-all placeholder:text-gray-400 shadow-inner"
                     />
-                    <button className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 bg-[#1e3932] rounded-lg">
-                        {/* Scan Icon Placeholder */}
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path></svg>
-                    </button>
                 </div>
             </div>
 
-            {/* Location Bar Integrated */}
-            <div className="border-t border-white/10 bg-[#152e28]">
-                <LocationBar />
-            </div>
+            {/* Notification Dropdown Portal-like */}
+            <AnimatePresence>
+                {showNotifications && (
+                    <>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowNotifications(false)}
+                            className="fixed inset-0 bg-black/10 backdrop-blur-sm z-[110]"
+                        />
+                        <motion.div
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            className="absolute top-20 right-4 w-[calc(100vw-2rem)] max-w-sm bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 p-6 z-[120] overflow-hidden"
+                        >
+                            <div className="flex justify-between items-center mb-6">
+                                <h3 className="text-xl font-black text-gray-900 tracking-tight">Updates</h3>
+                                <button
+                                    onClick={() => setShowNotifications(false)}
+                                    className="p-2 bg-gray-50 rounded-full text-gray-400 hover:text-gray-900 transition-colors"
+                                >
+                                    <X size={16} />
+                                </button>
+                            </div>
+
+                            <div className="space-y-4">
+                                {notifications.map(n => (
+                                    <div
+                                        key={n.id}
+                                        className={`p-4 rounded-2xl border transition-all ${n.unread ? 'bg-green-50/50 border-green-100 shadow-sm' : 'bg-white border-gray-100'}`}
+                                    >
+                                        <div className="flex justify-between items-start mb-1.5">
+                                            <span className="text-xs font-black text-gray-900 leading-none">{n.title}</span>
+                                            <span className="text-[9px] font-black text-gray-400 uppercase tracking-tighter">{n.time}</span>
+                                        </div>
+                                        <p className="text-[11px] text-gray-500 font-medium leading-relaxed">{n.message}</p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <button className="w-full mt-6 py-3 text-xs font-black text-[#1e3932] uppercase tracking-widest border border-[#1e3932]/10 rounded-2xl hover:bg-[#1e3932]/5 transition-all">
+                                View Activity History
+                            </button>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

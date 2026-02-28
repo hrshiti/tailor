@@ -1,75 +1,74 @@
 import React, { useState } from 'react';
-import { Search, Heart, ShoppingBag, User } from 'lucide-react';
+import { Search, Bell, ShoppingBag, X, Heart, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useCartStore from '../../../../store/cartStore';
 import useWishlistStore from '../../../../store/wishlistStore';
-import LocationBar from '../LocationBar';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const StoreHeader = ({ searchQuery, setSearchQuery }) => {
-    const totalItems = useCartStore(state => state.getTotalItems());
+    const cartCount = useCartStore(state => state.getTotalItems());
     const wishlistCount = useWishlistStore(state => state.items.length);
 
     return (
-        <header className="sticky top-0 z-50 bg-[#1e3932] shadow-md transition-all duration-300">
-            <div className="container mx-auto px-4 pb-3 pt-safe md:pt-3 flex items-center justify-between gap-4">
-                {/* Logo */}
-                <div className="flex-shrink-0">
-                    <Link to="/" className="text-2xl font-bold text-white">
-                        SilaiWala
-                    </Link>
-                </div>
+        <div className="sticky top-0 z-[100] bg-white/80 backdrop-blur-2xl border-b border-gray-100/50 pt-2 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 py-4 pt-safe">
+                <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center gap-3">
+                        <Link to="/" className="w-10 h-10 bg-rose-600 rounded-2xl flex items-center justify-center shadow-lg shadow-rose-600/20 rotate-3 active:scale-95 transition-transform">
+                            <span className="text-white font-black text-xl italic leading-none">S</span>
+                        </Link>
+                        <div>
+                            <h1 className="text-xl font-black text-gray-900 leading-none tracking-tight">Style<span className="text-rose-600">Store</span></h1>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter mt-1">Premium Collection</p>
+                        </div>
+                    </div>
 
-                {/* Search Bar - Center */}
-                <div className="flex-1 max-w-lg hidden md:block">
-                    <div className="relative">
-                        <input
-                            type="text"
-                            placeholder="Search kurti, dress, size M..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 border-none rounded-full bg-white/10 backdrop-blur-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white/20 focus:bg-white/20 transition-all text-sm"
-                        />
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-300" />
+                    <div className="flex items-center gap-2">
+                        <Link
+                            to="/wishlist"
+                            className="p-2.5 bg-gray-50 rounded-2xl text-gray-400 border border-gray-100 hover:bg-white hover:text-rose-600 transition-all active:scale-90 relative"
+                        >
+                            <Heart size={20} className={wishlistCount > 0 ? "fill-rose-600 text-rose-600" : ""} />
+                            {wishlistCount > 0 && (
+                                <span className="absolute top-2 right-2 h-2 w-2 bg-rose-500 rounded-full border border-white"></span>
+                            )}
+                        </Link>
+
+                        <Link
+                            to="/cart"
+                            className="p-2.5 bg-gray-50 rounded-2xl text-gray-400 border border-gray-100 hover:bg-white hover:text-rose-600 transition-all active:scale-90 relative"
+                        >
+                            <ShoppingBag size={20} />
+                            {cartCount > 0 && (
+                                <span className="absolute -top-1 -right-1 h-5 w-5 bg-rose-600 text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white shadow-md">
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
+
+                        <Link to="/profile" className="p-0.5 border-2 border-gray-100 rounded-[1.25rem] overflow-hidden active:scale-90 transition-transform">
+                            <div className="w-10 h-10 bg-gray-100 rounded-[1rem] flex items-center justify-center text-gray-400">
+                                <Menu size={20} />
+                            </div>
+                        </Link>
                     </div>
                 </div>
 
-                {/* Search Icon - Mobile Only */}
-                <div className="block md:hidden flex-1 flex justify-end">
-                    <button className="p-2 text-white hover:text-gray-200">
-                        <Search className="h-6 w-6" />
-                    </button>
-                </div>
-
-
-                {/* Right Actions */}
-                <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
-                    <Link to="/wishlist" className="p-2 relative group text-white hover:text-gray-200 transition-colors">
-                        <Heart className="h-6 w-6" />
-                        {wishlistCount > 0 && (
-                            <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-[#1e3932]">{wishlistCount}</span>
-                        )}
-                        <span className="hidden md:block absolute top-full left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity bg-black text-white px-1 rounded mt-1 whitespace-nowrap">Wishlist</span>
-                    </Link>
-
-                    <Link to="/cart" className="p-2 relative group text-white hover:text-gray-200 transition-colors">
-                        <ShoppingBag className="h-6 w-6" />
-                        {totalItems > 0 && (
-                            <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-[#1e3932]">{totalItems}</span>
-                        )}
-                        <span className="hidden md:block absolute top-full left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity bg-black text-white px-1 rounded mt-1 whitespace-nowrap">Cart</span>
-                    </Link>
-
-                    <Link to="/profile" className="p-2 hidden md:block text-white hover:text-gray-200 transition-colors">
-                        <User className="h-6 w-6" />
-                    </Link>
+                {/* Search Bar */}
+                <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <Search className="h-4 w-4 text-gray-400 group-focus-within:text-rose-600 transition-colors" />
+                    </div>
+                    <input
+                        type="text"
+                        placeholder="Search fabrics, designs, collections..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full bg-gray-100 border border-transparent rounded-[1.25rem] py-3.5 pl-11 pr-4 text-sm font-medium focus:bg-white focus:outline-none focus:ring-4 focus:ring-rose-600/5 focus:border-rose-600/20 transition-all placeholder:text-gray-400 shadow-inner"
+                    />
                 </div>
             </div>
-
-            {/* Location Bar Integrated */}
-            <div className="border-t border-white/10 bg-[#152e28]">
-                <LocationBar />
-            </div>
-        </header>
+        </div>
     );
 };
 

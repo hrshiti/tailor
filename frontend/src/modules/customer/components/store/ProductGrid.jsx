@@ -17,6 +17,9 @@ const ProductGrid = ({ filters, category, searchQuery }) => {
             // Category Filter
             if (category && category !== 'All') {
                 all = all.filter(p => p.category === category);
+            } else {
+                // Ensure fabrics aren't shown "directly" in the global store unless explicitly searched or in category
+                all = all.filter(p => p.category !== 'Fabrics' && p.category !== 'Unstitched');
             }
 
             // Search Filter

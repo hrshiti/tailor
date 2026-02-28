@@ -60,7 +60,9 @@ const CheckoutSummary = () => {
                     totalAmount: finalTotal,
                     deliveryType: configuration.deliveryType === 'express' ? 'Express' : 'Standard',
                     imageUrl: serviceDetails.image,
-                    status: 'Placed'
+                    status: 'Placed',
+                    tailorId: serviceDetails.tailorId,
+                    tailorName: serviceDetails.tailorName
                 };
                 addOrder(newOrder);
                 clearCheckout();

@@ -2,6 +2,24 @@ import React, { useState } from 'react';
 import { Home, Briefcase, ChevronRight } from 'lucide-react';
 import useAddressStore from '../../../../../store/userStore';
 
+const InputField = ({ label, name, placeholder, type = "text", required, form, errors, setForm, setErrors }) => (
+    <div className="mb-3">
+        <label className="text-[10px] uppercase font-bold text-gray-400 mb-1 block">{label} {required && "*"}</label>
+        <input
+            type={type}
+            placeholder={placeholder}
+            value={form[name]}
+            onChange={(e) => {
+                setForm({ ...form, [name]: e.target.value });
+                if (errors[name]) setErrors({ ...errors, [name]: null });
+            }}
+            className={`w-full text-xs font-semibold p-2.5 rounded-lg border focus:outline-none focus:ring-1 transition-all ${errors[name] ? "border-red-300 focus:border-red-500 bg-red-50" : "border-gray-200 focus:border-[#1e3932] bg-gray-50/50 focus:bg-white"
+                }`}
+        />
+        {errors[name] && <span className="text-[9px] text-red-500 font-medium ml-1">{errors[name]}</span>}
+    </div>
+);
+
 const AddressForm = ({ onCancel, onSuccess }) => {
     const addAddress = useAddressStore((state) => state.addAddress);
 
@@ -33,24 +51,6 @@ const AddressForm = ({ onCancel, onSuccess }) => {
         }
     };
 
-    const InputField = ({ label, name, placeholder, type = "text", required }) => (
-        <div className="mb-3">
-            <label className="text-[10px] uppercase font-bold text-gray-400 mb-1 block">{label} {required && "*"}</label>
-            <input
-                type={type}
-                placeholder={placeholder}
-                value={form[name]}
-                onChange={(e) => {
-                    setForm({ ...form, [name]: e.target.value });
-                    if (errors[name]) setErrors({ ...errors, [name]: null });
-                }}
-                className={`w-full text-xs font-semibold p-2.5 rounded-lg border focus:outline-none focus:ring-1 transition-all ${errors[name] ? "border-red-300 focus:border-red-500 bg-red-50" : "border-gray-200 focus:border-[#1e3932] bg-gray-50/50 focus:bg-white"
-                    }`}
-            />
-            {errors[name] && <span className="text-[9px] text-red-500 font-medium ml-1">{errors[name]}</span>}
-        </div>
-    );
-
     return (
         <div className="bg-white rounded-2xl p-4 animate-in slide-in-from-bottom-4 duration-300 shadow-xl border border-gray-100">
             <div className="flex justify-between items-center mb-4">
@@ -61,17 +61,17 @@ const AddressForm = ({ onCancel, onSuccess }) => {
 
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-3">
-                    <InputField label="Contact Name" name="name" placeholder="John Doe" required />
-                    <InputField label="Phone Number" name="phone" placeholder="9876543210" required />
+                    <InputField label="Contact Name" name="name" placeholder="John Doe" required form={form} errors={errors} setForm={setForm} setErrors={setErrors} />
+                    <InputField label="Phone Number" name="phone" placeholder="9876543210" required form={form} errors={errors} setForm={setForm} setErrors={setErrors} />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                    <InputField label="Pincode" name="pincode" placeholder="110001" required />
-                    <InputField label="City" name="city" placeholder="New Delhi" required />
+                    <InputField label="Pincode" name="pincode" placeholder="110001" required form={form} errors={errors} setForm={setForm} setErrors={setErrors} />
+                    <InputField label="City" name="city" placeholder="New Delhi" required form={form} errors={errors} setForm={setForm} setErrors={setErrors} />
                 </div>
 
-                <InputField label="House/Flat No, Building" name="addressLine1" placeholder="Flat 402, Block A" required />
-                <InputField label="Road Name, Area, Colony" name="addressLine2" placeholder="Sector 14, Main Road" />
+                <InputField label="House/Flat No, Building" name="addressLine1" placeholder="Flat 402, Block A" required form={form} errors={errors} setForm={setForm} setErrors={setErrors} />
+                <InputField label="Road Name, Area, Colony" name="addressLine2" placeholder="Sector 14, Main Road" form={form} errors={errors} setForm={setForm} setErrors={setErrors} />
 
                 {/* Type Selection */}
                 <div className="mb-6">

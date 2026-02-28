@@ -37,6 +37,7 @@ import DeliveryDashboard from './modules/delivery/pages/Dashboard';
 import AdminDashboard from './modules/admin/pages/Dashboard';
 
 import ReferEarn from './modules/customer/pages/ReferEarn'; // NEW
+import FabricDetail from './modules/customer/pages/FabricDetail'; // NEW
 
 const AppRoutes = () => {
     return (
@@ -55,6 +56,7 @@ const AppRoutes = () => {
             {/* New Store & Nav Routes */}
             <Route path="/store" element={<StorePage />} />
             <Route path="/store/product/:id" element={<StoreProductDetail />} />
+            <Route path="/fabric/:id" element={<FabricDetail />} />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/edit" element={<EditProfile />} />

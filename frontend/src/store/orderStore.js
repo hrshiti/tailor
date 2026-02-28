@@ -33,7 +33,9 @@ const useOrderStore = create(
                     id: `ORD-${Math.floor(1000 + Math.random() * 9000)}-${new Date().getFullYear()}`,
                     status: "Placed",
                     statusIndex: 0, // ORDER_PLACED
-                    date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                    date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+                    tailorId: newOrder.tailorId,
+                    tailorName: newOrder.tailorName
                 }, ...state.orders]
             })),
 

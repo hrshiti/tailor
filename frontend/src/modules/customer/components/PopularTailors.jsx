@@ -1,60 +1,83 @@
 import React from 'react';
-import { Star, MapPin } from 'lucide-react';
+import { Star, MapPin, ChevronRight, ShieldCheck, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import { TAILORS } from '../data/tailors';
 
 const PopularTailors = () => {
-    // Show top 5
-    const tailors = TAILORS.slice(0, 5);
+    // Show top 4 prominently
+    const tailors = TAILORS.slice(0, 4);
 
     return (
-        <div className="px-4 py-2 mb-2">
-            <div className="flex justify-between items-end mb-3">
+        <div className="px-4 py-2">
+            <div className="flex justify-between items-center mb-5">
                 <div>
-                    <h2 className="text-lg font-bold text-gray-900">Top Rated Tailors</h2>
-                    <p className="text-xs text-gray-500">Expert craftsmen near you</p>
+                    <h2 className="text-xl font-black text-gray-900 tracking-tight">Expert Tailors Near You</h2>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Stitching experts at your doorstep</p>
                 </div>
-                <Link to="/tailors" className="text-xs font-semibold text-[#1e3932] hover:underline">
+                <Link to="/tailors" className="text-xs font-black text-[#1e3932] bg-[#f2fcf9] px-3 py-1.5 rounded-full border border-[#1e3932]/10 hover:shadow-sm transition-all">
                     See All
                 </Link>
             </div>
 
-            <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 no-scrollbar snap-x snap-mandatory">
-                {tailors.map((tailor) => (
-                    <Link
-                        to={`/tailor/${tailor.id}`}
+            <div className="space-y-4">
+                {tailors.map((tailor, index) => (
+                    <motion.div
                         key={tailor.id}
-                        className="flex-shrink-0 w-32 snap-start group cursor-pointer"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        viewport={{ once: true }}
                     >
-                        <div className="relative mb-2">
-                            {/* Image Container with Gradient Overlay on Hover */}
-                            <div className="h-32 w-32 rounded-2xl overflow-hidden shadow-sm border-2 border-white relative">
-                                <img
-                                    src={tailor.image}
-                                    alt={tailor.name}
-                                    className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <Link
+                            to={`/tailor/${tailor.id}`}
+                            className="flex gap-4 bg-white p-4 rounded-[1.5rem] shadow-[0_4px_15px_rgba(0,0,0,0.02)] border border-gray-100 active:scale-[0.98] transition-transform group relative overflow-hidden"
+                        >
+                            {/* Visual Indicator of Fabric availability */}
+                            {tailor.fabrics && tailor.fabrics.length > 0 && (
+                                <div className="absolute top-3 right-3 flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-0.5 rounded-md text-[8px] font-black border border-amber-100/50 shadow-sm">
+                                    <Clock size={10} className="animate-pulse" /> HAS FABRICS
+                                </div>
+                            )}
+
+                            <div className="relative shrink-0">
+                                <div className="h-20 w-20 rounded-2xl overflow-hidden border border-gray-100 shadow-sm group-hover:rotate-2 transition-transform">
+                                    <img
+                                        src={tailor.image}
+                                        alt={tailor.name}
+                                        className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    />
+                                </div>
+                                <div className="absolute -bottom-1 -right-1 bg-[#1e3932] text-white p-1 rounded-lg border-2 border-white shadow-sm">
+                                    <ShieldCheck size={10} />
+                                </div>
                             </div>
 
-                            {/* Rating Badge */}
-                            <div className="absolute bottom-1 right-1 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded-md text-[10px] font-bold shadow-sm flex items-center gap-0.5 border border-gray-100">
-                                <Star size={8} className="fill-yellow-400 text-yellow-400" />
-                                {tailor.rating}
-                            </div>
-                        </div>
+                            <div className="flex-1 pt-1">
+                                <div className="flex items-center gap-1.5 mb-0.5">
+                                    <h3 className="text-sm font-black text-gray-900 leading-none group-hover:text-[#1e3932] transition-colors">{tailor.name}</h3>
+                                </div>
+                                <p className="text-[11px] text-[#1e3932] font-bold mt-1 bg-[#f2fcf9] w-fit px-2 py-0.5 rounded-full border border-[#1e3932]/5 italic">
+                                    {tailor.specialty}
+                                </p>
 
-                        <div className="text-center">
-                            <h3 className="text-sm font-bold text-gray-900 truncate leading-tight group-hover:text-[#1e3932] transition-colors">{tailor.name}</h3>
-                            <p className="text-[10px] text-gray-500 font-medium truncate mt-0.5">{tailor.specialty}</p>
-
-                            <div className="flex items-center justify-center gap-1 mt-1 text-[10px] text-gray-400">
-                                <MapPin size={10} />
-                                <span>{tailor.distance}</span>
+                                <div className="flex items-center gap-3 mt-3 text-[10px] text-gray-400 font-bold uppercase">
+                                    <div className="flex items-center gap-1 text-[#1e3932]">
+                                        <Star size={10} className="fill-[#1e3932]" />
+                                        {tailor.rating}
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <MapPin size={10} />
+                                        {tailor.distance}
+                                    </div>
+                                    <div className="ml-auto flex items-center gap-1 text-gray-800">
+                                        View <ChevronRight size={12} />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </Link>
+                        </Link>
+                    </motion.div>
                 ))}
             </div>
         </div>

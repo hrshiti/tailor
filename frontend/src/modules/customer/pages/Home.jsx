@@ -23,34 +23,35 @@ const mockActiveOrder = {
 
 const Home = () => {
     return (
-        <div className="min-h-screen bg-white pb-24 font-sans selection:bg-[#1e3932] selection:text-white">
+        <div className="min-h-screen bg-[#f8faf9] pb-24 font-sans selection:bg-[#1e3932] selection:text-white">
             <div className="fixed inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-green-50/50 via-white to-white -z-10" />
-
 
             {/* 1. Header & Location */}
             <HomeHeader user={mockUser} />
+            <LocationBar />
 
             {/* 2. Hero / Promo Section */}
             <PromoBanner />
 
-            {/* 3. Quick Actions */}
+            {/* 3. Quick Actions (Categories) */}
             <QuickActions />
 
-            {/* 3.5 Popular Tailors */}
-            <PopularTailors />
-
-            {/* 4. Active Order (Conditional) */}
+            {/* 4. ACTIVE ORDER (High Visibility if exists) */}
             <ActiveOrderBanner order={mockActiveOrder} />
 
-            {/* 5. Stitching Services */}
+            {/* 5. PRIMARY ACTION: Tailors List (User's request: Direct tailors ki list) */}
+            <div className="mt-4">
+                <PopularTailors />
+            </div>
+
+            {/* 6. Stitching Services (Secondary) */}
             <ServiceGrid />
 
-            {/* 6. Why Choose Us (Simple Trust Indicators) */}
+            {/* 7. Why Choose Us */}
             <WhyChooseUs />
 
-            {/* 7. Bottom Navigation */}
+            {/* 8. Bottom Navigation */}
             <BottomNav />
-
         </div>
     );
 };

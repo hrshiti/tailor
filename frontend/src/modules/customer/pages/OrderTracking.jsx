@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
     ArrowLeft, MapPin, Phone, MessageSquare,
     AlertCircle, HelpCircle, Package, Truck,
-    Calendar, ExternalLink
+    Calendar, ExternalLink, ChevronRight, ShieldCheck
 } from 'lucide-react';
 import useOrderStore, { ORDER_STATES } from '../../../store/orderStore';
 import TrackingTimeline from '../components/orders/TrackingTimeline';
@@ -83,32 +83,70 @@ const OrderTracking = () => {
 
                 {/* 4. Support & Actions */}
                 <div className="grid grid-cols-2 gap-3">
-                    <button className="bg-white p-4 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center gap-2 active:scale-95 transition-all">
+                    <a
+                        href={`tel:+919876543210`} // Mock number, could be dynamic from TAILORS
+                        className="bg-white p-4 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center gap-2 active:scale-95 transition-all text-center no-underline"
+                    >
                         <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
                             <Phone size={18} />
                         </div>
-                        <span className="text-[10px] font-bold text-gray-700 uppercase">Call Partner</span>
-                    </button>
-                    <button className="bg-white p-4 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center gap-2 active:scale-95 transition-all">
+                        <span className="text-[10px] font-black text-gray-700 uppercase tracking-tight">Call Partner</span>
+                    </a>
+
+                    <a
+                        href={`https://wa.me/919876543210?text=I need help with my order ${order.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-white p-4 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center gap-2 active:scale-95 transition-all text-center no-underline"
+                    >
                         <div className="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center">
                             <MessageSquare size={18} />
                         </div>
-                        <span className="text-[10px] font-bold text-gray-700 uppercase">Chat Help</span>
-                    </button>
+                        <span className="text-[10px] font-black text-gray-700 uppercase tracking-tight">Chat Help</span>
+                    </a>
                 </div>
 
-                <div className="p-4 bg-[#1e3932] rounded-3xl text-white shadow-xl flex items-center justify-between group cursor-pointer active:scale-[0.98] transition-all">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center">
-                            <HelpCircle size={20} />
+                <div
+                    onClick={() => {
+                        const subject = encodeURIComponent(`Issue with Order ${order.id}`);
+                        const body = encodeURIComponent(`Hello Support,\n\nI am facing an issue with my order ${order.id} for the service ${order.serviceTitle}.\n\nPlease help.`);
+                        window.location.href = `mailto:support@tailorapp.com?subject=${subject}&body=${body}`;
+                    }}
+                    className="p-4 bg-[#1e3932] rounded-[2rem] text-white shadow-xl flex items-center justify-between group cursor-pointer active:scale-[0.98] transition-all"
+                >
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center border border-white/10">
+                            <AlertCircle size={22} className="text-red-300" />
                         </div>
                         <div>
-                            <p className="text-xs font-bold">Have an issue?</p>
-                            <p className="text-[10px] opacity-70">Raise a support ticket now</p>
+                            <p className="text-[13px] font-black uppercase tracking-widest">Have an issue?</p>
+                            <p className="text-[10px] text-white/60 font-medium">Auto-generate support ticket</p>
                         </div>
                     </div>
-                    <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 transition-opacity" />
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#1e3932] transition-all">
+                        <ChevronRight size={16} />
+                    </div>
                 </div>
+
+                {/* Optional: Tailor Card in Tracking */}
+                {order.tailorName && (
+                    <div className="bg-white rounded-[2rem] p-5 border border-gray-100 shadow-sm">
+                        <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Assigned Artisan</h4>
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-[#1e3932] border border-gray-100 font-black text-xs">
+                                {order.tailorName.charAt(0)}
+                            </div>
+                            <div className="flex-1">
+                                <p className="text-sm font-black text-gray-900 leading-none mb-1">{order.tailorName}</p>
+                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Expert Tailor</p>
+                            </div>
+                            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#f2fcf9] rounded-xl border border-[#1e3932]/10">
+                                <ShieldCheck size={12} className="text-[#1e3932]" />
+                                <span className="text-[10px] font-black text-[#1e3932] uppercase">Verified</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
             </div>
         </div>

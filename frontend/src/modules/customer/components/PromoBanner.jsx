@@ -43,14 +43,14 @@ const PromoBanner = () => {
     const prev = () => setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length);
 
     return (
-        <div className="px-4 py-6 relative group">
+        <div className="px-4 py-3 relative group">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentIndex}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className={`relative overflow-hidden rounded-3xl ${banners[currentIndex].color} text-white p-6 shadow-xl h-48 flex items-center`}
+                    className={`relative overflow-hidden rounded-3xl ${banners[currentIndex].color} text-white p-6 shadow-xl h-42 flex items-center`}
                 >
                     {/* Background Decoration */}
                     <div className="absolute top-[-20px] right-[-20px] w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
@@ -85,7 +85,7 @@ const PromoBanner = () => {
             </AnimatePresence>
 
             {/* Dots */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
                 {banners.map((_, i) => (
                     <div
                         key={i}

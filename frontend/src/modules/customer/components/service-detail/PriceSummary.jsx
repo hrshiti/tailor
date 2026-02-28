@@ -2,9 +2,9 @@ import React from 'react';
 import { ArrowRight, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const PriceSummary = ({ basePrice, deliveryPrice, deliveryDays, onProceed }) => {
+const PriceSummary = ({ basePrice, deliveryPrice, fabricPrice = 0, deliveryDays, onProceed }) => {
     const navigate = useNavigate();
-    const total = basePrice + deliveryPrice;
+    const total = basePrice + deliveryPrice + fabricPrice;
     const taxes = Math.round(total * 0.05); // 5% GST estimate
     const grandTotal = total + taxes;
 
@@ -20,9 +20,15 @@ const PriceSummary = ({ basePrice, deliveryPrice, deliveryDays, onProceed }) => 
             {/* Desktop View Details */}
             <div className="hidden md:block mb-4 space-y-2">
                 <div className="flex justify-between text-sm text-gray-600">
-                    <span>Base Price</span>
+                    <span>Stitching Base Price</span>
                     <span>₹{basePrice}</span>
                 </div>
+                {fabricPrice > 0 && (
+                    <div className="flex justify-between text-sm text-gray-600">
+                        <span>Fabric Price</span>
+                        <span className="text-[#1e3932]">₹{fabricPrice}</span>
+                    </div>
+                )}
                 {deliveryPrice > 0 && (
                     <div className="flex justify-between text-sm text-gray-600">
                         <span>Express Delivery</span>
