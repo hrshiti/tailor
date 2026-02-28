@@ -1,0 +1,87 @@
+import React from 'react';
+import { Star, MapPin, ChevronRight, ShieldCheck, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
+import { TAILORS } from '../data/tailors';
+
+const PopularTailors = () => {
+    // Show top 4 prominently
+    const tailors = TAILORS.slice(0, 4);
+
+    return (
+        <div className="px-4 py-2">
+            <div className="flex justify-between items-center mb-5">
+                <div>
+                    <h2 className="text-xl font-black text-gray-900 tracking-tight">Expert Tailors Near You</h2>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Stitching experts at your doorstep</p>
+                </div>
+                <Link to="/tailors" className="text-xs font-black text-[#1e3932] bg-[#f2fcf9] px-3 py-1.5 rounded-full border border-[#1e3932]/10 hover:shadow-sm transition-all">
+                    See All
+                </Link>
+            </div>
+
+            <div className="space-y-4">
+                {tailors.map((tailor, index) => (
+                    <motion.div
+                        key={tailor.id}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        viewport={{ once: true }}
+                    >
+                        <Link
+                            to={`/tailor/${tailor.id}`}
+                            className="flex gap-4 bg-white p-4 rounded-[1.5rem] shadow-[0_4px_15px_rgba(0,0,0,0.02)] border border-gray-100 active:scale-[0.98] transition-transform group relative overflow-hidden"
+                        >
+                            {/* Visual Indicator of Fabric availability */}
+                            {tailor.fabrics && tailor.fabrics.length > 0 && (
+                                <div className="absolute top-3 right-3 flex items-center gap-1 bg-amber-50 text-amber-700 px-2 py-0.5 rounded-md text-[8px] font-black border border-amber-100/50 shadow-sm">
+                                    <Clock size={10} className="animate-pulse" /> HAS FABRICS
+                                </div>
+                            )}
+
+                            <div className="relative shrink-0">
+                                <div className="h-20 w-20 rounded-2xl overflow-hidden border border-gray-100 shadow-sm group-hover:rotate-2 transition-transform">
+                                    <img
+                                        src={tailor.image}
+                                        alt={tailor.name}
+                                        className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    />
+                                </div>
+                                <div className="absolute -bottom-1 -right-1 bg-[#1e3932] text-white p-1 rounded-lg border-2 border-white shadow-sm">
+                                    <ShieldCheck size={10} />
+                                </div>
+                            </div>
+
+                            <div className="flex-1 pt-1">
+                                <div className="flex items-center gap-1.5 mb-0.5">
+                                    <h3 className="text-sm font-black text-gray-900 leading-none group-hover:text-[#1e3932] transition-colors">{tailor.name}</h3>
+                                </div>
+                                <p className="text-[11px] text-[#1e3932] font-bold mt-1 bg-[#f2fcf9] w-fit px-2 py-0.5 rounded-full border border-[#1e3932]/5 italic">
+                                    {tailor.specialty}
+                                </p>
+
+                                <div className="flex items-center gap-3 mt-3 text-[10px] text-gray-400 font-bold uppercase">
+                                    <div className="flex items-center gap-1 text-[#1e3932]">
+                                        <Star size={10} className="fill-[#1e3932]" />
+                                        {tailor.rating}
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <MapPin size={10} />
+                                        {tailor.distance}
+                                    </div>
+                                    <div className="ml-auto flex items-center gap-1 text-gray-800">
+                                        View <ChevronRight size={12} />
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default PopularTailors;
