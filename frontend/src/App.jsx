@@ -4,12 +4,12 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // Layout Imports
 import { MobileFrame } from './components/layout/MobileFrame';
 import AdminLayout from './components/admin/AdminLayout';
-import { TailorLayout } from './components/tailor/TailorLayout';
+import { TailorLayout } from './modules/tailor/components/TailorLayout';
 import { DeliveryLayout } from './components/delivery/DeliveryLayout';
-import { TailorDashboardLayout } from './components/tailor/dashboard/TailorDashboardLayout';
+import { TailorDashboardLayout } from './modules/tailor/components/TailorDashboardLayout';
 
 // Auth Context
-import { TailorAuthProvider } from './context/TailorAuthContext';
+import { TailorAuthProvider } from './modules/tailor/context/TailorAuthContext';
 import { TailorProtectedRoute } from './components/auth/TailorProtectedRoute';
 
 // Customer Pages
@@ -32,17 +32,17 @@ import { AdminStore } from './pages/admin/AdminStore';
 import { AdminProfile } from './pages/profile/AdminProfile';
 
 // Tailor Pages
-import { TailorProfile } from './pages/profile/TailorProfile';
-import { TailorRegistration } from './pages/tailor/Registration/TailorRegistration';
-import { TailorLogin } from './pages/tailor/Auth/TailorLogin';
-import { PendingApproval } from './pages/tailor/Status/PendingApproval';
-import { RejectedStatus } from './pages/tailor/Status/RejectedStatus';
-import { TailorOverview } from './pages/tailor/Dashboard/TailorOverview';
-import { OrderRequests } from './pages/tailor/Dashboard/OrderRequests';
-import { ProductManagement } from './pages/tailor/Dashboard/ProductManagement';
-import { SubscriptionPage } from './pages/tailor/Dashboard/SubscriptionPage';
-import { DeliveryPartnerDetails } from './pages/tailor/Dashboard/DeliveryPartnerDetails';
-import { DocumentVerification } from './pages/tailor/Dashboard/DocumentVerification';
+import { TailorProfile } from './modules/tailor/pages/Dashboard/TailorProfile';
+import { TailorRegistration } from './modules/tailor/pages/Registration/TailorRegistration';
+import { TailorLogin } from './modules/tailor/pages/Auth/TailorLogin';
+import { PendingApproval } from './modules/tailor/pages/Status/PendingApproval';
+import { RejectedStatus } from './modules/tailor/pages/Status/RejectedStatus';
+import { TailorOverview } from './modules/tailor/pages/Dashboard/TailorOverview';
+import { OrderRequests } from './modules/tailor/pages/Dashboard/OrderRequests';
+import { ProductManagement } from './modules/tailor/pages/Dashboard/ProductManagement';
+import { SubscriptionPage } from './modules/tailor/pages/Dashboard/SubscriptionPage';
+import { DeliveryPartnerDetails } from './modules/tailor/pages/Dashboard/DeliveryPartnerDetails';
+import { DocumentVerification } from './modules/tailor/pages/Dashboard/DocumentVerification';
 
 // Delivery Pages
 import { DeliveryProfile } from './pages/profile/DeliveryProfile';

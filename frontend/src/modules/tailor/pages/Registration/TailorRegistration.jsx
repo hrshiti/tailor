@@ -11,7 +11,7 @@ import {
     Upload,
     Check
 } from 'lucide-react';
-import { useTailorAuth } from '../../../context/TailorAuthContext';
+import { useTailorAuth } from '../../context/TailorAuthContext';
 
 export const TailorRegistration = () => {
     const navigate = useNavigate();

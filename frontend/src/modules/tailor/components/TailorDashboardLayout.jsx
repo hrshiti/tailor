@@ -17,7 +17,7 @@ import {
     Truck,
     ShieldCheck
 } from 'lucide-react';
-import { useTailorAuth } from '../../../context/TailorAuthContext';
+import { useTailorAuth } from '../context/TailorAuthContext';
 
 const SidebarItem = ({ icon: Icon, label, path, active, onClick }) => (
     <button

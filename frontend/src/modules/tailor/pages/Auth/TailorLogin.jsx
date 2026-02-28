@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
-import { useTailorAuth } from '../../../context/TailorAuthContext';
+import { useTailorAuth } from '../../context/TailorAuthContext';
 
 export const TailorLogin = () => {
     const navigate = useNavigate();

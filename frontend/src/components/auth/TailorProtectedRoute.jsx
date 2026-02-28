@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useTailorAuth } from '../../context/TailorAuthContext';
+import { useTailorAuth } from '../../modules/tailor/context/TailorAuthContext';
 
 export const TailorProtectedRoute = ({ requiredStatus }) => {
     const { isLoggedIn, tailorStatus, subscriptionStatus } = useTailorAuth();
