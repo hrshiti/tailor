@@ -23,10 +23,10 @@ const HomeHeader = ({ user }) => {
                 <div className="flex justify-between items-center mb-5">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-[#1e3932] rounded-2xl flex items-center justify-center shadow-lg shadow-[#1e3932]/20 rotate-3">
-                            <span className="text-white font-black text-xl italic leading-none">T</span>
+                            <span className="text-white font-black text-xl italic leading-none">S</span>
                         </div>
                         <div>
-                            <h1 className="text-xl font-black text-gray-900 leading-none">Tailor<span className="text-[#1e3932]">App</span></h1>
+                            <h1 className="text-xl font-black text-gray-900 leading-none tracking-tight">Silai<span className="text-[#1e3932]">wala</span></h1>
                             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter mt-1">Modern Stitching</p>
                         </div>
                     </div>

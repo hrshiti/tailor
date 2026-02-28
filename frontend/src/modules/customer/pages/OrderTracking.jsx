@@ -110,7 +110,7 @@ const OrderTracking = () => {
                     onClick={() => {
                         const subject = encodeURIComponent(`Issue with Order ${order.id}`);
                         const body = encodeURIComponent(`Hello Support,\n\nI am facing an issue with my order ${order.id} for the service ${order.serviceTitle}.\n\nPlease help.`);
-                        window.location.href = `mailto:support@tailorapp.com?subject=${subject}&body=${body}`;
+                        window.location.href = `mailto:support@silaiwala.com?subject=${subject}&body=${body}`;
                     }}
                     className="p-4 bg-[#1e3932] rounded-[2rem] text-white shadow-xl flex items-center justify-between group cursor-pointer active:scale-[0.98] transition-all"
                 >
