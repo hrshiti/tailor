@@ -88,6 +88,16 @@ function App() {
             <Route path="profile/measurements" element={<FullBleedWrapper><ProfileMeasurements /></FullBleedWrapper>} />
             <Route path="profile/payments" element={<FullBleedWrapper><ProfilePayments /></FullBleedWrapper>} />
             <Route path="profile/support" element={<FullBleedWrapper><ProfileSupport /></FullBleedWrapper>} />
+
+            {/* Additional Routes from Remote */}
+            <Route path="services/:id" element={<PlaceholderPage title="Service Details" />} />
+            <Route path="store/product/:id" element={<PlaceholderPage title="Product Details" />} />
+            <Route path="fabric/:id" element={<PlaceholderPage title="Fabric Details" />} />
+            <Route path="refer" element={<PlaceholderPage title="Refer & Earn" />} />
+            <Route path="cart" element={<PlaceholderPage title="My Cart" />} />
+            <Route path="wishlist" element={<PlaceholderPage title="My Wishlist" />} />
+            <Route path="tailors" element={<PlaceholderPage title="Tailor Listings" />} />
+            <Route path="tailor/:id" element={<PlaceholderPage title="Tailor Profile View" />} />
           </Route>
 
           {/* Full Screen Customer Flow (No Bottom Nav) */}
