@@ -27,7 +27,7 @@ api.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             localStorage.removeItem('tailor_token');
-            window.location.href = '/tailor/login';
+            window.location.href = '/partner/login';
         }
         return Promise.reject(error);
     }

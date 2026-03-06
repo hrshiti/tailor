@@ -20,8 +20,8 @@ const ProfileSettings = () => {
 
     const menuOptions = [
         { icon: <Edit2 size={20} />, label: 'Edit Profile', action: () => setIsEditing(true) },
-        { icon: <History size={20} />, label: 'Order History', path: '/tailor/orders' },
-        { icon: <Bell size={20} />, label: 'Notifications', path: '/tailor/notifications' },
+        { icon: <History size={20} />, label: 'Order History', path: '/partner/orders' },
+        { icon: <Bell size={20} />, label: 'Notifications', path: '/partner/notifications' },
         { icon: <MapPin size={20} />, label: 'Pick Up Information', action: () => setActiveModal('pickup') },
         { icon: <FileText size={20} />, label: 'Terms & Conditions', action: () => setActiveModal('terms') },
         { icon: <Shield size={20} />, label: 'Privacy & Security', action: () => setActiveModal('privacy') },
@@ -45,7 +45,7 @@ const ProfileSettings = () => {
                     <div className="space-y-4">
                         <h3 className="text-lg font-black text-gray-900">Terms & Conditions</h3>
                         <div className="text-xs text-gray-600 space-y-2 h-48 overflow-y-auto custom-scrollbar pr-2 leading-relaxed">
-                            <p>1. By using TailorHub, you agree to fulfill all accepted orders within the specified deadline.</p>
+                            <p>1. By using Silaiwala, you agree to fulfill all accepted orders within the specified deadline.</p>
                             <p>2. Royal Stitches is responsible for the fabric quality if provided by the shop.</p>
                             <p>3. Payments are processed every Friday for completed orders.</p>
                             <p>4. Platform commission is fixed at 12% per transaction.</p>
@@ -153,7 +153,7 @@ const ProfileSettings = () => {
                     ))}
 
                     <button
-                        onClick={() => navigate('/tailor/login')}
+                        onClick={() => navigate('/partner/login')}
                         className="w-full bg-white p-4 rounded-[1.25rem] border border-gray-100/50 shadow-[0_2px_15px_rgb(0,0,0,0.03)] flex items-center justify-between hover:border-red-100 transition-all group active:scale-[0.98] mt-6 relative z-10"
                     >
                         <div className="flex items-center gap-4">

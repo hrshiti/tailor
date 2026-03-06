@@ -53,7 +53,7 @@ const Dashboard = () => {
                 </div>
                 <div className="flex gap-4">
                     <button
-                        onClick={() => navigate('/tailor/settings')}
+                        onClick={() => navigate('/partner/settings')}
                         className="px-6 py-2.5 rounded-xl bg-[#1e3932] text-white font-semibold hover:shadow-lg hover:translate-y-[-2px] active:translate-y-[0] transition-all"
                     >
                         Manage Availability
@@ -89,7 +89,7 @@ const Dashboard = () => {
                 <div className="p-6 border-b border-gray-100 flex justify-between items-center">
                     <h3 className="text-xl font-bold text-gray-900">Active Work Orders</h3>
                     <button
-                        onClick={() => navigate('/tailor/orders')}
+                        onClick={() => navigate('/partner/orders')}
                         className="text-[#1e3932] font-semibold text-sm flex items-center gap-1 hover:underline"
                     >
                         See all orders <ChevronRight size={16} />
@@ -128,7 +128,7 @@ const Dashboard = () => {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <button
-                                            onClick={() => navigate('/tailor/orders', { state: { highlightOrderTitle: order.id } })}
+                                            onClick={() => navigate('/partner/orders', { state: { highlightOrderTitle: order.id } })}
                                             className="bg-white border rounded-lg px-3 py-1.5 text-xs font-bold text-gray-700 hover:bg-[#1e3932] hover:text-white hover:border-[#1e3932] transition-all"
                                         >
                                             Update Status

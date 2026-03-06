@@ -22,8 +22,16 @@ const Login = () => {
         }
 
         try {
-            await login(email, password);
-            navigate('/'); // Redirect to dashboard based on role later
+            const user = await login(email, password);
+            if (user.role === 'tailor') {
+                navigate('/partner');
+            } else if (user.role === 'delivery') {
+                navigate('/delivery');
+            } else if (user.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
         } catch (err) {
             setError('Invalid credentials');
         }
@@ -32,7 +40,7 @@ const Login = () => {
     return (
         <div className="w-full">
             <h2 className="text-2xl font-bold text-center text-[#1e3932] mb-2">Welcome Back</h2>
-            <p className="text-center text-gray-500 mb-8">Sign in to continue to SilaiWala</p>
+            <p className="text-center text-gray-500 mb-8">Sign in to continue to Silaiwala</p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 {error && (

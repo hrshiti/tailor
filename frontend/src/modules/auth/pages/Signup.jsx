@@ -39,7 +39,15 @@ const Signup = () => {
 
         try {
             await signup({ ...formData, role: selectedRole });
-            navigate('/');
+            if (selectedRole === 'tailor') {
+                navigate('/partner');
+            } else if (selectedRole === 'delivery') {
+                navigate('/delivery');
+            } else if (selectedRole === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
         } catch (error) {
             console.error(error);
         }

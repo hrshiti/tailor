@@ -44,12 +44,17 @@ import WishlistPage from './modules/customer/pages/Wishlist'; // NEW
 import TailorProfile from './modules/customer/pages/TailorProfile'; // NEW
 import TailorListing from './modules/customer/pages/TailorListing'; // NEW
 import TailorSelection from './modules/customer/pages/TailorSelection'; // NEW
-
-// Tailor Pages
-import TailorDashboard from './modules/tailor/pages/Dashboard';
+import CustomerProtectedRoute from './modules/customer/components/CustomerProtectedRoute';
 
 // Delivery Pages
-import DeliveryDashboard from './modules/delivery/pages/Dashboard';
+import DeliveryDashboard from './modules/delivery/pages/Dashboard/DeliveryDashboard';
+import DeliveryTasks from './modules/delivery/pages/Tasks/Tasks';
+import DeliveryHistory from './modules/delivery/pages/History/DeliveryHistory';
+import DeliveryProfile from './modules/delivery/pages/Profile/DeliveryProfile';
+import DeliveryLogin from './modules/delivery/pages/Login';
+import DeliverySignup from './modules/delivery/pages/Signup';
+import DeliveryLayout from './modules/delivery/layouts/DeliveryLayout';
+import DeliveryProtectedRoute from './modules/delivery/components/DeliveryProtectedRoute';
 
 // Admin Pages
 import AdminDashboard from './modules/admin/pages/Dashboard';
@@ -64,60 +69,75 @@ const AppRoutes = () => {
             <Route element={<AuthLayout />}>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
+
+                {/* Delivery Public Auth Routes */}
+                <Route path="/delivery/login" element={<DeliveryLogin />} />
+                <Route path="/delivery/signup" element={<DeliverySignup />} />
             </Route>
 
             {/* Customer Routes */}
-            <Route path="/" element={<Navigate to="/tailor/login" replace />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/services/:id" element={<ServiceDetailPage />} />
+            <Route element={<CustomerProtectedRoute />}>
+                <Route path="/" element={<CustomerHome />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/services/:id" element={<ServiceDetailPage />} />
 
-            {/* New Store & Nav Routes */}
-            <Route path="/store" element={<StorePage />} />
-            <Route path="/store/product/:id" element={<StoreProductDetail />} />
-            <Route path="/fabric/:id" element={<FabricDetail />} />
-            <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile/edit" element={<EditProfile />} />
-            <Route path="/refer" element={<ReferEarn />} />
-            <Route path="/tailor/:id" element={<TailorProfile />} />
-            <Route path="/tailors" element={<TailorListing />} />
+                {/* New Store & Nav Routes */}
+                <Route path="/store" element={<StorePage />} />
+                <Route path="/store/product/:id" element={<StoreProductDetail />} />
+                <Route path="/fabric/:id" element={<FabricDetail />} />
+                <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile/edit" element={<EditProfile />} />
+                <Route path="/refer" element={<ReferEarn />} />
+                {/* Fixed path from /tailor/:id to /shop/:id to avoid conflict or keep it customer centric */}
+                <Route path="/tailor/:id" element={<TailorProfile />} />
+                <Route path="/tailors" element={<TailorListing />} />
 
-            {/* Checkout Flow */}
-            <Route path="/checkout/tailor" element={<TailorSelection />} />
-            <Route path="/checkout/address" element={<CheckoutAddress />} />
-            <Route path="/checkout/summary" element={<CheckoutSummary />} />
-            <Route path="/checkout/success" element={<OrderSuccess />} />
-            <Route path="/orders/:id/track" element={<OrderTracking />} />
+                {/* Checkout Flow */}
+                <Route path="/checkout/tailor" element={<TailorSelection />} />
+                <Route path="/checkout/address" element={<CheckoutAddress />} />
+                <Route path="/checkout/summary" element={<CheckoutSummary />} />
+                <Route path="/checkout/success" element={<OrderSuccess />} />
+                <Route path="/orders/:id/track" element={<OrderTracking />} />
 
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/wishlist" element={<WishlistPage />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/wishlist" element={<WishlistPage />} />
+            </Route>
 
-            {/* Tailor Public Routes */}
-            <Route path="/tailor/login" element={<TailorLogin />} />
-            <Route path="/tailor/register" element={<TailorRegistration />} />
-            <Route path="/tailor/under-review" element={<UnderReview />} />
-            <Route path="/tailor/rejected" element={<RejectedPage />} />
+            {/* Tailor/Partner Public Routes */}
+            <Route path="/partner/login" element={<TailorLogin />} />
+            <Route path="/partner/register" element={<TailorRegistration />} />
+            <Route path="/partner/under-review" element={<UnderReview />} />
+            <Route path="/partner/rejected" element={<RejectedPage />} />
 
-            {/* Tailor Protected Routes */}
+            {/* Tailor/Partner Protected Routes */}
             <Route element={<TailorProtectedRoute requiredStatus={[TAILOR_STATUS.APPROVED]} />}>
                 <Route element={<TailorLayout />}>
-                    <Route path="/tailor" element={<TailorOverview />} />
-                    <Route path="/tailor/orders" element={<TailorOrders />} />
-                    <Route path="/tailor/portfolio" element={<TailorProducts />} />
-                    <Route path="/tailor/earnings" element={<TailorOverview />} />
-                    <Route path="/tailor/products" element={<TailorProducts />} />
-                    <Route path="/tailor/delivery" element={<DeliveryDetails />} />
-                    <Route path="/tailor/verification" element={<VerificationStatus />} />
-                    <Route path="/tailor/subscription" element={<SubscriptionSettings />} />
-                    <Route path="/tailor/settings" element={<ProfileSettings />} />
+                    <Route path="/partner" element={<TailorOverview />} />
+                    <Route path="/partner/orders" element={<TailorOrders />} />
+                    <Route path="/partner/portfolio" element={<TailorProducts />} />
+                    <Route path="/partner/earnings" element={<TailorOverview />} />
+                    <Route path="/partner/products" element={<TailorProducts />} />
+                    <Route path="/partner/delivery" element={<DeliveryDetails />} />
+                    <Route path="/partner/verification" element={<VerificationStatus />} />
+                    <Route path="/partner/subscription" element={<SubscriptionSettings />} />
+                    <Route path="/partner/settings" element={<ProfileSettings />} />
                 </Route>
                 {/* Full screen tailor views separated from layout nav */}
-                <Route path="/tailor/withdraw" element={<TailorWithdraw />} />
-                <Route path="/tailor/notifications" element={<TailorNotifications />} />
+                <Route path="/partner/withdraw" element={<TailorWithdraw />} />
+                <Route path="/partner/notifications" element={<TailorNotifications />} />
             </Route>
 
             {/* Delivery Routes */}
-            <Route path="/delivery" element={<DeliveryDashboard />} />
+            <Route element={<DeliveryProtectedRoute />}>
+                <Route element={<DeliveryLayout />}>
+                    <Route path="/delivery" element={<Navigate to="/delivery/dashboard" replace />} />
+                    <Route path="/delivery/dashboard" element={<DeliveryDashboard />} />
+                    <Route path="/delivery/tasks" element={<DeliveryTasks />} />
+                    <Route path="/delivery/history" element={<DeliveryHistory />} />
+                    <Route path="/delivery/profile" element={<DeliveryProfile />} />
+                </Route>
+            </Route>
 
             {/* Admin Module */}
             <Route element={<AdminLayout />}>

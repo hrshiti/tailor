@@ -92,7 +92,7 @@ const Registration = () => {
                     <div className="mt-10 p-4 bg-gray-50 rounded-2xl w-full border border-gray-100 italic font-bold text-[#1e3932] text-xs uppercase tracking-widest">
                         Status: Pending Approval
                     </div>
-                    <Button className="mt-10" onClick={() => navigate('/tailor/under-review')}>
+                    <Button className="mt-10" onClick={() => navigate('/partner/under-review')}>
                         View Application Status
                     </Button>
                 </div>
@@ -112,7 +112,7 @@ const Registration = () => {
                             </button>
                         )}
                         <div>
-                            <h1 className="text-xl font-black tracking-tight text-gray-900 leading-none">Join TailorHub</h1>
+                            <h1 className="text-xl font-black tracking-tight text-gray-900 leading-none">Join Silaiwala</h1>
                             <p className="text-[9px] font-black w-full uppercase text-[#1e3932] tracking-[0.2em] mt-1 opacity-80">{stepTitles[step - 1]}</p>
                         </div>
                     </div>
@@ -155,7 +155,7 @@ const Registration = () => {
 
                 <button
                     type="button"
-                    onClick={() => navigate('/tailor/login')}
+                    onClick={() => navigate('/partner/login')}
                     className="flex flex-col items-center justify-center w-full group mt-4"
                 >
                     <p className="text-[11px] text-gray-500 font-medium">

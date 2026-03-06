@@ -5,6 +5,8 @@ import AppContainer from '../../../components/Common/AppContainer';
 import { Button, Input } from '../components/UIElements';
 import { useTailorAuth, TAILOR_STATUS } from '../context/AuthContext';
 
+import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
+
 const Login = () => {
     const { login } = useTailorAuth();
     const navigate = useNavigate();
@@ -27,7 +29,7 @@ const Login = () => {
             status: TAILOR_STATUS.APPROVED, // For testing, login as APPROVED
         };
         login(mockUser, 'mock-jwt-token-123');
-        navigate('/tailor');
+        navigate('/partner');
     };
 
     return (
@@ -35,8 +37,8 @@ const Login = () => {
             <div className="flex-1 flex flex-col w-full px-8 pt-12 pb-6 max-w-[400px] mx-auto overflow-y-auto custom-scrollbar">
 
                 <div className="mb-8">
-                    <div className="h-14 w-14 bg-[#1e3932] rounded-2xl flex items-center justify-center text-white font-black text-xl mb-4 shadow-xl shadow-green-900/10">
-                        TH
+                    <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-white font-black text-xl mb-4 shadow-xl shadow-green-900/10 overflow-hidden border border-gray-100">
+                        <img src={silaiwalaLogo} alt="Silaiwala" className="w-10 h-10 object-contain" />
                     </div>
                     <h1 className="text-2xl font-black text-gray-900 tracking-tight">Welcome Back</h1>
                     <p className="text-gray-400 font-bold mt-1 uppercase tracking-widest text-[10px]">Login to manage your shop</p>
@@ -106,7 +108,7 @@ const Login = () => {
                 <div className="mt-auto text-center pt-6 border-t border-gray-50">
                     <button
                         type="button"
-                        onClick={() => navigate('/tailor/register')}
+                        onClick={() => navigate('/partner/register')}
                         className="flex flex-col items-center justify-center w-full group"
                     >
                         <p className="text-xs text-gray-400 font-bold uppercase tracking-widest group-hover:text-gray-600 transition-colors">

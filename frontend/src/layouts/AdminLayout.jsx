@@ -13,6 +13,8 @@ import {
     Layers
 } from 'lucide-react';
 
+import silaiwalaLogo from '../assets/silaiwala-logo.png';
+
 const AdminLayout = () => {
     const location = useLocation();
 
@@ -31,9 +33,11 @@ const AdminLayout = () => {
             {/* Sidebar */}
             <aside className="w-64 bg-[#0a211e] text-white flex flex-col shadow-2xl">
                 <div className="p-6 border-b border-white/5">
-                    <h1 className="text-2xl font-black tracking-tighter flex items-center gap-2">
-                        <span className="bg-[#1e3932] text-white px-2 py-0.5 rounded shadow-lg border border-white/10">TH</span>
-                        ADMIN
+                    <h1 className="text-xl font-black tracking-tighter flex items-center gap-3">
+                        <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center p-1.5 shadow-lg border border-white/10 overflow-hidden">
+                            <img src={silaiwalaLogo} alt="Silaiwala" className="w-full h-full object-contain" />
+                        </div>
+                        <span className="tracking-widest opacity-80 uppercase text-xs font-bold">Admin Panel</span>
                     </h1>
                 </div>
 
@@ -43,8 +47,8 @@ const AdminLayout = () => {
                             key={item.path}
                             to={item.path}
                             className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group ${location.pathname === item.path
-                                    ? 'bg-[#1e3932] text-white shadow-md translate-x-1'
-                                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                ? 'bg-[#1e3932] text-white shadow-md translate-x-1'
+                                : 'text-gray-400 hover:bg-white/5 hover:text-white'
                                 }`}
                         >
                             <span className={`${location.pathname === item.path ? 'text-white' : 'text-gray-500 group-hover:text-white'} transition-colors`}>

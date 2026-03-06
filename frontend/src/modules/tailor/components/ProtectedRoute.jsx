@@ -14,19 +14,19 @@ const ProtectedRoute = ({ requiredStatus = [TAILOR_STATUS.APPROVED] }) => {
     }
 
     if (!token) {
-        return <Navigate to="/tailor/login" replace />;
+        return <Navigate to="/partner/login" replace />;
     }
 
     if (status === TAILOR_STATUS.PENDING_APPROVAL && !requiredStatus.includes(TAILOR_STATUS.PENDING_APPROVAL)) {
-        return <Navigate to="/tailor/under-review" replace />;
+        return <Navigate to="/partner/under-review" replace />;
     }
 
     if (status === TAILOR_STATUS.REJECTED && !requiredStatus.includes(TAILOR_STATUS.REJECTED)) {
-        return <Navigate to="/tailor/rejected" replace />;
+        return <Navigate to="/partner/rejected" replace />;
     }
 
     if (!requiredStatus.includes(status)) {
-        return <Navigate to="/tailor/login" replace />;
+        return <Navigate to="/partner/login" replace />;
     }
 
     return <Outlet />;

@@ -84,7 +84,7 @@ const ReferEarn = () => {
                         </div>
                         <div>
                             <h4 className="font-bold text-sm mb-1">Get Reward</h4>
-                            <p className="text-xs text-gray-500 leading-relaxed">Once the order is delivered, ₹200 will be credited to your SilaiWala Wallet.</p>
+                            <p className="text-xs text-gray-500 leading-relaxed">Once the order is delivered, ₹200 will be credited to your Silaiwala Wallet.</p>
                         </div>
                     </div>
                 </div>

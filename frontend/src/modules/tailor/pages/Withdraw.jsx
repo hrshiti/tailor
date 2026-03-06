@@ -41,7 +41,7 @@ const Withdraw = () => {
                         ₹{amount} is being processed. It will reflect in your registered bank account in 2-3 hours.
                     </p>
                     <button
-                        onClick={() => navigate('/tailor')}
+                        onClick={() => navigate('/partner')}
                         className="mt-8 w-full bg-[#1e3932] text-white py-4 rounded-[1.25rem] font-black uppercase tracking-widest text-sm shadow-xl active:scale-95 transition-all"
                     >
                         Back to Dashboard

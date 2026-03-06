@@ -5,6 +5,8 @@ import useCartStore from '../../../../store/cartStore';
 import useWishlistStore from '../../../../store/wishlistStore';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import silaiwalaLogo from '../../../../assets/silaiwala-logo.png';
+
 const StoreHeader = ({ searchQuery, setSearchQuery }) => {
     const cartCount = useCartStore(state => state.getTotalItems());
     const wishlistCount = useWishlistStore(state => state.items.length);
@@ -14,11 +16,11 @@ const StoreHeader = ({ searchQuery, setSearchQuery }) => {
             <div className="max-w-7xl mx-auto px-4 py-4 pt-safe">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center gap-3">
-                        <Link to="/" className="w-10 h-10 bg-rose-600 rounded-2xl flex items-center justify-center shadow-lg shadow-rose-600/20 rotate-3 active:scale-95 transition-transform">
-                            <span className="text-white font-black text-xl italic leading-none">S</span>
+                        <Link to="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md overflow-hidden border border-gray-50 rotate-3 active:scale-95 transition-transform">
+                            <img src={silaiwalaLogo} alt="Silaiwala" className="w-8 h-8 object-contain" />
                         </Link>
                         <div>
-                            <h1 className="text-xl font-black text-gray-900 leading-none tracking-tight">Style<span className="text-rose-600">Store</span></h1>
+                            <h1 className="text-xl font-black text-gray-900 leading-none tracking-tight">Silai<span className="text-[#1e3932]">wala</span></h1>
                             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter mt-1">Premium Collection</p>
                         </div>
                     </div>
