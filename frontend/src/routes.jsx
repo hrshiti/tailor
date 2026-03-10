@@ -58,6 +58,16 @@ import DeliveryProtectedRoute from './modules/delivery/components/DeliveryProtec
 
 // Admin Pages
 import AdminDashboard from './modules/admin/pages/Dashboard';
+import AdminOrders from './modules/admin/pages/Orders';
+import AdminTailors from './modules/admin/pages/Tailors';
+import AdminDelivery from './modules/admin/pages/Delivery';
+import AdminCustomers from './modules/admin/pages/Customers';
+import AdminServices from './modules/admin/pages/Services';
+import AdminStore from './modules/admin/pages/Store';
+import AdminFinance from './modules/admin/pages/Finance';
+import AdminCMS from './modules/admin/pages/CMS';
+import AdminReports from './modules/admin/pages/Reports';
+import AdminSettings from './modules/admin/pages/Settings';
 
 import ReferEarn from './modules/customer/pages/ReferEarn'; // NEW
 import FabricDetail from './modules/customer/pages/FabricDetail'; // NEW
@@ -142,12 +152,16 @@ const AppRoutes = () => {
             {/* Admin Module */}
             <Route element={<AdminLayout />}>
                 <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/admin/orders" element={<AdminDashboard />} />
-                <Route path="/admin/tailors" element={<AdminDashboard />} />
-                <Route path="/admin/delivery" element={<AdminDashboard />} />
-                <Route path="/admin/customers" element={<AdminDashboard />} />
-                <Route path="/admin/services" element={<AdminDashboard />} />
-                <Route path="/admin/reports" element={<AdminDashboard />} />
+                <Route path="/admin/orders" element={<AdminOrders />} />
+                <Route path="/admin/tailors" element={<AdminTailors />} />
+                <Route path="/admin/delivery" element={<AdminDelivery />} />
+                <Route path="/admin/customers" element={<AdminCustomers />} />
+                <Route path="/admin/services" element={<AdminServices />} />
+                <Route path="/admin/store" element={<AdminStore />} />
+                <Route path="/admin/finance" element={<AdminFinance />} />
+                <Route path="/admin/cms" element={<AdminCMS />} />
+                <Route path="/admin/reports" element={<AdminReports />} />
+                <Route path="/admin/settings" element={<AdminSettings />} />
             </Route>
 
             {/* Fallback */}
