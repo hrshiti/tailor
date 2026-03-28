@@ -66,8 +66,8 @@ const DeliveryDashboard = () => {
                     activeOrders: ordersRes.data,
                     availableOrders: availableRes.data,
                     stats: {
-                        activeTasks: statsRes.data.activeDeliveries,
-                        earnings: statsRes.data.totalEarnings,
+                        activeTasks: statsRes.data.activeDeliveries || ordersRes.data.length,
+                        earnings: statsRes.data.walletBalance || statsRes.data.totalEarnings || 0,
                         totalPickups: statsRes.data.totalDeliveries
                     }
                 });

@@ -1,118 +1,227 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Mail } from 'lucide-react';
+import { Mail, ArrowRight, ShieldCheck, RefreshCw } from 'lucide-react';
 import useAuthStore from '../../../store/authStore';
 import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
 
 const AdminLogin = () => {
     const navigate = useNavigate();
-    const { login, isLoading } = useAuthStore();
+    const { sendOTP, otpLogin, isLoading } = useAuthStore();
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [otp, setOtp] = useState(['', '', '', '', '', '']);
+    const [step, setStep] = useState('identifier'); // 'identifier' | 'otp'
     const [error, setError] = useState('');
+    const [timer, setTimer] = useState(0);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const otpInputs = useRef([]);
+
+    // Resend Timer Logic
+    useEffect(() => {
+        let interval = null;
+        if (timer > 0) {
+            interval = setInterval(() => {
+                setTimer((prev) => prev - 1);
+            }, 1000);
+        } else {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [timer]);
+
+    const handleSendOTP = async (e) => {
+        if (e) e.preventDefault();
         setError('');
 
-        if (!email || !password) {
-            setError('Please enter both email and password.');
+        if (!email || !email.includes('@')) {
+            setError('Please enter a valid administrative email address.');
             return;
         }
 
         try {
-            const user = await login(email, password);
+            await sendOTP(email);
+            setStep('otp');
+            setTimer(60); // 60 seconds reset
+        } catch (err) {
+            setError(err.message || 'Failed to send OTP to this admin email.');
+        }
+    };
+
+    const handleVerifyOTP = async (e) => {
+        e.preventDefault();
+        setError('');
+        
+        const otpValue = otp.join('');
+        if (otpValue.length !== 6) {
+            setError('Please enter the 6-digit verification code.');
+            return;
+        }
+
+        try {
+            const user = await otpLogin(email, otpValue);
+            
             if (user.role !== 'admin') {
-                setError('Unauthorized. Only administrators can access this portal.');
-                // Optionally log them out if they are not an admin
+                setError('Access Denied. Internal Admin accounts only.');
                 useAuthStore.getState().logout();
                 return;
             }
             navigate('/admin');
         } catch (err) {
-            setError(err.message || 'Invalid credentials');
+            setError(err.message || 'Invalid verification code');
+        }
+    };
+
+    const handleOtpChange = (value, index) => {
+        if (isNaN(value)) return;
+
+        const newOtp = [...otp];
+        newOtp[index] = value.slice(-1);
+        setOtp(newOtp);
+
+        // Move to next input
+        if (value && index < 5) {
+            otpInputs.current[index + 1].focus();
+        }
+    };
+
+    const handleKeyDown = (e, index) => {
+        if (e.key === 'Backspace' && !otp[index] && index > 0) {
+            otpInputs.current[index - 1].focus();
+        }
+    };
+
+    const handlePaste = (e) => {
+        const data = e.clipboardData.getData('text').slice(0, 6).split('');
+        if (data.length === 6 && data.every(char => !isNaN(char))) {
+            setOtp(data);
+            otpInputs.current[5].focus();
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#FF5C8A] relative overflow-hidden">
-            {/* Ambient Background Elements */}
-            <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#FF5C8A] rounded-full blur-[120px] opacity-60"></div>
-            <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#0f2d26] rounded-full blur-[100px] opacity-80"></div>
+        <div className="min-h-screen flex items-center justify-center bg-[#FF5C8A] relative overflow-hidden font-sans">
+            {/* Ambient Animated Gradients */}
+            <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-pink-400 rounded-full blur-[140px] opacity-40 animate-pulse"></div>
+            <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] bg-[#0a211e] rounded-full blur-[120px] opacity-60"></div>
 
-            <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden relative z-10 mx-4 border border-white/10">
-                <div className="p-8 sm:p-10 flex flex-col items-center">
+            <div className="w-full max-w-md bg-white/95 backdrop-blur-xl rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] overflow-hidden relative z-10 mx-4 border border-white">
+                <div className="p-8 sm:p-12 flex flex-col items-center">
                     
-                    {/* Logo & Header */}
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#FF5C8A] to-[#FF5C8A] rounded-2xl flex items-center justify-center p-3 shadow-lg shadow-pink-900/20 mb-6 border border-white/10">
+                    {/* Brand Identity */}
+                    <div className="w-20 h-20 bg-[#FF5C8A] rounded-2xl flex items-center justify-center p-4 shadow-xl shadow-pink-500/30 mb-8 border-4 border-white transform hover:rotate-6 transition-transform">
                          <img src={silaiwalaLogo} alt="Logo" className="w-full h-full object-contain filter brightness-0 invert" />
                     </div>
                     
-                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight text-center">Admin Portal</h2>
-                    <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider font-semibold">Secure Access ONLY</p>
+                    <div className="text-center space-y-1 mb-10">
+                        <h2 className="text-3xl font-black text-gray-900 tracking-tight">Admin Gate</h2>
+                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em]">Authorized Personnel Only</p>
+                    </div>
 
-                    <form onSubmit={handleSubmit} className="w-full mt-8 space-y-5">
+                    <div className="w-full">
                         {error && (
-                            <div className="p-3 text-xs font-bold text-red-600 bg-red-50/80 border border-red-100 rounded-xl text-center backdrop-blur-sm">
+                            <div className="p-4 mb-6 text-xs font-bold text-red-600 bg-red-50 border border-red-100 rounded-2xl text-center">
                                 {error}
                             </div>
                         )}
 
-                        <div className="space-y-1.5">
-                            <label className="text-[10px] uppercase tracking-wider font-semibold text-gray-500 ml-1">Admin Email</label>
-                            <div className="relative">
-                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                                    <Mail size={16} />
-                                </span>
-                                <input
-                                    type="email"
-                                    placeholder="Enter your administrative email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-semibold text-gray-900 outline-none focus:border-[#FF5C8A] focus:bg-white transition-all"
-                                    required
-                                />
-                            </div>
-                        </div>
+                        {step === 'identifier' ? (
+                            <form onSubmit={handleSendOTP} className="space-y-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] uppercase tracking-widest font-black text-gray-400 ml-1">Work Email Address</label>
+                                    <div className="relative group">
+                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[#FF5C8A] transition-colors">
+                                            <Mail size={18} />
+                                        </span>
+                                        <input
+                                            type="email"
+                                            placeholder="admin@silaiwala.com"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                                            className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-[1.25rem] text-sm font-bold text-gray-900 outline-none focus:border-[#FF5C8A] focus:bg-white transition-all shadow-inner"
+                                            required
+                                        />
+                                    </div>
+                                </div>
 
-                        <div className="space-y-1.5">
-                            <label className="text-[10px] uppercase tracking-wider font-semibold text-gray-500 ml-1">Master Password</label>
-                            <div className="relative">
-                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                                    <Lock size={16} />
-                                </span>
-                                <input
-                                    type="password"
-                                    placeholder="••••••••••••"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-semibold text-gray-900 outline-none focus:border-[#FF5C8A] focus:bg-white transition-all"
-                                    required
-                                />
-                            </div>
-                        </div>
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="w-full py-5 bg-[#FF5C8A] hover:bg-[#cc496e] text-white text-[11px] font-black rounded-2xl shadow-xl shadow-pink-500/40 transition-all uppercase tracking-[0.15em] active:scale-[0.98] disabled:opacity-50 flex justify-center items-center gap-2"
+                                >
+                                    {isLoading ? (
+                                        <RefreshCw size={18} className="animate-spin" />
+                                    ) : (
+                                        <>Request Access Code <ArrowRight size={16} /></>
+                                    )}
+                                </button>
+                            </form>
+                        ) : (
+                            <form onSubmit={handleVerifyOTP} className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="text-center space-y-2">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-pink-50 text-[#FF5C8A] rounded-full text-[10px] font-black uppercase tracking-wider">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[#FF5C8A] animate-ping"></div>
+                                        Safety Token Sent
+                                    </div>
+                                    <p className="text-[11px] text-gray-500 font-medium">Verify login for <span className="font-black text-gray-900">{email}</span></p>
+                                </div>
 
-                        <button
-                            type="submit"
-                            disabled={isLoading}
-                            className="w-full py-3.5 mt-4 bg-[#FF5C8A] hover:bg-[#cc496e] text-white text-xs font-semibold rounded-xl shadow-lg shadow-[#FF5C8A]/20 transition-all uppercase tracking-wider disabled:opacity-70 flex justify-center items-center"
-                        >
-                            {isLoading ? (
-                                <span className="flex items-center gap-2">
-                                    <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                                    Authenticating...
-                                </span>
-                            ) : (
-                                "Authorize Access"
-                            )}
-                        </button>
-                    </form>
+                                <div className="flex justify-between gap-2" onPaste={handlePaste}>
+                                    {otp.map((data, index) => (
+                                        <input
+                                            key={index}
+                                            ref={el => otpInputs.current[index] = el}
+                                            className="w-12 h-14 text-center text-xl font-black bg-gray-50 border-2 border-transparent rounded-xl outline-none focus:border-[#FF5C8A] focus:bg-white transition-all text-gray-900 shadow-inner"
+                                            type="text"
+                                            maxLength="1"
+                                            value={data}
+                                            onChange={e => handleOtpChange(e.target.value, index)}
+                                            onKeyDown={e => handleKeyDown(e, index)}
+                                            onFocus={e => e.target.select()}
+                                        />
+                                    ))}
+                                </div>
+
+                                <div className="space-y-4">
+                                    <button
+                                        type="submit"
+                                        disabled={isLoading || otp.join('').length !== 6}
+                                        className="w-full py-5 bg-[#FF5C8A] hover:bg-[#cc496e] text-white text-[11px] font-black rounded-2xl shadow-xl shadow-pink-500/40 transition-all uppercase tracking-[0.15em] active:scale-[0.98] disabled:opacity-50 flex justify-center items-center gap-2"
+                                    >
+                                        {isLoading ? (
+                                            <RefreshCw size={18} className="animate-spin" />
+                                        ) : (
+                                            <>Verify & Authorize <ShieldCheck size={18} /></>
+                                        )}
+                                    </button>
+                                    
+                                    <div className="flex flex-col items-center gap-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => setStep('identifier')}
+                                            className="text-[10px] text-gray-400 font-bold uppercase hover:text-[#FF5C8A] transition-colors"
+                                        >
+                                            Change Email Address
+                                        </button>
+                                        
+                                        <button
+                                            type="button"
+                                            onClick={handleSendOTP}
+                                            disabled={timer > 0 || isLoading}
+                                            className="text-[10px] text-[#FF5C8A] font-black uppercase tracking-widest disabled:text-gray-300"
+                                        >
+                                            {timer > 0 ? `Resend Code in ${timer}s` : 'Resend Security Code'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        )}
+                    </div>
                 </div>
 
-                {/* Footer Band */}
-                <div className="bg-gray-50/50 p-4 border-t border-gray-100 text-center">
-                     <p className="text-[9px] text-gray-400 font-medium uppercase tracking-wider">
-                         Silaiwala Systems © {new Date().getFullYear()}
+                {/* Footer Assurance */}
+                <div className="bg-gray-50/80 p-6 border-t border-gray-100 flex items-center justify-center gap-2">
+                     <ShieldCheck size={14} className="text-[#FF5C8A]" />
+                     <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                         Secure SSL Encrypted Session
                      </p>
                 </div>
             </div>

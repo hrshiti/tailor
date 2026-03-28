@@ -44,7 +44,7 @@ const Tasks = () => {
             if (assignedRes.success) {
                 setTasks(assignedRes.data);
                 // Check if any task is already "active" (not just pending)
-                const inProgress = assignedRes.data.find(t => t.status === 'out-for-delivery');
+                const inProgress = assignedRes.data.find(t => ['out-for-delivery', 'fabric-picked-up'].includes(t.status));
                 if (inProgress) setActiveTaskId(inProgress._id);
             }
             if (availableRes.success) {
@@ -105,7 +105,7 @@ const Tasks = () => {
     }, []);
 
     const activeTask = tasks.find(t => t._id === activeTaskId);
-    const pendingTasks = tasks.filter(t => t.status === 'ready-for-pickup' || t.status === 'fabric-ready-for-pickup');
+    const pendingTasks = tasks.filter(t => ['pending', 'accepted', 'ready-for-pickup', 'fabric-ready-for-pickup'].includes(t.status));
 
     const handleAcceptOrder = async (orderId) => {
         try {

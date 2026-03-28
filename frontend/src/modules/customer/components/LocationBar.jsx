@@ -42,7 +42,8 @@ const LocationBar = () => {
     };
 
     return (
-        <div className="px-4 py-3 bg-white/40 backdrop-blur-md border-b border-gray-100 flex justify-between items-center relative z-40 selection:bg-[#1e3932] selection:text-white">
+        <div className="bg-white/40 backdrop-blur-md border-b border-gray-100 relative z-40 selection:bg-[#1e3932] selection:text-white transition-all duration-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
             <AnimatePresence mode="wait">
                 {isEditing ? (
                     <motion.div
@@ -109,6 +110,7 @@ const LocationBar = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+            </div>
         </div>
     );
 };

@@ -8,16 +8,18 @@ const useCheckoutStore = create(
             serviceDetails: null, // { id, title, image, basePrice, tailorId, tailorName }
             configuration: null,  // { deliveryType, fabricSource, measurements, instructions }
             pricing: null,        // { base, delivery, taxes, total, deliveryDays }
+            addons: [],           // Array of addon objects
 
             // Actions
             initializeCheckout: (data) => set({
-                serviceDetails: {
+                serviceDetails: data.service ? {
                     ...data.service,
                     tailorId: data.tailorId || null,
                     tailorName: data.tailorName || null
-                },
-                configuration: data.config,
-                pricing: data.pricing
+                } : null,
+                configuration: data.config || null,
+                pricing: data.pricing || null,
+                addons: data.addons || []
             }),
 
             setTailor: (id, name) => set((state) => ({
@@ -29,7 +31,8 @@ const useCheckoutStore = create(
             clearCheckout: () => set({
                 serviceDetails: null,
                 configuration: null,
-                pricing: null
+                pricing: null,
+                addons: []
             })
         }),
         {
@@ -37,7 +40,8 @@ const useCheckoutStore = create(
             partialize: (state) => ({
                 serviceDetails: state.serviceDetails,
                 configuration: state.configuration,
-                pricing: state.pricing
+                pricing: state.pricing,
+                addons: state.addons
             }),
         }
     )

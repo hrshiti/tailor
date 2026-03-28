@@ -13,14 +13,14 @@ import useOrderStore from '../../../store/orderStore';
 
 const CheckoutSummary = () => {
     const navigate = useNavigate();
-    const { serviceDetails, configuration, pricing } = useCheckoutStore(state => state);
+    const { serviceDetails, configuration, pricing, addons } = useCheckoutStore(state => state);
     const { items: cartItems, getTotalPrice, clearCart } = useCartStore(state => state);
     const selectedAddress = useAddressStore(state => state.getSelectedAddress());
 
     const addOrder = useOrderStore(state => state.addOrder);
     const clearCheckout = useCheckoutStore(state => state.clearCheckout);
 
-    const isServiceCheckout = !!serviceDetails;
+    const isServiceCheckout = !!(serviceDetails?.id || serviceDetails?._id || (addons && addons.length > 0));
     const isCartCheckout = cartItems.length > 0;
 
     const [isProcessing, setIsProcessing] = useState(false);
@@ -33,10 +33,13 @@ const CheckoutSummary = () => {
             navigate('/checkout/address');
             return;
         }
+        
+        console.log('Checkout State:', { isServiceCheckout, isCartCheckout, serviceDetails, addons, cartItems });
+
         if (!isServiceCheckout && !isCartCheckout) {
             navigate('/store'); // Navigate to store instead of services if empty
         }
-    }, [isServiceCheckout, isCartCheckout, selectedAddress, navigate, isProcessing]);
+    }, [isServiceCheckout, isCartCheckout, selectedAddress, navigate, isProcessing, addons, serviceDetails, cartItems]);
 
     if ((!isServiceCheckout && !isCartCheckout && !isProcessing) || !selectedAddress) return null;
 
@@ -58,12 +61,12 @@ const CheckoutSummary = () => {
             let payload;
             if (isServiceCheckout) {
                 payload = {
-                    tailorId: serviceDetails.tailorId,
+                    tailorId: serviceDetails.tailorId || serviceDetails.tailor,
                     items: [{
-                        service: serviceDetails.id,
+                        service: serviceDetails.id || serviceDetails._id,
                         fabricSource: configuration.fabricSource,
                         deliveryType: configuration.deliveryType,
-                        selectedFabric: configuration.selectedFabric?._id,
+                        selectedFabric: configuration.selectedFabric?._id || configuration.selectedFabric?.id,
                         quantity: 1,
                         price: pricing.base,
                         measurements: configuration.measurements

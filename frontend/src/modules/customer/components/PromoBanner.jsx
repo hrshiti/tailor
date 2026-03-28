@@ -43,7 +43,7 @@ const PromoBanner = () => {
     const prev = () => setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length);
 
     return (
-        <div className="px-4 py-3 relative group">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 relative group">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentIndex}

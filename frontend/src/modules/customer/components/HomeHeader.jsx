@@ -15,8 +15,8 @@ const HomeHeader = ({ user }) => {
     const { notifications, unreadCount, markAsRead, markAllRead } = useNotifications();
 
     return (
-        <div className="sticky top-0 z-[100] bg-white/80 backdrop-blur-2xl border-b border-gray-100/50 pt-2">
-            <div className="max-w-md mx-auto px-4 py-5 pt-safe">
+        <div className="sticky top-0 z-[100] bg-white/80 backdrop-blur-2xl border-b border-gray-100/50 pt-2 transition-all duration-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 pt-safe">
                 {/* Top Row: Brand & Icons */}
                 <div className="flex justify-between items-center mb-5">
                     <div className="flex items-center gap-3">

@@ -22,10 +22,10 @@ const PopularTailors = () => {
     }
 
     return (
-        <div className="px-4 py-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
             <div className="flex justify-between items-center mb-5">
                 <div>
-                    <h2 className="text-xl font-black text-gray-900 tracking-tight">Expert Tailors Near You</h2>
+                    <h2 className="text-2xl font-black text-gray-900 tracking-tight">Expert Tailors Near You</h2>
                     <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Stitching experts at your doorstep</p>
                 </div>
                 <Link to="/tailors" className="text-xs font-black text-[#1e3932] bg-[#f2fcf9] px-3 py-1.5 rounded-full border border-[#1e3932]/10 hover:shadow-sm transition-all">
@@ -33,7 +33,7 @@ const PopularTailors = () => {
                 </Link>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                 {displayTailors.map((tailor, index) => (
                     <motion.div
                         key={tailor._id}
