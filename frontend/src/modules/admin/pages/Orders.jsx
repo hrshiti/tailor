@@ -12,6 +12,9 @@ const AdminOrders = () => {
     const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
     const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [manageOrderData, setManageOrderData] = useState(null);
+    const [isManageOpen, setIsManageOpen] = useState(false);
+    const [isLoadingDetails, setIsLoadingDetails] = useState(false);
 
     // States for Assignments
     const [tailorsList, setTailorsList] = useState([]);
@@ -144,6 +147,22 @@ const AdminOrders = () => {
             console.error('Failed to assign:', err);
         } finally {
             setIsUpdatingStatus(false);
+        }
+    };
+
+    const handleManageOrderDetails = async (orderId) => {
+        setIsLoadingDetails(true);
+        try {
+            const res = await api.get(`/admin/orders/${orderId}`);
+            if (res.data.success) {
+                setManageOrderData(res.data.data);
+                setIsManageOpen(true);
+            }
+        } catch (err) {
+            console.error('Failed to fetch order details:', err);
+            toast.error('Failed to load order details');
+        } finally {
+            setIsLoadingDetails(false);
         }
     };
 
@@ -477,12 +496,273 @@ const AdminOrders = () => {
                                          )}
                                      </AnimatePresence>
                                 </div>
-                                <button className="px-6 py-3 bg-[#1e3932] text-white text-xs font-black rounded-xl hover:bg-[#0a211e] shadow-lg shadow-green-900/20 transition-all uppercase tracking-widest flex-1">
-                                    Manage Order Details
+                                <button 
+                                    onClick={() => handleManageOrderDetails(selectedOrder.fullId)}
+                                    disabled={isLoadingDetails || selectedOrder.isCustomBooking}
+                                    className="px-6 py-3 bg-[#FF5C8A] text-white text-xs font-bold rounded-xl hover:bg-[#cc496e] shadow-lg shadow-[#FF5C8A]/20 transition-all uppercase tracking-wider flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {isLoadingDetails ? 'Loading...' : 'Manage Order Details'}
                                 </button>
                             </div>
                         </motion.div>
                     </>
+                )}
+            </AnimatePresence>
+
+            {/* ===== MANAGE ORDER DETAILS MODAL ===== */}
+            <AnimatePresence>
+                {isManageOpen && manageOrderData && (
+                    <motion.div 
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[70] flex items-center justify-center p-4"
+                        onClick={() => setIsManageOpen(false)}
+                    >
+                        <motion.div 
+                            initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+                            className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] shadow-2xl flex flex-col overflow-hidden"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Modal Header */}
+                            <div className="p-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center shrink-0">
+                                <div>
+                                    <h2 className="text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                                        <Package size={18} className="text-[#FF5C8A]" />
+                                        Order Details — {manageOrderData.orderId || manageOrderData._id?.substring(0, 8)}
+                                    </h2>
+                                    <p className="text-[10px] text-gray-500 font-medium mt-1">
+                                        Full order breakdown with items, pricing, and delivery info
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={() => setIsManageOpen(false)}
+                                    className="p-2 bg-white text-gray-400 hover:text-red-500 border border-gray-100 rounded-full shadow-sm hover:bg-red-50 transition-all"
+                                >
+                                    <X size={18} />
+                                </button>
+                            </div>
+
+                            {/* Modal Body — Scrollable */}
+                            <div className="flex-1 overflow-y-auto p-5 space-y-5">
+
+                                {/* Summary Row */}
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                    <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                        <p className="text-[9px] uppercase text-gray-400 font-semibold tracking-wider">Status</p>
+                                        <p className={`text-xs font-bold mt-1 capitalize ${manageOrderData.status === 'delivered' || manageOrderData.status === 'completed' ? 'text-green-600' : 'text-gray-900'}`}>
+                                            {manageOrderData.status?.replace(/-/g, ' ')}
+                                        </p>
+                                    </div>
+                                    <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                        <p className="text-[9px] uppercase text-gray-400 font-semibold tracking-wider">Payment</p>
+                                        <p className={`text-xs font-bold mt-1 capitalize ${manageOrderData.paymentStatus === 'paid' ? 'text-green-600' : 'text-orange-500'}`}>
+                                            {manageOrderData.paymentStatus || 'pending'}
+                                        </p>
+                                    </div>
+                                    <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                        <p className="text-[9px] uppercase text-gray-400 font-semibold tracking-wider">Total Amount</p>
+                                        <p className="text-xs font-bold text-gray-900 mt-1">₹{(manageOrderData.totalAmount || 0).toLocaleString()}</p>
+                                    </div>
+                                    <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                        <p className="text-[9px] uppercase text-gray-400 font-semibold tracking-wider">Order Date</p>
+                                        <p className="text-xs font-bold text-gray-900 mt-1">{new Date(manageOrderData.createdAt).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+
+                                {/* Customer & Address */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="bg-white border border-gray-100 p-4 rounded-xl shadow-sm">
+                                        <h4 className="text-[10px] font-semibold uppercase text-gray-400 tracking-wider mb-2 flex items-center gap-1.5">
+                                            <User size={12} /> Customer
+                                        </h4>
+                                        <p className="text-sm font-bold text-gray-900">{manageOrderData.customer?.name || 'N/A'}</p>
+                                        <p className="text-xs text-gray-500 mt-0.5">{manageOrderData.customer?.phoneNumber || 'N/A'}</p>
+                                        <p className="text-xs text-gray-500">{manageOrderData.customer?.email || 'N/A'}</p>
+                                    </div>
+                                    <div className="bg-white border border-gray-100 p-4 rounded-xl shadow-sm">
+                                        <h4 className="text-[10px] font-semibold uppercase text-gray-400 tracking-wider mb-2 flex items-center gap-1.5">
+                                            <MapPin size={12} /> Delivery Address
+                                        </h4>
+                                        {manageOrderData.deliveryAddress ? (
+                                            <div className="text-xs text-gray-700 space-y-0.5">
+                                                <p className="font-medium">{manageOrderData.deliveryAddress.street}</p>
+                                                <p>{manageOrderData.deliveryAddress.city}, {manageOrderData.deliveryAddress.state}</p>
+                                                <p className="text-gray-500">{manageOrderData.deliveryAddress.zipCode}</p>
+                                            </div>
+                                        ) : (
+                                            <p className="text-xs text-gray-400 font-medium">No address provided</p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Team Assignments */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="bg-blue-50/50 border border-blue-100 p-4 rounded-xl">
+                                        <h4 className="text-[10px] font-semibold uppercase text-blue-400 tracking-wider mb-2 flex items-center gap-1.5">
+                                            <Scissors size={12} /> Assigned Tailor
+                                        </h4>
+                                        {manageOrderData.tailor ? (
+                                            <div>
+                                                <p className="text-sm font-bold text-gray-900">{manageOrderData.tailor.name || manageOrderData.tailor.shopName}</p>
+                                                <p className="text-xs text-gray-500 mt-0.5">{manageOrderData.tailor.phoneNumber || 'N/A'}</p>
+                                            </div>
+                                        ) : (
+                                            <p className="text-xs text-orange-500 font-medium">Not yet assigned</p>
+                                        )}
+                                    </div>
+                                    <div className="bg-orange-50/50 border border-orange-100 p-4 rounded-xl">
+                                        <h4 className="text-[10px] font-semibold uppercase text-orange-400 tracking-wider mb-2 flex items-center gap-1.5">
+                                            <Truck size={12} /> Delivery Partner
+                                        </h4>
+                                        {manageOrderData.deliveryPartner ? (
+                                            <div>
+                                                <p className="text-sm font-bold text-gray-900">{manageOrderData.deliveryPartner.name}</p>
+                                                <p className="text-xs text-gray-500 mt-0.5">{manageOrderData.deliveryPartner.phoneNumber || 'N/A'}</p>
+                                            </div>
+                                        ) : (
+                                            <p className="text-xs text-orange-500 font-medium">Not yet assigned</p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Order Items */}
+                                <div>
+                                    <h4 className="text-[10px] font-semibold uppercase text-gray-400 tracking-wider mb-3 flex items-center gap-1.5">
+                                        <Package size={12} /> Order Items ({manageOrderData.items?.length || 0})
+                                    </h4>
+                                    <div className="space-y-3">
+                                        {manageOrderData.items && manageOrderData.items.length > 0 ? (
+                                            manageOrderData.items.map((item, idx) => (
+                                                <div key={idx} className="bg-white border border-gray-100 p-4 rounded-xl shadow-sm">
+                                                    <div className="flex justify-between items-start">
+                                                        <div className="flex-1">
+                                                            <p className="text-sm font-bold text-gray-900">
+                                                                {item.service?.title || item.product?.name || `Item ${idx + 1}`}
+                                                            </p>
+                                                            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+                                                                <span className="text-[10px] text-gray-500">
+                                                                    <span className="font-semibold text-gray-400">Qty:</span> {item.quantity || 1}
+                                                                </span>
+                                                                <span className="text-[10px] text-gray-500">
+                                                                    <span className="font-semibold text-gray-400">Fabric:</span> {item.fabricSource || 'N/A'}
+                                                                </span>
+                                                                <span className="text-[10px] text-gray-500">
+                                                                    <span className="font-semibold text-gray-400">Delivery:</span> {item.deliveryType || 'standard'}
+                                                                </span>
+                                                            </div>
+                                                            {/* Style Add-ons */}
+                                                            {item.styleAddons && item.styleAddons.length > 0 && (
+                                                                <div className="mt-2 pt-2 border-t border-gray-50">
+                                                                    <p className="text-[9px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Style Add-ons</p>
+                                                                    <div className="flex flex-wrap gap-1">
+                                                                        {item.styleAddons.map((addon, addonIdx) => (
+                                                                            <span key={addonIdx} className="text-[10px] bg-pink-50 text-[#FF5C8A] px-2 py-0.5 rounded-full border border-pink-100 font-medium">
+                                                                                {addon.name} (+₹{addon.price || 0})
+                                                                            </span>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                            {/* Measurements */}
+                                                            {item.measurements && Object.keys(item.measurements).length > 0 && (
+                                                                <div className="mt-2 pt-2 border-t border-gray-50">
+                                                                    <p className="text-[9px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Measurements</p>
+                                                                    <div className="grid grid-cols-3 gap-x-4 gap-y-1">
+                                                                        {Object.entries(item.measurements).map(([key, val]) => (
+                                                                            val && (
+                                                                                <span key={key} className="text-[10px] text-gray-600">
+                                                                                    <span className="text-gray-400 capitalize">{key}:</span> {val}"
+                                                                                </span>
+                                                                            )
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <div className="text-right ml-4 shrink-0">
+                                                            <p className="text-sm font-bold text-[#FF5C8A]">₹{(item.price || 0).toLocaleString()}</p>
+                                                            {item.styleAddonsTotal > 0 && (
+                                                                <p className="text-[10px] text-gray-400 mt-0.5">+₹{item.styleAddonsTotal} add-ons</p>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="text-center p-6 text-xs font-medium text-gray-400 bg-gray-50 rounded-xl border border-gray-100">
+                                                No items found for this order.
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Price Breakdown */}
+                                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                    <h4 className="text-[10px] font-semibold uppercase text-gray-400 tracking-wider mb-3 flex items-center gap-1.5">
+                                        <CreditCard size={12} /> Price Breakdown
+                                    </h4>
+                                    <div className="space-y-2">
+                                        {manageOrderData.items?.map((item, idx) => (
+                                            <div key={idx} className="flex justify-between text-xs">
+                                                <span className="text-gray-600 font-medium">{item.service?.title || item.product?.name || `Item ${idx + 1}`} (x{item.quantity || 1})</span>
+                                                <span className="font-bold text-gray-900">₹{(item.price || 0).toLocaleString()}</span>
+                                            </div>
+                                        ))}
+                                        {manageOrderData.deliveryCharge > 0 && (
+                                            <div className="flex justify-between text-xs pt-1 border-t border-gray-200">
+                                                <span className="text-gray-600 font-medium">Delivery Charge</span>
+                                                <span className="font-bold text-gray-900">₹{manageOrderData.deliveryCharge}</span>
+                                            </div>
+                                        )}
+                                        {manageOrderData.discount > 0 && (
+                                            <div className="flex justify-between text-xs">
+                                                <span className="text-green-600 font-medium">Discount</span>
+                                                <span className="font-bold text-green-600">-₹{manageOrderData.discount}</span>
+                                            </div>
+                                        )}
+                                        <div className="flex justify-between text-sm pt-2 mt-2 border-t border-gray-200">
+                                            <span className="font-bold text-gray-900">Total</span>
+                                            <span className="font-bold text-[#FF5C8A]">₹{(manageOrderData.totalAmount || 0).toLocaleString()}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Tracking Timeline */}
+                                {manageOrderData.trackingHistory && manageOrderData.trackingHistory.length > 0 && (
+                                    <div>
+                                        <h4 className="text-[10px] font-semibold uppercase text-gray-400 tracking-wider mb-3 flex items-center gap-1.5">
+                                            <Clock size={12} /> Tracking History ({manageOrderData.trackingHistory.length} events)
+                                        </h4>
+                                        <div className="relative pl-6 space-y-4 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-100">
+                                            {[...manageOrderData.trackingHistory].reverse().map((event, idx) => (
+                                                <div key={idx} className="relative">
+                                                    <div className={`absolute -left-[19px] top-1 h-3 w-3 rounded-full border-2 border-white shadow-sm ${idx === 0 ? 'bg-[#FF5C8A]' : 'bg-gray-300'}`} />
+                                                    <div className="bg-white p-3 rounded-xl border border-gray-50 shadow-sm">
+                                                        <div className="flex justify-between items-start">
+                                                            <p className="text-[11px] font-bold text-gray-900 uppercase tracking-tight">{event.status?.replace(/-/g, ' ')}</p>
+                                                            <p className="text-[9px] text-gray-400 font-medium">
+                                                                {new Date(event.timestamp).toLocaleString()}
+                                                            </p>
+                                                        </div>
+                                                        <p className="text-[10px] text-gray-500 font-medium mt-1">{event.message}</p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Modal Footer */}
+                            <div className="p-4 border-t border-gray-100 bg-white flex items-center justify-end gap-3 shrink-0">
+                                <button 
+                                    onClick={() => setIsManageOpen(false)}
+                                    className="px-5 py-2.5 border border-gray-200 text-gray-600 text-xs font-semibold rounded-xl hover:bg-gray-50 transition-colors"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
                 )}
             </AnimatePresence>
 

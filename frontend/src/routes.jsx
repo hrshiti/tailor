@@ -72,6 +72,7 @@ import AdminCMS from './modules/admin/pages/CMS';
 import AdminReports from './modules/admin/pages/Reports';
 import AdminSettings from './modules/admin/pages/Settings';
 import AdminLogin from './modules/admin/pages/Login';
+import AdminStyleAddons from './modules/admin/pages/StyleAddons';
 import AdminProtectedRoute from './modules/admin/components/AdminProtectedRoute';
 
 import ReferEarn from './modules/customer/pages/ReferEarn'; // NEW
@@ -184,6 +185,7 @@ const AppRoutes = () => {
                     <Route path="/admin/finance" element={<AdminFinance />} />
                     <Route path="/admin/cms" element={<AdminCMS />} />
                     <Route path="/admin/reports" element={<AdminReports />} />
+                    <Route path="/admin/style-addons" element={<AdminStyleAddons />} />
                     <Route path="/admin/settings" element={<AdminSettings />} />
                 </Route>
             </Route>

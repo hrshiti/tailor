@@ -35,21 +35,21 @@ const AdminLogin = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#0a211e] relative overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-[#FF5C8A] relative overflow-hidden">
             {/* Ambient Background Elements */}
-            <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#1e3932] rounded-full blur-[120px] opacity-60"></div>
+            <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#FF5C8A] rounded-full blur-[120px] opacity-60"></div>
             <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#0f2d26] rounded-full blur-[100px] opacity-80"></div>
 
             <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden relative z-10 mx-4 border border-white/10">
                 <div className="p-8 sm:p-10 flex flex-col items-center">
                     
                     {/* Logo & Header */}
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#1e3932] to-[#0a211e] rounded-2xl flex items-center justify-center p-3 shadow-lg shadow-green-900/20 mb-6 border border-white/10">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#FF5C8A] to-[#FF5C8A] rounded-2xl flex items-center justify-center p-3 shadow-lg shadow-pink-900/20 mb-6 border border-white/10">
                          <img src={silaiwalaLogo} alt="Logo" className="w-full h-full object-contain filter brightness-0 invert" />
                     </div>
                     
-                    <h2 className="text-2xl font-black text-gray-900 tracking-tight text-center">Admin Portal</h2>
-                    <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">Secure Access ONLY</p>
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight text-center">Admin Portal</h2>
+                    <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider font-semibold">Secure Access ONLY</p>
 
                     <form onSubmit={handleSubmit} className="w-full mt-8 space-y-5">
                         {error && (
@@ -59,7 +59,7 @@ const AdminLogin = () => {
                         )}
 
                         <div className="space-y-1.5">
-                            <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">Admin Email</label>
+                            <label className="text-[10px] uppercase tracking-wider font-semibold text-gray-500 ml-1">Admin Email</label>
                             <div className="relative">
                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                                     <Mail size={16} />
@@ -69,14 +69,14 @@ const AdminLogin = () => {
                                     placeholder="Enter your administrative email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-semibold text-gray-900 outline-none focus:border-[#1e3932] focus:bg-white transition-all"
+                                    className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-semibold text-gray-900 outline-none focus:border-[#FF5C8A] focus:bg-white transition-all"
                                     required
                                 />
                             </div>
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">Master Password</label>
+                            <label className="text-[10px] uppercase tracking-wider font-semibold text-gray-500 ml-1">Master Password</label>
                             <div className="relative">
                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                                     <Lock size={16} />
@@ -86,7 +86,7 @@ const AdminLogin = () => {
                                     placeholder="••••••••••••"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-semibold text-gray-900 outline-none focus:border-[#1e3932] focus:bg-white transition-all"
+                                    className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-semibold text-gray-900 outline-none focus:border-[#FF5C8A] focus:bg-white transition-all"
                                     required
                                 />
                             </div>
@@ -95,7 +95,7 @@ const AdminLogin = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full py-3.5 mt-4 bg-[#0a211e] hover:bg-[#061512] text-white text-xs font-black rounded-xl shadow-lg shadow-[#0a211e]/20 transition-all uppercase tracking-widest disabled:opacity-70 flex justify-center items-center"
+                            className="w-full py-3.5 mt-4 bg-[#FF5C8A] hover:bg-[#cc496e] text-white text-xs font-semibold rounded-xl shadow-lg shadow-[#FF5C8A]/20 transition-all uppercase tracking-wider disabled:opacity-70 flex justify-center items-center"
                         >
                             {isLoading ? (
                                 <span className="flex items-center gap-2">
@@ -111,7 +111,7 @@ const AdminLogin = () => {
 
                 {/* Footer Band */}
                 <div className="bg-gray-50/50 p-4 border-t border-gray-100 text-center">
-                     <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                     <p className="text-[9px] text-gray-400 font-medium uppercase tracking-wider">
                          Silaiwala Systems © {new Date().getFullYear()}
                      </p>
                 </div>

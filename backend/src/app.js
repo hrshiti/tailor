@@ -10,12 +10,18 @@ const app = express();
 // ─── Security Middlewares ────────────────────────────────────────────────────
 
 // Set secure HTTP headers
-app.use(helmet());
+// Set secure HTTP headers with cross-origin resource policy disabled for static files
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginEmbedderPolicy: false,
+  })
+);
 
-// CORS – allow frontend origin
+// CORS – allow frontend origin (Flexible for LAN/Mobile Access)
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: true, // Allow direct origin match for LAN testing
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -75,6 +81,8 @@ app.use("/api/v1/tailors", require("./modules/tailors/routes/tailor.routes"));
 app.use("/api/v1/deliveries", require("./modules/deliveries/routes/delivery.routes"));
 app.use("/api/v1/wallet", require("./modules/wallet/wallet.routes"));
 app.use("/api/v1/admin", require("./modules/admin/routes/admin.routes"));
+app.use("/api/v1/custom-bookings", require("./modules/bookings/routes/booking.routes"));
+app.use("/api/v1/style-addons", require("./modules/styleAddons/routes/styleAddon.routes"));
 app.use("/api/v1/cms", require("./modules/public/routes/cms.routes"));
 app.use("/api/v1/upload", require("./routes/upload.routes"));
 // ─── 404 Handler ─────────────────────────────────────────────────────────────

@@ -138,14 +138,14 @@ const Registration = () => {
         return (
             <AppContainer>
                 <div className="flex-1 flex flex-col items-center justify-center p-8 text-center animate-in zoom-in duration-500">
-                    <div className="h-24 w-24 bg-green-50 text-[#1e3932] rounded-full flex items-center justify-center mb-6 shadow-xl shadow-green-900/10">
+                    <div className="h-24 w-24 bg-pink-50 text-[#FF5C8A] rounded-full flex items-center justify-center mb-6 shadow-xl shadow-pink-900/10">
                         <CheckCircle2 size={48} strokeWidth={2.5} />
                     </div>
-                    <h2 className="text-2xl font-black text-[#1e3932]">Application Submitted!</h2>
+                    <h2 className="text-2xl font-bold text-[#FF5C8A]">Application Submitted!</h2>
                     <p className="text-gray-500 mt-4 leading-relaxed font-medium">
                         Your documents are being reviewed by our team. You'll receive a notification once your account is approved.
                     </p>
-                    <div className="mt-10 p-4 bg-gray-50 rounded-2xl w-full border border-gray-100 italic font-bold text-[#1e3932] text-xs uppercase tracking-widest">
+                    <div className="mt-10 p-4 bg-gray-50 rounded-2xl w-full border border-gray-100 font-semibold text-[#FF5C8A] text-xs uppercase tracking-wider">
                         Status: Pending Approval
                     </div>
                     <Button className="mt-10" onClick={() => navigate('/partner/under-review')}>
@@ -168,12 +168,12 @@ const Registration = () => {
                             </button>
                         )}
                         <div>
-                            <h1 className="text-xl font-black tracking-tight text-gray-900 leading-none">Join Silaiwala</h1>
-                            <p className="text-[9px] font-black w-full uppercase text-[#1e3932] tracking-[0.2em] mt-1 opacity-80">{stepTitles[step - 1]}</p>
+                            <h1 className="text-xl font-bold tracking-tight text-gray-900 leading-none">Join Silaiwala</h1>
+                            <p className="text-[9px] font-semibold w-full uppercase text-[#FF5C8A] tracking-[0.15em] mt-1 opacity-80">{stepTitles[step - 1]}</p>
                         </div>
                     </div>
                     <div className="flex flex-col items-end">
-                        <div className="h-10 w-10 bg-[#1e3932] rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-green-900/20">
+                        <div className="h-10 w-10 bg-[#FF5C8A] rounded-2xl flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-pink-900/20">
                             {step}<span className="text-white/60 text-xs translate-y-[1px]">/4</span>
                         </div>
                     </div>
@@ -186,7 +186,7 @@ const Registration = () => {
                     {[1, 2, 3, 4].map((s) => (
                         <div
                             key={s}
-                            className={`flex-1 transition-all duration-700 ${s <= step ? 'bg-[#1e3932]' : 'bg-transparent'}`}
+                            className={`flex-1 transition-all duration-700 ${s <= step ? 'bg-[#FF5C8A]' : 'bg-transparent'}`}
                         />
                     ))}
                 </div>
@@ -200,11 +200,11 @@ const Registration = () => {
             {/* Footer Actions */}
             <footer className="p-6 pb-12 bg-white border-t mt-auto flex-shrink-0 z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] text-center">
                 {step < 4 ? (
-                    <Button onClick={handleNext} className="shadow-[#1e3932]/20 w-full mb-4">
+                    <Button onClick={handleNext} className="shadow-[#FF5C8A]/20 w-full mb-4">
                         Continue
                     </Button>
                 ) : (
-                    <Button onClick={handleSubmit(onSubmit)} loading={isLoading} className="bg-[#1e3932] text-white w-full mb-4 font-bold text-sm h-[52px] rounded-full active:scale-95 transition-all">
+                    <Button onClick={handleSubmit(onSubmit)} loading={isLoading} className="bg-[#FF5C8A] text-white w-full mb-4 font-bold text-sm h-[52px] rounded-full active:scale-95 transition-all">
                         Submit Application
                     </Button>
                 )}

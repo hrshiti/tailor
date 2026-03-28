@@ -489,21 +489,16 @@ exports.updateOrderStatus = async (req, res) => {
     }
     if (paymentStatus) updateData.paymentStatus = paymentStatus;
     
-    // Handle Tailor Assignment & Notification
+    // Handle Tailor Assignment Logic
     if (tailor && tailor !== oldOrder.tailor?.toString()) {
       updateData.tailor = tailor;
+      if (oldOrder.status === 'pending') {
+          updateData.status = oldOrder.fabricPickupRequired ? 'fabric-ready-for-pickup' : 'accepted';
+      }
       trackingMessage = trackingMessage || "New tailor assigned to order";
-      
-      await sendNotification({
-        recipient: tailor,
-        type: "ORDER_ASSIGNED",
-        title: "New Job Assigned!",
-        message: `Admin has assigned order ${oldOrder.orderId} to your shop.`,
-        data: { orderId: id, targetUrl: "/partner/orders" }
-      });
     }
 
-    // Handle Delivery Assignment & Notification
+    // Handle Delivery Assignment Logic
     if (deliveryPartner && deliveryPartner !== oldOrder.deliveryPartner?.toString()) {
       // Check if partner is online/available
       const partnerProfile = await Delivery.findOne({ user: deliveryPartner });
@@ -512,22 +507,15 @@ exports.updateOrderStatus = async (req, res) => {
       }
 
       updateData.deliveryPartner = deliveryPartner;
-      trackingMessage = trackingMessage || "Delivery partner assigned";
       
-      await sendNotification({
-        recipient: deliveryPartner,
-        type: "TASK_ASSIGNED",
-        title: "New Delivery Task!",
-        message: `New dispatch task assigned for order ${oldOrder.orderId}`,
-        data: { orderId: id, targetUrl: "/delivery/tasks" }
-      });
-
-      // Notify other partners that this task is no longer available
-      const { getIO } = require("../../../config/socket");
-      const io = getIO();
-      if (io) {
-          io.to("delivery_partners").emit("task_claimed", { orderId: id });
+      // LOGIC: If we are assigning a delivery partner and the order was pending/accepted,
+      // it might need to move to fabric-ready-for-pickup if fabric pickup is required
+      if (oldOrder.status === 'pending' || oldOrder.status === 'accepted') {
+          if (oldOrder.fabricPickupRequired) {
+              updateData.status = 'fabric-ready-for-pickup';
+          }
       }
+      trackingMessage = trackingMessage || "Delivery partner assigned";
     }
     
     if (status === 'delivered') updateData.deliveredAt = Date.now();
@@ -539,7 +527,7 @@ exports.updateOrderStatus = async (req, res) => {
         ...updateData,
         $push: { 
           trackingHistory: { 
-            status: status || oldOrder.status, 
+            status: status || updateData.status || oldOrder.status, 
             message: trackingMessage || "Order details updated by Admin",
             timestamp: Date.now()
           } 
@@ -547,6 +535,32 @@ exports.updateOrderStatus = async (req, res) => {
       }, 
       { new: true, runValidators: true }
     ).populate("customer tailor deliveryPartner items.service items.product");
+
+    // Notifications AFTER Update (Prevent Race Conditions)
+    if (tailor && tailor !== oldOrder.tailor?.toString()) {
+      await sendNotification({
+        recipient: tailor,
+        type: "ORDER_ASSIGNED",
+        title: "New Job Assigned! 🧵",
+        message: `Job ${order.orderId || id} has been assigned to you.`,
+        data: { orderId: id, targetUrl: "/partner/orders" }
+      });
+    }
+
+    if (deliveryPartner && deliveryPartner !== oldOrder.deliveryPartner?.toString()) {
+      await sendNotification({
+        recipient: deliveryPartner,
+        type: "TASK_ASSIGNED",
+        title: "New Delivery Assigned 📦",
+        message: `Dispatch ${order.orderId || id} has been assigned to you.`,
+        data: { orderId: id, targetUrl: "/delivery/tasks" }
+      });
+
+      // Clear from general fleet
+      const { getIO } = require("../../../config/socket");
+      const io = getIO();
+      if (io) io.to("delivery_partners").emit("task_claimed", { orderId: id });
+    }
     
     if (order && status && status !== oldOrder.status) {
         // Earnings Distribution

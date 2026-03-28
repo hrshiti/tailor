@@ -39,14 +39,14 @@ router.get("/wishlist", authorize("customer", "admin"), getWishlist);
 router.post("/wishlist/toggle", authorize("customer", "admin"), wishlistToggle);
 
 // Promo
-router.post("/apply-promo", authorize("customer"), applyPromoCode);
+router.post("/apply-promo", authorize("customer", "admin"), applyPromoCode);
 
 // Refer & Earn
-router.get("/referral-stats", authorize("customer"), getReferralStats);
+router.get("/referral-stats", authorize("customer", "admin"), getReferralStats);
 
 // Cart Management
-router.get("/cart", authorize("customer"), getCart);
-router.post("/cart", authorize("customer"), addToCart);
-router.delete("/cart/:itemId", authorize("customer"), removeFromCart);
+router.get("/cart", authorize("customer", "admin"), getCart);
+router.post("/cart", authorize("customer", "admin"), addToCart);
+router.delete("/cart/:itemId", authorize("customer", "admin"), removeFromCart);
 
 module.exports = router;

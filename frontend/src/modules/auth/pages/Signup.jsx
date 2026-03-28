@@ -62,7 +62,7 @@ const Signup = () => {
     return (
         <div className="w-full">
             <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-[#1e3932]">Create Account</h2>
+                <h2 className="text-2xl font-bold text-[#FF5C8A]">Create Account</h2>
                 <p className="text-gray-500">
                     {step === 1 ? 'Join us as a Customer, Tailor, or Partner' : `Sign up as a ${selectedRole}`}
                 </p>
@@ -79,7 +79,7 @@ const Signup = () => {
                     <RoleSelector selectedRole={selectedRole} onSelect={handleRoleSelect} />
                     <div className="text-center mt-4">
                         <p className="text-sm text-gray-500">
-                            Already have an account? <Link to="/login" className="text-[#1e3932] font-semibold hover:underline">Sign In</Link>
+                            Already have an account? <Link to="/login" className="text-[#FF5C8A] font-semibold hover:underline">Sign In</Link>
                         </p>
                     </div>
                 </div>
@@ -145,15 +145,15 @@ const Signup = () => {
 
                     {selectedRole === 'customer' && (
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700 font-bold flex items-center gap-2">
-                                Referral Code <span className="text-[10px] bg-emerald-100 text-[#1e3932] px-2 py-0.5 rounded-full font-black uppercase tracking-widest">Optional</span>
+                            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                                Referral Code <span className="text-[10px] bg-pink-100 text-[#FF5C8A] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider">Optional</span>
                             </label>
                             <Input
                                 name="referralCode"
                                 placeholder="TRXXXXXX"
                                 value={formData.referralCode}
                                 onChange={handleChange}
-                                className="border-emerald-100 focus:border-[#1e3932] uppercase placeholder:normal-case font-bold tracking-widest"
+                                className="border-pink-100 focus:border-[#FF5C8A] uppercase placeholder:normal-case font-semibold tracking-wider"
                             />
                         </div>
                     )}
@@ -169,7 +169,7 @@ const Signup = () => {
                         </Button>
                         <Button
                             type="submit"
-                            className="flex-1 bg-[#1e3932] hover:bg-[#152e28] text-white rounded-full"
+                            className="flex-1 bg-[#FF5C8A] hover:bg-[#cc496e] text-white rounded-full"
                             disabled={isLoading}
                         >
                             {isLoading ? 'Creating...' : 'Create Account'}

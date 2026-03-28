@@ -20,7 +20,7 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
   
   let customerProfile = await Customer.findOne({ user: req.user.id }).lean();
   
-  if (!customerProfile && user.role === "customer") {
+  if (!customerProfile && (user.role === "customer" || user.role === "admin")) {
     customerProfile = await Customer.create({ user: req.user.id });
     customerProfile = customerProfile.toJSON();
   }

@@ -1,6 +1,8 @@
+const mongoose = require("mongoose");
 const Delivery = require("../../../models/Delivery");
 const Order = require("../../../models/Order");
 const User = require("../../../models/User");
+const Tailor = require("../../../models/Tailor");
 const asyncHandler = require("../../../utils/asyncHandler");
 const ErrorResponse = require("../../../utils/errorResponse");
 
@@ -119,26 +121,47 @@ exports.getAssignedOrders = asyncHandler(async (req, res, next) => {
     query.status = status;
   } else {
     // Default show active deliveries (both fabric pickup and final delivery)
-    query.status = { $in: ["fabric-ready-for-pickup", "fabric-picked-up", "ready-for-pickup", "out-for-delivery"] };
+    query.status = { $in: ["pending", "accepted", "fabric-ready-for-pickup", "fabric-picked-up", "ready-for-pickup", "out-for-delivery"] };
   }
 
   const orders = await Order.find(query)
     .populate("customer", "name phoneNumber profileImage")
-    .populate("tailor", "shopName address location phone")
-    .sort("-updatedAt");
+    .sort("-updatedAt")
+    .lean();
 
-  // Add taskType for frontend clarity
-  const formattedOrders = orders.map(order => {
-    const isFabric = ["fabric-ready-for-pickup", "fabric-picked-up"].includes(order.status);
+  // Enrich each order with Tailor profile data (shopName, location, phone)
+  const formattedOrders = await Promise.all(orders.map(async (order) => {
+    // Determine taskType based on status AND fabricPickupRequired flag
+    const isFabricPhase = ["fabric-ready-for-pickup", "fabric-picked-up"].includes(order.status);
+    const needsFabricPickup = order.fabricPickupRequired && 
+      ["pending", "accepted", "fabric-ready-for-pickup", "fabric-picked-up"].includes(order.status);
+    const taskType = (isFabricPhase || (needsFabricPickup && !["ready-for-pickup", "out-for-delivery"].includes(order.status))) 
+      ? "fabric-pickup" : "order-delivery";
+
+    // Lookup Tailor profile to get shopName, location, phone
+    let tailorProfile = null;
+    if (order.tailor) {
+      const tailorDoc = await Tailor.findOne({ user: order.tailor }).populate("user", "name phoneNumber").lean();
+      if (tailorDoc) {
+        tailorProfile = {
+          _id: order.tailor,
+          shopName: tailorDoc.shopName || tailorDoc.user?.name || 'Tailor Workshop',
+          phone: tailorDoc.user?.phoneNumber,
+          location: tailorDoc.location
+        };
+      }
+    }
+
     return {
-      ...order.toObject(),
-      taskType: isFabric ? "fabric-pickup" : "order-delivery"
+      ...order,
+      tailor: tailorProfile,
+      taskType
     };
-  });
+  }));
 
   res.status(200).json({
     success: true,
-    count: orders.length,
+    count: formattedOrders.length,
     data: formattedOrders,
   });
 });
@@ -155,24 +178,57 @@ exports.getDashboardStats = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Delivery profile not found", 404));
   }
 
-  const stats = await Order.aggregate([
-    { $match: { deliveryPartner: req.user.id } },
+  // Use both ObjectId and string forms for maximum compatibility
+  const userId = new mongoose.Types.ObjectId(req.user.id);
+  const userIdStr = req.user.id.toString();
+
+  // Primary: Aggregation pipeline (most efficient)
+  let stats = await Order.aggregate([
+    { $match: { deliveryPartner: userId } },
     {
       $group: {
         _id: null,
         totalDeliveries: { $sum: { $cond: [{ $eq: ["$status", "delivered"] }, 1, 0] } },
-        activeDeliveries: { $sum: { $cond: [{ $in: ["$status", ["fabric-ready-for-pickup", "fabric-picked-up", "ready-for-pickup", "out-for-delivery"]] }, 1, 0] } },
-        totalEarnings: { $sum: { $cond: [{ $eq: ["$status", "delivered"] }, 20, 0] } } // Dummy earning per delivery
+        activeDeliveries: { 
+          $sum: { 
+            $cond: [
+              { $in: ["$status", ["pending", "accepted", "fabric-ready-for-pickup", "fabric-picked-up", "ready-for-pickup", "out-for-delivery"]] }, 
+              1, 0
+            ] 
+          } 
+        },
+        totalEarnings: { $sum: { $cond: [{ $eq: ["$status", "delivered"] }, "$deliveryFee", 0] } }
       }
     }
   ]);
 
+  // Fallback: If aggregation returns nothing, use find-based counting
+  // This handles edge cases where ObjectId casting fails in the pipeline
+  if (!stats || stats.length === 0) {
+    const allOrders = await Order.find({ deliveryPartner: req.user.id }).select('status deliveryFee').lean();
+    
+    if (allOrders.length > 0) {
+      const activeStatuses = ["pending", "accepted", "fabric-ready-for-pickup", "fabric-picked-up", "ready-for-pickup", "out-for-delivery"];
+      
+      const totalDeliveries = allOrders.filter(o => o.status === "delivered").length;
+      const activeDeliveries = allOrders.filter(o => activeStatuses.includes(o.status)).length;
+      const totalEarnings = allOrders
+        .filter(o => o.status === "delivered")
+        .reduce((sum, o) => sum + (o.deliveryFee || 0), 0);
+      
+      stats = [{ totalDeliveries, activeDeliveries, totalEarnings }];
+    }
+  }
+
   const dashboardStats = stats[0] || { totalDeliveries: 0, activeDeliveries: 0, totalEarnings: 0 };
 
+  // Also use the wallet balance from the Delivery profile
   res.status(200).json({
     success: true,
     data: {
       ...dashboardStats,
+      _id: undefined,
+      walletBalance: delivery.walletBalance || 0,
       rating: delivery.rating,
       isAvailable: delivery.isAvailable
     }
@@ -301,25 +357,43 @@ exports.updateDeliveryStatus = asyncHandler(async (req, res, next) => {
  */
 exports.getAvailableOrders = asyncHandler(async (req, res, next) => {
   const orders = await Order.find({
-    status: { $in: ["ready-for-pickup", "fabric-ready-for-pickup", "out-for-delivery"] },
-    deliveryPartner: null,
+    status: { $in: ["ready-for-pickup", "fabric-ready-for-pickup"] },
+    $or: [
+      { deliveryPartner: null },
+      { deliveryPartner: { $exists: false } }
+    ]
   })
     .populate("customer", "name phoneNumber profileImage")
-    .populate("tailor", "shopName address location phone")
-    .sort("-updatedAt");
+    .sort("-updatedAt")
+    .lean();
 
-  // Add taskType for frontend clarity
-  const formattedOrders = orders.map(order => {
+  // Enrich with Tailor profile data
+  const formattedOrders = await Promise.all(orders.map(async (order) => {
     const isFabric = order.status === "fabric-ready-for-pickup";
+
+    let tailorProfile = null;
+    if (order.tailor) {
+      const tailorDoc = await Tailor.findOne({ user: order.tailor }).populate("user", "name phoneNumber").lean();
+      if (tailorDoc) {
+        tailorProfile = {
+          _id: order.tailor,
+          shopName: tailorDoc.shopName || tailorDoc.user?.name || 'Tailor Workshop',
+          phone: tailorDoc.user?.phoneNumber,
+          location: tailorDoc.location
+        };
+      }
+    }
+
     return {
-      ...order.toObject(),
+      ...order,
+      tailor: tailorProfile,
       taskType: isFabric ? "fabric-pickup" : "order-delivery"
     };
-  });
+  }));
 
   res.status(200).json({
     success: true,
-    count: orders.length,
+    count: formattedOrders.length,
     data: formattedOrders,
   });
 });

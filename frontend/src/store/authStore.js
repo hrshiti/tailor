@@ -26,7 +26,6 @@ const useAuthStore = create((set) => ({
             const response = await api.post('/auth/login', { email, password });
             console.log('Backend Login Raw Response:', response.data);
             
-            // Handle different potential response structures robustly
             const user = response.data.data || response.data.user || response.data;
             const token = response.data.token;
 
@@ -48,6 +47,49 @@ const useAuthStore = create((set) => ({
             console.error('Frontend AuthStore Login Error Detail:', err);
             const data = err.response?.data;
             const message = data?.errors?.[0] || data?.message || err.message || 'Login failed';
+            set({ error: message, isLoading: false });
+            throw new Error(message);
+        }
+    },
+
+    sendOTP: async (identifier) => {
+        set({ isLoading: true, error: null });
+        try {
+            const isEmail = identifier.includes('@');
+            const payload = isEmail ? { email: identifier } : { phoneNumber: identifier };
+            
+            const response = await api.post('/auth/send-otp', payload);
+            set({ isLoading: false });
+            return response.data;
+        } catch (err) {
+            const message = err.response?.data?.message || 'Failed to send verification code';
+            set({ error: message, isLoading: false });
+            throw new Error(message);
+        }
+    },
+
+    otpLogin: async (phoneNumber, otp) => {
+        set({ isLoading: true, error: null });
+        try {
+            // Using /auth/login route which backend controller already supports for phoneNumber + otp
+            const response = await api.post('/auth/login', { email: phoneNumber, otp });
+            
+            const user = response.data.data || response.data.user || response.data;
+            const token = response.data.token;
+
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+
+            set({
+                user,
+                isAuthenticated: true,
+                role: user.role,
+                isLoading: false
+            });
+            return user;
+        } catch (err) {
+            const data = err.response?.data;
+            const message = data?.message || 'Invalid OTP. Please try again.';
             set({ error: message, isLoading: false });
             throw new Error(message);
         }

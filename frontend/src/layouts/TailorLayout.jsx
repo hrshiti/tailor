@@ -32,9 +32,9 @@ const TailorLayout = () => {
     return (
         <AppContainer>
             {/* Top Navbar - Hide on Overview and Settings so they can have custom headers */}
-            {(!isOverview && location.pathname !== '/partner/settings') && (
+            {(!isOverview && location.pathname !== '/partner/settings' && location.pathname !== '/partner/wallet' && location.pathname !== '/partner/earnings') && (
                 <div className="relative sticky top-0 z-10 w-full mb-4">
-                    <header className="bg-[#1e3932] pt-6 pb-4 px-6 flex items-center justify-between text-white transition-all shadow-[0_4px_20px_rgb(0,0,0,0.1)]">
+                    <header className="bg-[#FF5C8A] pt-6 pb-4 px-6 flex items-center justify-between text-white transition-all shadow-[0_4px_20px_rgb(0,0,0,0.1)]">
                         <div>
                             <h2 className="text-xl font-black tracking-tight drop-shadow-sm">
                                 {menuItems.find(i => i.path === location.pathname)?.label || 'Silaiwala'}
@@ -51,7 +51,7 @@ const TailorLayout = () => {
                         </div>
                     </header>
                     {/* SVG Wave Curve matching the aesthetic */}
-                    <svg className="w-full h-8 text-[#1e3932] fill-current absolute top-full left-0 z-10" viewBox="0 0 100 20" preserveAspectRatio="none">
+                    <svg className="w-full h-8 text-[#FF5C8A] fill-current absolute top-full left-0 z-10" viewBox="0 0 100 20" preserveAspectRatio="none">
                         <path d="M0,0 C30,20 70,20 100,0 L100,0 L0,0 Z" />
                     </svg>
                 </div>
@@ -63,18 +63,20 @@ const TailorLayout = () => {
             </main>
 
             {/* Bottom Navigation for App-View */}
-            <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[450px] bg-white border-t border-gray-100 px-4 py-3 flex items-center justify-between z-20 shadow-[0_-8px_30px_rgba(0,0,0,0.06)] rounded-t-[1.75rem]">
+            <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[450px] bg-black border-t border-white/5 px-4 py-3 flex items-center justify-between z-20 shadow-[0_-8px_30px_rgba(0,0,0,0.5)] rounded-t-[1.75rem] pb-safe">
                 {menuItems.slice(0, 5).map((item) => {
-                    // Injecting a slightly larger size if needed, but styling padding makes it larger
                     const isActive = location.pathname === item.path;
                     return (
                         <Link
                             key={item.path}
                             to={item.path}
-                            className={`flex flex-col items-center gap-1 group transition-all ${isActive ? 'text-[#1e3932]' : 'text-gray-300'}`}
+                            className={`flex flex-col items-center gap-1 group transition-all ${isActive ? 'text-[#FF5C8A]' : 'text-gray-400'}`}
                         >
-                            <div className={`p-3 rounded-[1.25rem] transition-all flex items-center justify-center ${isActive ? 'bg-green-50 shadow-inner' : 'group-hover:bg-gray-50'}`}>
-                                {React.cloneElement(item.icon, { size: 22 })}
+                            <div className={`p-3 rounded-[1.25rem] transition-all flex items-center justify-center ${isActive ? 'bg-[#FF5C8A]/10 shadow-inner' : 'group-hover:bg-white/5'}`}>
+                                {React.cloneElement(item.icon, { 
+                                    size: 22,
+                                    strokeWidth: isActive ? 2.5 : 2
+                                })}
                             </div>
                         </Link>
                     )
@@ -82,13 +84,14 @@ const TailorLayout = () => {
                 {/* Profile Link as the last item */}
                 <Link
                     to="/partner/settings"
-                    className={`flex flex-col items-center gap-1 group transition-all ${location.pathname === '/partner/settings' ? 'text-[#1e3932]' : 'text-gray-300'}`}
+                    className={`flex flex-col items-center gap-1 group transition-all ${location.pathname === '/partner/settings' ? 'text-[#FF5C8A]' : 'text-gray-400'}`}
                 >
-                    <div className={`p-3 rounded-[1.25rem] transition-all flex items-center justify-center ${location.pathname === '/partner/settings' ? 'bg-green-50 shadow-inner' : 'group-hover:bg-gray-50'}`}>
-                        <UserCircle size={22} />
+                    <div className={`p-3 rounded-[1.25rem] transition-all flex items-center justify-center ${location.pathname === '/partner/settings' ? 'bg-[#FF5C8A]/10 shadow-inner' : 'group-hover:bg-white/5'}`}>
+                        <UserCircle size={22} strokeWidth={location.pathname === '/partner/settings' ? 2.5 : 2} />
                     </div>
                 </Link>
             </nav>
+
         </AppContainer>
     );
 };

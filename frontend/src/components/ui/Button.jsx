@@ -5,11 +5,11 @@ const Button = React.forwardRef(({ className, variant = 'primary', size = 'md', 
     const baseStyles = 'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50';
 
     const variants = {
-        primary: 'bg-[#1e3932] text-white hover:bg-[#152924] shadow-sm', // Starbucks Green
-        secondary: 'bg-[#d4e9e2] text-[#1e3932] hover:bg-[#c1dfd4]',
-        outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+        primary: 'bg-[#FF5C8A] text-white hover:bg-black shadow-sm', // Deep Pink & High Contrast Black
+        secondary: 'bg-pink-50 text-[#FF5C8A] hover:bg-pink-100',
+        outline: 'border border-[#FF5C8A]/20 bg-background hover:bg-pink-50 hover:text-[#FF5C8A]',
+        ghost: 'hover:bg-pink-50 hover:text-[#FF5C8A]',
+        link: 'text-[#FF5C8A] underline-offset-4 hover:underline',
     };
 
     const sizes = {

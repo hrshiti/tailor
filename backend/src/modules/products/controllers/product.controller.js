@@ -34,10 +34,15 @@ exports.getProducts = asyncHandler(async (req, res, next) => {
     query.$text = { $search: search };
   }
 
-  // 3. Category Filtering
+  // 3. Category Filtering (Support both ID and Name)
   if (category && category !== "All") {
-    const categoryDoc = await Category.findOne({ name: category });
-    if (categoryDoc) query.category = categoryDoc._id;
+    const mongoose = require("mongoose");
+    if (mongoose.Types.ObjectId.isValid(category)) {
+      query.category = category;
+    } else {
+      const categoryDoc = await Category.findOne({ name: category });
+      if (categoryDoc) query.category = categoryDoc._id;
+    }
   }
 
   // 4. Optimized Price Range

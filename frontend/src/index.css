@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+@theme {
+    /* Centralized Brand Colors */
+    --color-primary: #FF5C8A;
+    --color-primary-light: #FF85A2;
+    --color-primary-dark: #cc496e;
+    --color-primary-soft: #fff5f7;
+    
+    /* Legacy Green color (for reference or if needed elsewhere) */
+    --color-brand-green: #FF5C8A;
+    
+    /* Ultra High Contrast Gray Overrides for Max Readability */
+    --color-gray-400: #1a1a1a; /* Very Dark Black-Gray */
+    --color-gray-500: #111827; /* Rich Black */
+    --color-gray-600: #020617; /* Absolute Contrast */
+    --color-gray-300: #404040; /* Dark Charcoal */
+    
+    /* Custom spacing & roundedness */
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+}
+
+:root {
+    --brand-color: #FF5C8A;
+}
+
+/* Base utility for centralizing the theme color if needed */
+.bg-brand {
+    background-color: var(--brand-color);
+}
+
+.text-brand {
+    color: var(--brand-color);
+}
+
+.border-brand {
+    border-color: var(--brand-color);
+}

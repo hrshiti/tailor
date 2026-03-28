@@ -9,8 +9,8 @@ const ErrorResponse = require("../../../utils/errorResponse");
  */
 exports.getCart = asyncHandler(async (req, res, next) => {
   let cart = await Cart.findOne({ user: req.user.id })
-    .populate("items.product", "name title price image")
-    .populate("items.service", "title basePrice image");
+    .populate("items.product", "name title price image tailor")
+    .populate("items.service", "title basePrice image tailor");
 
   if (!cart) {
     cart = await Cart.create({ user: req.user.id, items: [] });

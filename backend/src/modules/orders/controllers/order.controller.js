@@ -162,7 +162,7 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
   const { tailorId, items, totalAmount, deliveryAddress, promoCode } = req.body;
 
   // 1. Validation: Ensure tailor exists and is active (Check both User and Tailor Profile IDs)
-  let tailor = await User.findOne({ _id: tailorId, role: "tailor" });
+  let tailor = await User.findOne({ _id: tailorId, role: { $in: ["tailor", "admin"] } });
   
   if (!tailor) {
     // If not found in User, check if it's a Tailor Profile ID

@@ -57,9 +57,9 @@ const DeliverySignup = () => {
                     <img src={silaiwalaLogo} alt="Silaiwala" className="w-14 h-14 object-contain" />
                 </div>
                 
-                <h2 className="text-3xl font-black text-slate-900 tracking-tighter text-center">Join the Fleet</h2>
-                <div className="w-12 h-1 bg-emerald-600 rounded-full mt-3 opacity-20"></div>
-                <p className="text-[11px] font-black text-emerald-800 uppercase tracking-[0.2em] mt-4 opacity-70 italic">Exclusive Delivery Partner Program</p>
+                <h2 className="text-3xl font-bold text-slate-900 tracking-tight text-center">Join the Fleet</h2>
+                <div className="w-12 h-1 bg-pink-600 rounded-full mt-3 opacity-20"></div>
+                <p className="text-[11px] font-semibold text-pink-800 uppercase tracking-[0.15em] mt-4 opacity-70">Exclusive Delivery Partner Program</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -70,19 +70,19 @@ const DeliverySignup = () => {
                 )}
 
                 <div className="space-y-2">
-                    <label className="text-sm font-black text-slate-700 uppercase tracking-widest pl-1">Full Name</label>
+                    <label className="text-sm font-semibold text-slate-700 uppercase tracking-wider pl-1">Full Name</label>
                     <Input
                         name="name"
                         placeholder="Enter your name"
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="rounded-2xl border-slate-200 focus:ring-emerald-500 focus:border-emerald-500"
+                        className="rounded-2xl border-slate-200 focus:ring-pink-500 focus:border-pink-500"
                     />
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-sm font-black text-slate-700 uppercase tracking-widest pl-1">Email Address</label>
+                    <label className="text-sm font-semibold text-slate-700 uppercase tracking-wider pl-1">Email Address</label>
                     <Input
                         name="email"
                         type="email"
@@ -90,38 +90,38 @@ const DeliverySignup = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="rounded-2xl border-slate-200 focus:ring-emerald-500 focus:border-emerald-500"
+                        className="rounded-2xl border-slate-200 focus:ring-pink-500 focus:border-pink-500"
                     />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-black text-slate-700 uppercase tracking-widest pl-1">Phone</label>
+                        <label className="text-sm font-semibold text-slate-700 uppercase tracking-wider pl-1">Phone</label>
                         <Input
                             name="phone"
                             placeholder="Mobile No."
                             value={formData.phone}
                             onChange={handleChange}
                             required
-                            className="rounded-2xl border-slate-200 focus:ring-emerald-500 focus:border-emerald-500"
+                            className="rounded-2xl border-slate-200 focus:ring-pink-500 focus:border-pink-500"
                         />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-sm font-black text-slate-700 uppercase tracking-widest pl-1">Vehicle No.</label>
+                        <label className="text-sm font-semibold text-slate-700 uppercase tracking-wider pl-1">Vehicle No.</label>
                         <Input
                             name="vehicleNumber"
                             placeholder="DL 1CB 1234"
                             value={formData.vehicleNumber}
                             onChange={handleChange}
                             required
-                            className="rounded-2xl border-slate-200 focus:ring-emerald-500 focus:border-emerald-500"
+                            className="rounded-2xl border-slate-200 focus:ring-pink-500 focus:border-pink-500"
                         />
                     </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-black text-slate-700 uppercase tracking-widest pl-1">Password</label>
+                        <label className="text-sm font-semibold text-slate-700 uppercase tracking-wider pl-1">Password</label>
                         <Input
                             name="password"
                             type="password"
@@ -129,11 +129,11 @@ const DeliverySignup = () => {
                             value={formData.password}
                             onChange={handleChange}
                             required
-                            className="rounded-2xl border-slate-200 focus:ring-emerald-500 focus:border-emerald-500"
+                            className="rounded-2xl border-slate-200 focus:ring-pink-500 focus:border-pink-500"
                         />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-sm font-black text-slate-700 uppercase tracking-widest pl-1">Confirm</label>
+                        <label className="text-sm font-semibold text-slate-700 uppercase tracking-wider pl-1">Confirm</label>
                         <Input
                             name="confirmPassword"
                             type="password"
@@ -141,14 +141,14 @@ const DeliverySignup = () => {
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             required
-                            className="rounded-2xl border-slate-200 focus:ring-emerald-500 focus:border-emerald-500"
+                            className="rounded-2xl border-slate-200 focus:ring-pink-500 focus:border-pink-500"
                         />
                     </div>
                 </div>
 
                 <Button
                     type="submit"
-                    className="w-full bg-[#142921] hover:bg-[#0d1b16] text-white py-3.5 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-lg shadow-emerald-900/10 active:scale-95 transition-all mt-4"
+                    className="w-full bg-[#FF5C8A] hover:bg-[#cc496e] text-white py-3.5 rounded-2xl font-semibold text-[11px] uppercase tracking-[0.15em] shadow-lg shadow-pink-900/10 active:scale-95 transition-all mt-4"
                     disabled={isLoading}
                 >
                     {isLoading ? 'Processing...' : 'Create Driver Profile'}
@@ -156,10 +156,10 @@ const DeliverySignup = () => {
             </form>
 
             <div className="mt-8 text-center">
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">
+                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">
                     Already a partner?{' '}
                 </p>
-                <Link to="/delivery/login" className="inline-block mt-3 text-emerald-800 font-black text-sm uppercase tracking-widest hover:underline">
+                <Link to="/delivery/login" className="inline-block mt-3 text-pink-800 font-bold text-sm uppercase tracking-wider hover:underline">
                     Sign In Here
                 </Link>
             </div>
