@@ -109,16 +109,16 @@ const DeliveryWallet = () => {
                 <div className="flex items-center gap-4 mb-8">
                     <button 
                         onClick={() => navigate(-1)}
-                        className="p-2 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
+                        className="p-3 bg-white/10 rounded-2xl hover:bg-white/20 transition-colors border border-white/10 backdrop-blur-md"
                     >
-                        <ArrowLeft size={20} />
+                        <ArrowLeft size={20} strokeWidth={3} />
                     </button>
-                    <h1 className="text-xl font-black tracking-tight">Financial Wallet</h1>
+                    <h1 className="text-2xl font-black tracking-tight uppercase italic drop-shadow-md">Payout Wallet</h1>
                 </div>
 
                 <div className="text-center space-y-2">
-                    <p className="text-white/60 text-[10px] font-black uppercase tracking-[0.2em]">Available Balance</p>
-                    <h2 className="text-5xl font-black tracking-tighter">₹{walletData.balance.toLocaleString()}</h2>
+                    <p className="text-pink-100/60 text-[10px] font-black uppercase tracking-[0.3em] italic">Available Liquidity</p>
+                    <h2 className="text-6xl font-black tracking-tighter drop-shadow-2xl italic">₹{walletData.balance.toLocaleString()}</h2>
                     <div className="flex items-center justify-center gap-2 pt-2">
                         <div className="px-3 py-1 bg-[#FF5C8A]/20 rounded-full border border-[#FF5C8A]/30">
                             <span className="text-[10px] font-black tracking-widest text-pink-300 uppercase">Settled Earnings</span>
@@ -129,8 +129,8 @@ const DeliveryWallet = () => {
 
             {/* Quick Stats & Action */}
             <div className="px-6 -mt-12 space-y-4">
-                <div className="bg-white p-6 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50 flex items-center justify-between relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-pink-50 rounded-bl-full -z-0 opacity-40"></div>
+                <div className="bg-white p-6 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-slate-50 flex items-center justify-between relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-pink-50 rounded-bl-full -z-0 opacity-40 group-hover:scale-110 transition-transform"></div>
                     <div className="relative z-10">
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1.5">Lifetime Withdrawn</p>
                         <p className="text-xl font-black text-slate-900 tracking-tight">₹{walletData.totalWithdrawn.toLocaleString()}</p>

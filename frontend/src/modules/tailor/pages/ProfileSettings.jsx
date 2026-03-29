@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Edit2, History, Bell, MapPin, Shield, LogOut, ChevronRight, FileText, Save, X, Phone, Mail } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { ArrowLeft, Edit2, History, Bell, MapPin, Shield, LogOut, ChevronRight, FileText, Save, X, Phone, Mail, Wallet, Star, Ticket } from 'lucide-react';
+import MenuOption from '../../customer/components/profile/MenuOption';
 import { Input, Button } from '../components/UIElements';
 import { useTailorAuth } from '../context/AuthContext';
 import api from '../services/api';
@@ -214,33 +215,80 @@ const ProfileSettings = () => {
                 </form>
             ) : (
                 /* Menu List */
-                <div className="px-5 space-y-3 flex-1 pb-10 animate-in fade-in duration-300">
-                    {menuOptions.map((item, index) => (
-                        <button
-                            key={index}
-                            onClick={() => item.action ? item.action() : navigate(item.path)}
-                            className="w-full bg-white px-5 py-4 rounded-[1.5rem] border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.02)] flex items-center justify-between hover:border-primary/20 transition-all group active:scale-[0.98]"
-                        >
-                            <div className="flex items-center gap-4">
-                                <div className="h-10 w-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-pink-50 transition-all">
-                                    {item.icon}
-                                </div>
-                                <span className="text-sm font-bold text-gray-700 tracking-tight">{item.label}</span>
-                            </div>
-                            <ChevronRight size={18} className="text-gray-300 group-hover:text-primary transition-colors" />
-                        </button>
-                    ))}
+                <div className="px-5 space-y-4 flex-1 pb-10 animate-in fade-in duration-300">
+                    <div className="bg-white rounded-[2rem] p-4 border border-gray-100 shadow-sm">
+                        <MenuOption
+                            icon={Edit2}
+                            color="bg-indigo-500"
+                            label="Edit Profile"
+                            subLabel="Update shop details"
+                            onClick={() => setIsEditing(true)}
+                        />
+                        <MenuOption
+                            icon={History}
+                            color="bg-purple-600"
+                            label="Order History"
+                            subLabel="View past transactions"
+                            to="/partner/orders"
+                        />
+                        <MenuOption
+                            icon={Bell}
+                            color="bg-pink-500"
+                            label="Notifications"
+                            subLabel="Manage alerts"
+                            to="/partner/notifications"
+                        />
+                    </div>
+
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-4 mb-2 italic">Earnings & Wallet</h3>
+                    <div className="bg-white rounded-[2rem] p-4 border border-gray-100 shadow-sm">
+                        <MenuOption
+                            icon={Wallet}
+                            color="bg-orange-400"
+                            label="Wallet & Payouts"
+                            subLabel="Check your balance"
+                            extra={<span className="bg-green-50 text-[10px] font-black px-2.5 py-1 rounded-full text-green-600 border border-green-100 italic">₹ 0</span>}
+                            to="/partner/withdraw"
+                        />
+                        <MenuOption
+                            icon={MapPin}
+                            color="bg-green-500"
+                            label="Pick Up Information"
+                            subLabel="Manage addresses"
+                            onClick={() => setActiveModal('pickup')}
+                        />
+                    </div>
+
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-4 mb-2 italic">Support & Legal</h3>
+                    <div className="bg-white rounded-[2rem] p-4 border border-gray-100 shadow-sm">
+                        <MenuOption
+                            icon={FileText}
+                            color="bg-blue-600"
+                            label="Terms & Conditions"
+                            onClick={() => setActiveModal('terms')}
+                        />
+                        <MenuOption
+                            icon={Shield}
+                            color="bg-red-500"
+                            label="Privacy & Security"
+                            onClick={() => setActiveModal('privacy')}
+                        />
+                    </div>
 
                     <button
                         onClick={handleLogout}
-                        className="w-full bg-white px-5 py-4 rounded-[1.5rem] border border-red-50 shadow-[0_4px_20px_rgb(0,0,0,0.02)] flex items-center justify-between hover:bg-red-50/50 transition-all group active:scale-[0.98] mt-4"
+                        className="w-full bg-red-50/50 p-4 rounded-[2rem] border border-red-100 flex items-center justify-between hover:bg-red-50 transition-all group active:scale-[0.98] mt-6"
                     >
                         <div className="flex items-center gap-4">
-                            <div className="h-10 w-10 bg-red-50 rounded-xl flex items-center justify-center text-red-400 group-hover:text-red-500 transition-all">
+                            <div className="h-12 w-12 bg-red-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-200 group-hover:rotate-6 transition-transform">
                                 <LogOut size={20} />
                             </div>
-                            <span className="text-sm font-bold text-red-500 tracking-tight">Sign Out</span>
+                            <div className="text-left">
+                                <h4 className="text-sm font-black text-red-600 uppercase tracking-widest italic leading-none">Sign Out</h4>
+                                <p className="text-[10px] font-bold text-red-400 mt-1">Exit Partner Dashboard</p>
+                            </div>
                         </div>
+                        <ChevronRight size={16} className="text-red-300" />
                     </button>
                 </div>
             )}

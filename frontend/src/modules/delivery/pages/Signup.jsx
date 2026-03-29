@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
 import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
 import useAuthStore from '../../../store/authStore';
 import { Navigation2, ArrowLeft } from 'lucide-react';
-import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
 
 const DeliverySignup = () => {
     const navigate = useNavigate();
@@ -45,24 +45,24 @@ const DeliverySignup = () => {
 
     return (
         <div className="w-full">
-            <div className="relative flex flex-col items-center mb-10">
+            <div className="relative flex flex-col items-center mb-6">
                 <button 
                     onClick={() => navigate('/delivery/login')} 
-                    className="absolute left-0 top-0 p-3 bg-slate-50 text-slate-400 rounded-2xl hover:text-slate-900 transition-all border border-slate-100"
+                    className="absolute left-0 top-0 p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:text-slate-900 transition-all border border-slate-100"
                 >
-                    <ArrowLeft size={18} />
+                    <ArrowLeft size={16} />
                 </button>
                 
-                <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center shadow-xl border border-slate-50 mb-6">
-                    <img src={silaiwalaLogo} alt="Silaiwala" className="w-14 h-14 object-contain" />
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-xl border border-slate-50 mb-4 transition-transform hover:rotate-3">
+                    <img src={silaiwalaLogo} alt="Silaiwala" className="w-10 h-10 object-contain" />
                 </div>
                 
-                <h2 className="text-3xl font-bold text-slate-900 tracking-tight text-center">Join the Fleet</h2>
-                <div className="w-12 h-1 bg-pink-600 rounded-full mt-3 opacity-20"></div>
-                <p className="text-[11px] font-semibold text-pink-800 uppercase tracking-[0.15em] mt-4 opacity-70">Exclusive Delivery Partner Program</p>
+                <h2 className="text-2xl font-black text-gray-900 tracking-tight text-center leading-none">Join the Fleet</h2>
+                <div className="w-10 h-1 bg-[#FF5C8A] rounded-full mt-2 opacity-20"></div>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] mt-3 text-center">Delivery Partner Program</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3">
                 {error && (
                     <div className="p-3 text-sm text-red-600 bg-red-50 rounded-xl border border-red-100 font-bold">
                         {error}

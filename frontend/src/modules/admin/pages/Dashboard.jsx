@@ -193,17 +193,22 @@ const AdminDashboard = () => {
                                 <div key={idx} className="flex flex-col items-center flex-1 z-10 group">
                                     <div className="relative w-full max-w-[40px] flex justify-center flex-1 items-end">
                                         <div
-                                            className="w-full bg-pink-50 rounded-t-lg group-hover:bg-primary transition-colors relative"
+                                            className="w-full bg-pink-100/50 rounded-t-lg group-hover:bg-[#FF5C8A] transition-all duration-300 relative"
                                             style={{ height: `${(data.revenue / (maxRevenue || 1)) * 100}%` }}
                                         >
-                                            <div className="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg pointer-events-none whitespace-nowrap transition-opacity">
-                                                ₹{data.revenue}
+                                            <div className="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] font-black px-3 py-1.5 rounded-lg shadow-xl pointer-events-none whitespace-nowrap transition-all z-20">
+                                                ₹{data.revenue.toLocaleString()}
                                             </div>
                                         </div>
                                     </div>
-                                    <span className="text-[10px] font-bold text-gray-400 mt-3 uppercase">{data.name}</span>
+                                    <span className="text-[10px] font-black text-gray-400 mt-3 uppercase tracking-tighter">{data.name}</span>
                                 </div>
                             ))}
+                            {revenueChartData.length === 0 && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <p className="text-xs font-black text-gray-300 uppercase tracking-widest">No Revenue Data Yet</p>
+                                </div>
+                            )}
                         </div>
                     </motion.div>
 
@@ -290,14 +295,19 @@ const AdminDashboard = () => {
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="gradient-brand p-6 lg:p-8 rounded-[2rem] shadow-xl text-white relative overflow-hidden group"
+                        className="bg-[#FF5C8A] p-6 lg:p-8 rounded-[2rem] shadow-xl text-white relative overflow-hidden group border border-pink-400/20"
                     >
-                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <Scissors size={80} />
+                        <div className="absolute -top-4 -right-4 p-4 opacity-10 group-hover:opacity-20 transition-all duration-500 transform group-hover:rotate-12 group-hover:scale-110">
+                            <Scissors size={120} />
                         </div>
-                        <h4 className="text-base lg:text-lg font-black tracking-tight relative z-10">Tailor Applications</h4>
-                        <p className="text-white/60 text-[10px] lg:text-xs mt-2 font-medium relative z-10 max-w-[200px]">You have {statsData.pendingTailorsCount || 0} new tailors waiting for document KYC verification.</p>
-                        <Link to="/admin/tailors" className="mt-6 w-full py-3 bg-white text-primary font-black rounded-xl text-[10px] lg:text-xs uppercase tracking-widest hover:shadow-[0_8px_30px_rgb(255,255,255,0.12)] transition-all active:scale-95 relative z-10 flex items-center justify-center">
+                        <h4 className="text-lg lg:text-xl font-black tracking-tight relative z-10">Tailor Applications</h4>
+                        <div className="mt-3 space-y-1 relative z-10">
+                            <p className="text-white font-bold text-xs">Verification Needed</p>
+                            <p className="text-pink-100/80 text-[11px] font-medium leading-relaxed max-w-[200px]">
+                                You have <span className="text-white font-black underline decoration-white/30 underline-offset-4">{statsData.pendingTailorsCount || 0} applications</span> waiting for document KYC verification.
+                            </p>
+                        </div>
+                        <Link to="/admin/tailors" className="mt-8 w-full py-4 bg-white text-[#FF5C8A] font-black rounded-2xl text-[11px] uppercase tracking-widest hover:bg-pink-50 hover:shadow-xl transition-all active:scale-95 relative z-10 flex items-center justify-center shadow-lg shadow-pink-900/10">
                             Review Applications
                         </Link>
                     </motion.div>

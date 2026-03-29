@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import useCartStore from '../../../store/cartStore';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
+// import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
+import silaiwalaLogo from '/logo.png';
 
 import { useNotifications } from '../context/NotificationContext';
 
@@ -21,7 +22,7 @@ const HomeHeader = ({ user }) => {
                 <div className="flex justify-between items-center mb-5">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md overflow-hidden border border-gray-50 rotate-3">
-                            <img src={silaiwalaLogo} alt="Silaiwala" className="w-8 h-8 object-contain" />
+                            <img src={silaiwalaLogo} alt="Silaiwala" className="w-full h-full object-contain p-1.5" />
                         </div>
                         <div>
                             <h1 className="text-xl font-black text-gray-900 leading-none tracking-tight">Silai<span className="text-[#FF5C8A]">wala</span></h1>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
-    User, ShoppingBag, MapPin, Ruler, Grid, LogOut,
-    Settings, Headset, ChevronRight, Share2, Heart, MessageSquare, FileText, Shield
+    User, ShoppingBag, MapPin, Ruler, Grid, LogOut, Wallet, Star,
+    Settings, Headset, ChevronRight, Share2, Heart, MessageSquare, FileText, Shield, Ticket, Bell, Globe, Sparkles
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../../store/authStore';
@@ -84,80 +84,121 @@ const ProfilePage = () => {
 
                 {/* Account Section */}
                 <div className="mb-6">
-                    <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 ml-1">Account</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3 ml-2 italic">Account Management</h3>
+                    <div className="space-y-1">
                         <MenuOption
                             icon={ShoppingBag}
+                            color="bg-indigo-500"
                             label="My Orders"
                             subLabel="Track, Return, Feedback"
                             to="/orders"
                         />
                         <MenuOption
                             icon={MapPin}
+                            color="bg-green-500"
                             label="Saved Addresses"
                             subLabel="Manage Pickup & Delivery locations"
                             to="/profile/addresses"
                         />
                         <MenuOption
                             icon={Ruler}
+                            color="bg-blue-500"
                             label="My Measurements"
                             subLabel="Saved Body Profiles"
                             to="/profile/measurements"
                         />
+                    </div>
+                </div>
+
+                {/* Rewards & Benefits Section - Matching Image exactly */}
+                <div className="mb-6">
+                    <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3 ml-2 italic">Rewards & Benefits</h3>
+                    <div className="space-y-1">
                         <MenuOption
-                            icon={Heart}
-                            label="Wishlist"
-                            subLabel="Your Saved styles"
-                            to="/wishlist"
+                            icon={Star}
+                            color="bg-orange-400"
+                            label="Loyalty Points"
+                            subLabel="Redeem your rewards"
+                            extra={<span className="bg-gray-100 text-[10px] font-black px-2.5 py-1 rounded-full text-gray-900 border border-gray-200">0</span>}
+                            to="/rewards"
                         />
                         <MenuOption
-                            icon={MessageSquare}
-                            label="My Reviews"
-                            subLabel="Rating & feedback given"
-                            to="/reviews"
+                            icon={Wallet}
+                            color="bg-purple-500"
+                            label="Wallet"
+                            subLabel="Your balance"
+                            extra={<span className="bg-green-50 text-[10px] font-black px-2.5 py-1 rounded-full text-green-600 border border-green-100 italic">₹ 0</span>}
+                            to="/wallet"
+                        />
+                        <MenuOption
+                            icon={Ticket}
+                            color="bg-pink-500"
+                            label="Coupons"
+                            subLabel="View available offers"
+                            to="/coupons"
+                        />
+                        <MenuOption
+                            icon={Share2}
+                            color="bg-teal-600"
+                            label="Refer & Earn"
+                            subLabel="Invite friends, earn rewards"
+                            extra={<span className="bg-red-500 text-[8px] font-black px-2 py-0.5 rounded-full text-white animate-pulse">NEW</span>}
+                            to="/refer"
                         />
                     </div>
                 </div>
 
-                {/* Support Section */}
+                {/* Settings Section */}
                 <div className="mb-6">
-                    <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 mt-6 ml-1">Support & More</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3 ml-2 italic">Settings</h3>
+                    <div className="space-y-1">
                         <MenuOption
-                            icon={Headset}
-                            label="Help & Support"
-                            subLabel="FAQs, Contact Us"
-                            to="/support"
+                            icon={Globe}
+                            color="bg-blue-600"
+                            label="Language"
+                            subLabel="Change app language"
+                            extra={<span className="text-[10px] font-bold text-gray-400 mr-1">EN</span>}
+                            to="/settings/language"
                         />
                         <MenuOption
-                            icon={Share2}
-                            label="Refer & Earn"
-                            subLabel="Invite friends, get discounts"
-                            to="/refer"
+                            icon={Bell}
+                            color="bg-red-500"
+                            label="Notifications"
+                            subLabel="Manage preferences"
+                            to="/settings/notifications"
+                        />
+                        <MenuOption
+                            icon={MessageSquare}
+                            color="bg-cyan-500"
+                            label="Support"
+                            subLabel="Get help & chat with us"
+                            to="/support"
                         />
                     </div>
                 </div>
 
                 <LegalLinks />
 
-                <div className="max-w-md mx-auto sm:max-w-none">
+                <div className="max-w-md mx-auto sm:max-w-none px-2 mt-8">
                     <button
                         onClick={handleLogout}
-                        className="w-full sm:max-w-sm mx-auto flex items-center justify-between p-4 bg-white rounded-2xl border border-red-100 shadow-sm mt-8 group hover:bg-red-50 transition-colors"
+                        className="w-full flex items-center justify-between p-4 bg-red-50/50 rounded-2xl border border-red-100 group hover:bg-red-50 transition-all duration-300 active:scale-[0.98]"
                     >
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-red-500 group-hover:bg-white group-hover:shadow-sm">
-                                <LogOut size={18} />
+                            <div className="w-12 h-12 rounded-2xl bg-red-500 flex items-center justify-center text-white shadow-lg shadow-red-200 group-hover:rotate-6 transition-transform">
+                                <LogOut size={20} strokeWidth={2.5} />
                             </div>
                             <div className="text-left">
-                                <h4 className="text-sm font-bold text-red-600">Logout</h4>
+                                <h4 className="text-sm font-black text-red-600 uppercase tracking-wider italic">Logout Account</h4>
+                                <p className="text-[10px] font-bold text-red-400">Sign out from this device</p>
                             </div>
                         </div>
+                        <ChevronRight size={16} className="text-red-300" />
                     </button>
                 </div>
 
-                <p className="text-center text-[10px] text-gray-400 mt-8 pb-4">
-                    App Version 1.0.0 • Made with ❤️ in India
+                <p className="text-center text-[10px] font-bold text-gray-400 mt-10 pb-6 uppercase tracking-widest opacity-50">
+                    Silaiwala • Version 1.0.0 (Beta)
                 </p>
             </div>
 

@@ -10,6 +10,7 @@ import {
     UserCircle,
     Wallet
 } from 'lucide-react';
+const silaiwalaLogo = '/logo.png';
 import AppContainer from '../components/Common/AppContainer';
 import { useTailorAuth } from '../modules/tailor/context/AuthContext';
 
@@ -35,13 +36,18 @@ const TailorLayout = () => {
             {(!isOverview && location.pathname !== '/partner/settings' && location.pathname !== '/partner/wallet' && location.pathname !== '/partner/earnings') && (
                 <div className="relative sticky top-0 z-10 w-full mb-4">
                     <header className="bg-primary pt-6 pb-4 px-6 flex items-center justify-between text-white transition-all shadow-[0_4px_20px_rgb(0,0,0,0.1)]">
-                        <div>
-                            <h2 className="text-xl font-black tracking-tight drop-shadow-sm">
-                                {menuItems.find(i => i.path === location.pathname)?.label || 'Silaiwala'}
-                            </h2>
-                            <div className="flex items-center gap-1.5 mt-0.5">
-                                <span className={`h-1.5 w-1.5 rounded-full ${status === 'APPROVED' ? 'bg-green-400' : 'bg-orange-400'}`}></span>
-                                <span className="text-[10px] font-bold uppercase text-green-100/70 tracking-widest">{status}</span>
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1.5 shadow-xl border border-white/10 overflow-hidden shrink-0 transform -rotate-3">
+                                <img src={silaiwalaLogo} alt="Silaiwala" className="w-full h-full object-contain" />
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-black tracking-tight drop-shadow-sm leading-none">
+                                    {menuItems.find(i => i.path === location.pathname)?.label || 'Silaiwala'}
+                                </h2>
+                                <div className="flex items-center gap-1.5 mt-1">
+                                    <span className={`h-1.5 w-1.5 rounded-full ${status === 'APPROVED' ? 'bg-green-400' : 'bg-orange-400'}`}></span>
+                                    <span className="text-[10px] font-bold uppercase text-green-100/70 tracking-widest leading-none">{status}</span>
+                                </div>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">

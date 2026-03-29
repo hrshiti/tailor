@@ -5,7 +5,7 @@ import useCartStore from '../../../../store/cartStore';
 import useWishlistStore from '../../../../store/wishlistStore';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import silaiwalaLogo from '../../../../assets/silaiwala-logo.png';
+const silaiwalaLogo = '/logo.png';
 
 const StoreHeader = ({ searchQuery, setSearchQuery }) => {
     const cartCount = useCartStore(state => state.getTotalItems());
@@ -17,7 +17,7 @@ const StoreHeader = ({ searchQuery, setSearchQuery }) => {
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center gap-3">
                         <Link to="/" className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md overflow-hidden border border-gray-50 rotate-3 active:scale-95 transition-transform">
-                            <img src={silaiwalaLogo} alt="Silaiwala" className="w-8 h-8 object-contain" />
+                            <img src={silaiwalaLogo} alt="Silaiwala" className="w-full h-full object-contain p-1.5" />
                         </Link>
                         <div>
                             <h1 className="text-xl font-black text-gray-900 leading-none tracking-tight">Silai<span className="text-[#FF5C8A]">wala</span></h1>
@@ -32,7 +32,9 @@ const StoreHeader = ({ searchQuery, setSearchQuery }) => {
                         >
                             <Heart size={20} className={wishlistCount > 0 ? "fill-[#FF5C8A] text-[#FF5C8A]" : ""} />
                             {wishlistCount > 0 && (
-                                <span className="absolute top-2 right-2 h-2 w-2 bg-[#FF5C8A] rounded-full border border-white"></span>
+                                <span className="absolute -top-1 -right-1 h-5 w-5 bg-[#FFBC00] text-[#FF5C8A] text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white shadow-md">
+                                    {wishlistCount}
+                                </span>
                             )}
                         </Link>
 

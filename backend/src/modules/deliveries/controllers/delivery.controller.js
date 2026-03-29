@@ -243,6 +243,7 @@ exports.getDashboardStats = asyncHandler(async (req, res, next) => {
 exports.updateDeliveryStatus = asyncHandler(async (req, res, next) => {
   const { status, message, proof } = req.body;
   const allowedStatuses = [
+    "accepted",
     "fabric-picked-up", 
     "fabric-delivered", 
     "out-for-delivery", 

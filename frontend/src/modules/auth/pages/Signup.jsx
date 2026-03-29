@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+const silaiwalaLogo = '/logo.png';
 import RoleSelector from '../components/RoleSelector';
 import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
@@ -61,9 +62,12 @@ const Signup = () => {
 
     return (
         <div className="w-full">
-            <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-[#FF5C8A]">Create Account</h2>
-                <p className="text-gray-500">
+            <div className="flex flex-col items-center mb-8">
+                <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center shadow-xl border border-slate-50 mb-6 transition-transform hover:rotate-3">
+                    <img src={silaiwalaLogo} alt="Silaiwala" className="w-14 h-14 object-contain" />
+                </div>
+                <h2 className="text-3xl font-black text-gray-900 tracking-tight text-center">Create Account</h2>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-2">
                     {step === 1 ? 'Join us as a Customer, Tailor, or Partner' : `Sign up as a ${selectedRole}`}
                 </p>
             </div>

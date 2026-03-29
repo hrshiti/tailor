@@ -5,7 +5,7 @@ import AppContainer from '../../../components/Common/AppContainer';
 import { Button, Input } from '../components/UIElements';
 import { useTailorAuth } from '../context/AuthContext';
 import api from '../services/api';
-import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
+
 
 const Login = () => {
     const { login } = useTailorAuth();
@@ -70,14 +70,14 @@ const Login = () => {
 
     return (
         <AppContainer className="bg-white items-center justify-center">
-            <div className="flex-1 flex flex-col w-full px-8 pt-12 pb-6 max-w-[400px] mx-auto overflow-y-auto custom-scrollbar">
+            <div className="flex-1 flex flex-col w-full px-8 pt-12 pb-6 max-w-[400px] mx-auto overflow-hidden">
 
-                <div className="mb-8">
-                    <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-white font-black text-xl mb-4 shadow-xl shadow-pink-900/10 overflow-hidden border border-gray-100">
-                        <img src={silaiwalaLogo} alt="Silaiwala" className="w-10 h-10 object-contain" />
+                <div className="flex flex-col items-center mb-8">
+                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-xl border border-gray-50 mb-4 transition-transform hover:rotate-3">
+                        <img src="/logo.png" alt="Silaiwala" className="w-10 h-10 object-contain" />
                     </div>
-                    <h1 className="text-2xl font-black text-gray-900 tracking-tight">Welcome Back</h1>
-                    <p className="text-gray-400 font-bold mt-1 uppercase tracking-widest text-[10px]">Login to manage your shop</p>
+                    <h1 className="text-2xl font-black text-gray-900 tracking-tight text-center">Welcome Back</h1>
+                    <p className="text-gray-400 font-bold mt-1 uppercase tracking-widest text-[10px] text-center">Login to manage your shop</p>
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="flex-1 space-y-4">

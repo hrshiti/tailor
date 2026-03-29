@@ -35,8 +35,8 @@ router.patch("/addresses/:id", authorize("customer", "admin"), updateAddress);
 router.delete("/addresses/:id", authorize("customer", "admin"), deleteAddress);
 
 // Wishlist
-router.get("/wishlist", authorize("customer", "admin"), getWishlist);
-router.post("/wishlist/toggle", authorize("customer", "admin"), wishlistToggle);
+router.get("/wishlist", authorize("customer", "admin", "tailor", "delivery"), getWishlist);
+router.post("/wishlist/toggle", authorize("customer", "admin", "tailor", "delivery"), wishlistToggle);
 
 // Promo
 router.post("/apply-promo", authorize("customer", "admin"), applyPromoCode);
@@ -45,8 +45,8 @@ router.post("/apply-promo", authorize("customer", "admin"), applyPromoCode);
 router.get("/referral-stats", authorize("customer", "admin"), getReferralStats);
 
 // Cart Management
-router.get("/cart", authorize("customer", "admin"), getCart);
-router.post("/cart", authorize("customer", "admin"), addToCart);
-router.delete("/cart/:itemId", authorize("customer", "admin"), removeFromCart);
+router.get("/cart", authorize("customer", "admin", "tailor", "delivery"), getCart);
+router.post("/cart", authorize("customer", "admin", "tailor", "delivery"), addToCart);
+router.delete("/cart/:itemId", authorize("customer", "admin", "tailor", "delivery"), removeFromCart);
 
 module.exports = router;

@@ -159,7 +159,7 @@ const Registration = () => {
     return (
         <AppContainer>
             {/* Header */}
-            <header className="px-6 py-5 bg-white sticky top-0 z-20 shadow-[0_4px_20px_rgba(0,0,0,0.03)] rounded-b-3xl">
+            <header className="px-6 py-4 bg-white sticky top-0 z-20 shadow-[0_4px_20px_rgba(0,0,0,0.03)] rounded-b-3xl">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         {step > 1 && (
@@ -167,9 +167,12 @@ const Registration = () => {
                                 <ChevronLeft size={20} />
                             </button>
                         )}
+                        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg border border-gray-50 overflow-hidden shrink-0">
+                            <img src="/logo.png" alt="Silaiwala" className="w-7 h-7 object-contain" />
+                        </div>
                         <div>
-                            <h1 className="text-xl font-bold tracking-tight text-gray-900 leading-none">Join Silaiwala</h1>
-                            <p className="text-[9px] font-semibold w-full uppercase text-[#FF5C8A] tracking-[0.15em] mt-1 opacity-80">{stepTitles[step - 1]}</p>
+                            <h1 className="text-lg font-black tracking-tight text-gray-900 leading-none">Join Silaiwala</h1>
+                            <p className="text-[9px] font-semibold uppercase text-[#FF5C8A] tracking-[0.15em] mt-0.5 opacity-80">{stepTitles[step - 1]}</p>
                         </div>
                     </div>
                     <div className="flex flex-col items-end">
@@ -193,7 +196,7 @@ const Registration = () => {
             </div>
 
             {/* Form Content */}
-            <div className="flex-1 overflow-y-auto px-6 py-8 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto px-6 py-6 no-scrollbar">
                 {renderStep()}
             </div>
 

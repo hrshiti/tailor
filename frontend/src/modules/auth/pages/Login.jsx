@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+// import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
 import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
 import useAuthStore from '../../../store/authStore';
-
+import silaiwalaLogo from '/logo.png';
 const Login = () => {
     const navigate = useNavigate();
     const { otpLogin, sendOTP, isLoading } = useAuthStore();
-    
+
     const [mobileNumber, setMobileNumber] = useState('');
     const [otp, setOtp] = useState('');
     const [otpSent, setOtpSent] = useState(false);
@@ -56,8 +57,13 @@ const Login = () => {
 
     return (
         <div className="w-full">
-            <h2 className="text-2xl font-bold text-center text-[#FF5C8A] mb-2">Welcome Back</h2>
-            <p className="text-center text-gray-500 mb-8">Sign in with Mobile Number to continue</p>
+            <div className="flex flex-col items-center mb-8">
+                <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center shadow-xl border border-slate-50 mb-6 transition-transform hover:rotate-3">
+                    <img src={silaiwalaLogo} alt="Silaiwala" className="w-14 h-14 object-contain" />
+                </div>
+                <h2 className="text-3xl font-black text-gray-900 tracking-tight text-center">Welcome Back</h2>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-2">Sign in to your account</p>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 {error && (
@@ -80,9 +86,9 @@ const Login = () => {
                             className="flex-1"
                         />
                         {!otpSent && (
-                            <Button 
-                                type="button" 
-                                onClick={handleSendOtp} 
+                            <Button
+                                type="button"
+                                onClick={handleSendOtp}
                                 disabled={!mobileNumber || mobileNumber.length < 10 || sendingOtp}
                                 className="bg-[#FF5C8A] hover:bg-[#cc496e] text-white shrink-0"
                             >
@@ -96,9 +102,9 @@ const Login = () => {
                     <div className="space-y-2 animate-in fade-in slide-in-from-top-2">
                         <div className="flex justify-between">
                             <label className="text-sm font-medium text-gray-700">Enter OTP</label>
-                            <button 
-                                type="button" 
-                                onClick={() => setOtpSent(false)} 
+                            <button
+                                type="button"
+                                onClick={() => setOtpSent(false)}
                                 className="text-xs text-[#FF5C8A] hover:underline"
                             >
                                 Change Number?
@@ -123,11 +129,13 @@ const Login = () => {
                 )}
             </form>
 
-            <div className="mt-6 text-center text-sm text-gray-500">
-                Don't have an account?{' '}
-                <Link to="/signup" className="font-semibold text-[#FF5C8A] hover:underline">
-                    Create account
-                </Link>
+            <div className="mt-8 pt-6 border-t border-gray-50 text-center">
+                <p className="text-[11px] text-gray-400 font-bold uppercase tracking-widest">
+                    Don't have an account?{' '}
+                    <Link to="/signup" className="text-[#FF5C8A] hover:underline ml-1">
+                        Create account
+                    </Link>
+                </p>
             </div>
         </div>
     );

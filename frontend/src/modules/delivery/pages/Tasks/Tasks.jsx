@@ -140,12 +140,38 @@ const Tasks = () => {
         }
     };
 
-    const handleStartTask = (taskId) => {
+    const handleStartTask = async (taskId) => {
         if (activeTaskId) {
             toast.error('Finish the current Active Dispatch before starting another task.');
             return;
         }
-        setActiveTaskId(taskId);
+
+        try {
+            // Find the task in our local list to check current status
+            const task = tasks.find(t => t._id === taskId);
+            
+            // Determine the next status based on current status
+            let nextStatus;
+            if (task.status === 'fabric-ready-for-pickup') {
+                nextStatus = 'accepted'; // Start heading for fabric pickup
+            } else if (task.status === 'ready-for-pickup') {
+                nextStatus = 'accepted'; // Start heading for order pickup
+            } else {
+                nextStatus = task.status;
+            }
+
+            // Sync with backend that we are starting this specific dispatch
+            const res = await deliveryService.updateDeliveryStatus(taskId, nextStatus, "Starting dispatch flow");
+            
+            if (res.success) {
+                setActiveTaskId(taskId);
+                toast.success("Dispatch Started! Navigating to destination.");
+                fetchTasks();
+            }
+        } catch (error) {
+            console.error('Error starting task:', error);
+            toast.error('Failed to start dispatch. Please try again.');
+        }
     };
 
     // Helper to format addresses
@@ -166,10 +192,14 @@ const Tasks = () => {
     const renderActiveTaskActions = (task) => {
         const btnClass = "w-full rounded-xl py-3 font-black tracking-[0.12em] text-[10px] uppercase flex items-center justify-center gap-2 transition-all shadow-md active:scale-95";
 
-        if (task.status === 'fabric-ready-for-pickup') {
+        if (task.status === 'accepted' || task.status === 'fabric-ready-for-pickup') {
+            const isFabric = task.taskType === 'fabric-pickup';
             return (
-                <button onClick={() => handleUpdateStatus(task._id, 'fabric-picked-up')} className={`${btnClass} bg-amber-600 text-white hover:bg-amber-700 shadow-amber-100`}>
-                    <Navigation size={14} /> Confirm Fabric Collected from Customer
+                <button 
+                    onClick={() => handleUpdateStatus(task._id, isFabric ? 'fabric-picked-up' : 'out-for-delivery')} 
+                    className={`${btnClass} bg-amber-600 text-white hover:bg-amber-700 shadow-amber-100 uppercase tracking-widest font-black`}
+                >
+                    <Navigation size={14} /> Confirm Item Picked Up
                 </button>
             );
         }

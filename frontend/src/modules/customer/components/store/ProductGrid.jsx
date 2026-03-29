@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import AddToCartModal from './AddToCartModal';
 import api from '../../../../utils/api';
 import useGeoLocation from '../../../../hooks/useLocation';
 
 const ProductGrid = ({ filters, categoryId, categoryName, searchQuery }) => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const fetchProducts = async () => {
         setIsLoading(true);
@@ -43,9 +44,13 @@ const ProductGrid = ({ filters, categoryId, categoryName, searchQuery }) => {
                     <p>No products found in this category.</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 px-3 md:px-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 px-2 md:px-4">
                     {items.map((product, index) => (
-                        <ProductCard key={`${product.id}-${index}`} product={product} />
+                        <ProductCard 
+                            key={`${product.id || product._id}-${index}`} 
+                            product={product} 
+                            onAddClick={(p) => setSelectedProduct(p)} 
+                        />
                     ))}
                 </div>
             )}
@@ -55,6 +60,12 @@ const ProductGrid = ({ filters, categoryId, categoryName, searchQuery }) => {
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF5C8A]"></div>
                 </div>
             )}
+
+            <AddToCartModal 
+                isOpen={!!selectedProduct} 
+                onClose={() => setSelectedProduct(null)} 
+                product={selectedProduct} 
+            />
         </div>
     );
 };

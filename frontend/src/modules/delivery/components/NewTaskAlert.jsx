@@ -138,10 +138,19 @@ const NewTaskAlert = ({ onTaskAccepted }) => {
                             </div>
                             <div className="flex-1 space-y-4">
                                 <div>
-                                    <p className="text-[9px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">Pickup Information</p>
-                                    <p className="text-sm font-black text-white leading-tight">
-                                        {newTask.taskType === 'fabric-pickup' ? 'Collection From Customer' : 'Ready at Artisan Workshop'}
-                                    </p>
+                                    <p className="text-[9px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">Route Context</p>
+                                    <div className="flex flex-col gap-1">
+                                        <p className="text-sm font-black text-white leading-tight">
+                                            {newTask.taskType === 'fabric-pickup' 
+                                                ? `Pickup: ${newTask.customer?.name || 'Customer'}` 
+                                                : `Pickup: ${newTask.tailor?.shopName || 'Artisan'}`}
+                                        </p>
+                                        <p className="text-[11px] font-bold text-pink-300/60 leading-tight">
+                                            {newTask.taskType === 'fabric-pickup' 
+                                                ? `Drop to: ${newTask.tailor?.shopName || 'Workshop'}` 
+                                                : `Drop to: ${newTask.customer?.name || 'Requester'}`}
+                                        </p>
+                                    </div>
                                 </div>
                                 <div className="flex items-center gap-2 text-white/60">
                                     <MapPin size={12} className="text-primary" />

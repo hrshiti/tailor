@@ -18,13 +18,13 @@ import {
     X,
     Sparkles
 } from 'lucide-react';
+const silaiwalaLogo = '/logo.png';
 
 
 import useAuthStore from '../store/authStore';
 import { io } from 'socket.io-client';
 import { SOCKET_URL } from '../config/constants';
 import { toast } from 'react-hot-toast';
-
 const AdminLayout = () => {
     const location = useLocation();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -88,11 +88,14 @@ const AdminLayout = () => {
             {/* Sidebar */}
             <aside className={`fixed lg:relative inset-y-0 left-0 z-50 w-64 bg-primary text-white flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
                 <div className="p-6 border-b border-white/5 flex justify-between items-center">
-                    <h1 className="text-xl font-black tracking-tighter flex items-center gap-3">
-                        <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center p-1.5 shadow-lg border border-white/10 overflow-hidden shrink-0">
-                            <img src="/logo.png" alt="Silaiwala" className="w-full h-full object-contain" />
+                    <h1 className="flex items-center gap-3">
+                        <div className="h-10 w-10 bg-white rounded-xl flex items-center justify-center p-1.5 shadow-xl border border-white/10 overflow-hidden shrink-0 transform -rotate-3">
+                            <img src={silaiwalaLogo} alt="Silaiwala" className="w-full h-full object-contain" />
                         </div>
-                        <span className="tracking-widest opacity-80 uppercase text-xs font-bold">Admin Panel</span>
+                        <div className="flex flex-col">
+                            <span className="text-lg font-black tracking-tighter text-white leading-none">Silai<span className="text-white/60">wala</span></span>
+                            <span className="tracking-[0.2em] opacity-50 uppercase text-[8px] font-black mt-1">Admin Panel</span>
+                        </div>
                     </h1>
                     <button className="lg:hidden text-gray-400 hover:text-white" onClick={() => setIsSidebarOpen(false)}>
                         <X size={24} />
@@ -163,10 +166,10 @@ const AdminLayout = () => {
                         </button>
                         <div className="flex items-center gap-3 lg:gap-4 pl-3 lg:pl-6 border-l border-gray-100">
                             <div className="text-right hidden lg:block">
-                                <p className="text-sm font-bold text-gray-900 leading-none">Super Admin</p>
-                                <p className="text-[10px] text-gray-400 font-bold uppercase mt-1 tracking-tighter">Full Access</p>
+                                <p className="text-xs font-black text-gray-900 leading-none uppercase tracking-tighter">Super Admin</p>
+                                <p className="text-[9px] text-[#FF5C8A] font-black uppercase mt-1 tracking-[0.1em]">Full Platform Access</p>
                             </div>
-                            <div className="h-10 w-10 lg:h-11 lg:w-11 rounded-xl gradient-brand flex items-center justify-center text-white font-bold shadow-lg shadow-pink-900/10 shrink-0">
+                            <div className="h-10 w-10 lg:h-11 lg:w-11 rounded-2xl bg-[#FF5C8A] flex items-center justify-center text-white font-black text-xs shadow-lg shadow-pink-900/20 shrink-0 border-2 border-white">
                                 SA
                             </div>
                             <button 

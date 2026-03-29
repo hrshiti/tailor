@@ -19,8 +19,10 @@ import {
     Book,
     Send,
     UploadCloud,
-    Loader2
+    Loader2,
+    Globe
 } from 'lucide-react';
+import MenuOption from '../../../customer/components/profile/MenuOption';
 import deliveryService from '../../services/deliveryService';
 import { toast } from 'react-hot-toast';
 import api from '../../../../utils/api';
@@ -208,213 +210,109 @@ const DeliveryProfile = () => {
 
 
 
-            {/* Editable Sections */}
+            {/* New Categorized Menu - Matching Reference */}
             <div className="space-y-6">
-
-                {/* Personal Details */}
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden group">
-                    <div className="p-6 flex items-center justify-between border-b border-slate-50">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-600">
-                                <User size={18} />
-                            </div>
-                            <h3 className="text-sm font-black text-slate-900 tracking-tight">Identity Profile</h3>
-                            {deliveryProfile?.user?.isVerified && (
-                                <div className="px-2 py-0.5 bg-pink-100 text-[#FF5C8A] rounded-md flex items-center gap-1">
-                                    <ShieldCheck size={10} className="fill-[#FF5C8A] text-white" />
-                                    <span className="text-[8px] font-black uppercase tracking-widest">Verified</span>
-                                </div>
-                            )}
-                        </div>
-                        {isEditing !== 'personal' && (
-                            <button onClick={() => setIsEditing('personal')} className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-all">
-                                <Edit3 size={16} />
-                            </button>
-                        )}
-                    </div>
-
-                    <div className="p-6 space-y-4">
-                        {isEditing === 'personal' ? (
-                            <AnimatePresence>
-                                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4">
-                                    <div>
-                                        <label className="text-[9px] font-black text-slate-400 tracking-widest mb-1 block">Full Name</label>
-                                        <input type="text" value={personalInfo.name} onChange={(e) => setPersonalInfo({ ...personalInfo, name: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none focus:border-slate-500 transition-all" />
-                                    </div>
-                                    <div>
-                                        <label className="text-[9px] font-black text-slate-400 tracking-widest mb-1 block">Phone Number</label>
-                                        <input type="text" value={personalInfo.phone} onChange={(e) => setPersonalInfo({ ...personalInfo, phone: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none focus:border-slate-500 transition-all" />
-                                    </div>
-                                    <div>
-                                        <label className="text-[9px] font-black text-rose-400 tracking-widest mb-1 block">Emergency Contact</label>
-                                        <input type="text" value={personalInfo.emergencyPhone} onChange={(e) => setPersonalInfo({ ...personalInfo, emergencyPhone: e.target.value })} className="w-full bg-rose-50 border border-rose-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none focus:border-rose-500 transition-all" placeholder="Family or Friend" />
-                                    </div>
-                                    <div>
-                                        <label className="text-[9px] font-black text-slate-400 tracking-widest mb-1 block">Vehicle Number</label>
-                                        <input type="text" value={personalInfo.vehicle} onChange={(e) => setPersonalInfo({ ...personalInfo, vehicle: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none focus:border-slate-500 transition-all" />
-                                    </div>
-                                    <div className="flex gap-3 pt-2">
-                                        <button onClick={() => handleSave('personal')} className="flex-1 bg-slate-600 text-white py-3 rounded-xl font-black text-[10px] tracking-widest shadow-md hover:bg-slate-700 active:scale-95 transition-all flex justify-center items-center gap-2">
-                                            <CheckCircle2 size={16} /> Save Changes
-                                        </button>
-                                        <button onClick={() => setIsEditing(null)} className="w-12 h-12 bg-slate-100 text-slate-500 rounded-xl flex items-center justify-center hover:bg-slate-200 transition-all">
-                                            <X size={16} />
-                                        </button>
-                                    </div>
-                                </motion.div>
-                            </AnimatePresence>
-                        ) : (
-                            <div className="space-y-5">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <p className="text-[10px] font-black text-slate-400 tracking-widest leading-none mb-1.5">Registered Phone</p>
-                                        <p className="text-sm font-bold text-slate-900">{personalInfo.phone}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-[10px] font-black text-rose-400 tracking-widest leading-none mb-1.5">Emergency Contact</p>
-                                        <p className="text-sm font-bold text-rose-600">{personalInfo.emergencyPhone}</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-black text-slate-400 tracking-widest leading-none mb-1.5">Vehicle Designation</p>
-                                    <div className="inline-flex px-3 py-1 bg-slate-100 rounded-lg border border-slate-200">
-                                        <p className="text-sm font-black text-slate-700 tracking-wider capitalize">{personalInfo.vehicle}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+                
+                {/* 1. Identity & Duty */}
+                <div className="space-y-3">
+                    <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2 italic">Identity & Performance</h3>
+                    <div className="bg-white rounded-[2rem] p-4 border border-slate-100 shadow-sm">
+                        <MenuOption 
+                            icon={User}
+                            color="bg-green-500"
+                            label="Identity Profile"
+                            subLabel={deliveryProfile?.user?.isVerified ? "Verified Partner" : "Update details"}
+                            onClick={() => setIsEditing('personal')}
+                        />
+                        <MenuOption 
+                            icon={Star}
+                            color="bg-orange-400"
+                            label="Performance Rating"
+                            subLabel="Your service score"
+                            extra={<span className="bg-orange-50 text-[10px] font-black px-2.5 py-1 rounded-full text-orange-600 border border-orange-100 italic">4.8</span>}
+                            to="/delivery/stats"
+                        />
                     </div>
                 </div>
 
-                {/* Bank Details */}
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden group">
-                    <div className="p-6 flex items-center justify-between border-b border-slate-50">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center text-[#FF5C8A]">
-                                <CreditCard size={18} />
-                            </div>
-                            <h3 className="text-sm font-black text-slate-900 tracking-tight">Financial Routing</h3>
-                        </div>
-                        {isEditing !== 'bank' && (
-                            <button onClick={() => setIsEditing('bank')} className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 hover:text-[#FF5C8A] hover:bg-pink-100 transition-all">
-                                <Edit3 size={16} />
-                            </button>
-                        )}
-                    </div>
-
-                    <div className="p-6 space-y-4">
-                        {isEditing === 'bank' ? (
-                            <AnimatePresence>
-                                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4">
-                                    <div>
-                                        <label className="text-[9px] font-black text-slate-400 tracking-widest mb-1 block">Account Holder Name</label>
-                                        <input type="text" value={bankInfo.accountName} onChange={(e) => setBankInfo({ ...bankInfo, accountName: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none focus:border-[#FF5C8A] transition-all" />
-                                    </div>
-                                    <div>
-                                        <label className="text-[9px] font-black text-slate-400 tracking-widest mb-1 block">Bank Name</label>
-                                        <input type="text" value={bankInfo.bank} onChange={(e) => setBankInfo({ ...bankInfo, bank: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none focus:border-[#FF5C8A] transition-all" />
-                                    </div>
-                                    <div>
-                                        <label className="text-[9px] font-black text-slate-400 tracking-widest mb-1 block">Account Number</label>
-                                        <input type="text" value={bankInfo.accountNo} onChange={(e) => setBankInfo({ ...bankInfo, accountNo: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none focus:border-[#FF5C8A] transition-all" />
-                                    </div>
-                                    <div>
-                                        <label className="text-[9px] font-black text-slate-400 tracking-widest mb-1 block">IFSC Code</label>
-                                        <input type="text" value={bankInfo.ifsc} onChange={(e) => setBankInfo({ ...bankInfo, ifsc: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none focus:border-[#FF5C8A] transition-all" />
-                                    </div>
-                                    <div className="flex gap-3 pt-2">
-                                        <button onClick={() => handleSave('bank')} className="flex-1 bg-[#FF5C8A] text-white py-3 rounded-xl font-black text-[10px] tracking-widest shadow-md hover:bg-primary-dark active:scale-95 transition-all flex justify-center items-center gap-2">
-                                            <CheckCircle2 size={16} /> Save Securely
-                                        </button>
-                                        <button onClick={() => setIsEditing(null)} className="w-12 h-12 bg-slate-100 text-slate-500 rounded-xl flex items-center justify-center hover:bg-slate-200 transition-all">
-                                            <X size={16} />
-                                        </button>
-                                    </div>
-                                </motion.div>
-                            </AnimatePresence>
-                        ) : (
-                            <div className="space-y-5">
-                                <div className="flex justify-between items-center">
-                                    <div>
-                                        <p className="text-[10px] font-black text-slate-400 tracking-widest leading-none mb-1.5">Primary Bank</p>
-                                        <p className="text-sm font-bold text-slate-900">{bankInfo.bank}</p>
-                                    </div>
-                                    <div className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center border border-slate-100">
-                                        <ShieldCheck size={16} className="text-[#FF5C8A]" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-black text-slate-400 tracking-widest leading-none mb-1.5">Account Number</p>
-                                    <p className="text-sm font-black text-slate-800 tracking-wider font-mono">{bankInfo.accountNo}</p>
-                                </div>
-                            </div>
-                        )}
+                {/* 2. Financials */}
+                <div className="space-y-3">
+                    <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2 italic">Earnings & Bank</h3>
+                    <div className="bg-white rounded-[2rem] p-4 border border-slate-100 shadow-sm">
+                        <MenuOption 
+                            icon={Wallet}
+                            color="bg-purple-600"
+                            label="Wallet & Earnings"
+                            subLabel="Check your balance"
+                            extra={<span className="bg-green-50 text-[10px] font-black px-2.5 py-1 rounded-full text-green-600 border border-green-100 italic">₹ 1,240</span>}
+                            to="/delivery/wallet"
+                        />
+                        <MenuOption 
+                            icon={CreditCard}
+                            color="bg-pink-500"
+                            label="Financial Routing"
+                            subLabel="Bank details"
+                            onClick={() => setIsEditing('bank')}
+                        />
                     </div>
                 </div>
 
-                {/* Support & Platform Rules */}
-                <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-                    <div onClick={() => setShowRules(true)} className="flex items-center justify-between cursor-pointer group">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-amber-500 group-hover:bg-amber-50 group-hover:border-amber-100 transition-colors">
-                                <Book size={18} />
-                            </div>
-                            <div>
-                                <p className="text-sm font-black text-slate-900 tracking-tight">Platform Rules & Policy</p>
-                                <p className="text-[9px] font-bold text-slate-400 tracking-widest mt-0.5 group-hover:text-amber-500 transition-colors uppercase">Read Guidelines</p>
-                            </div>
-                        </div>
-                        <ChevronRight size={16} className="text-slate-300 group-hover:text-amber-500 transition-colors" />
+                {/* 3. Settings & Support */}
+                <div className="space-y-3">
+                    <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2 italic">Platform Settings</h3>
+                    <div className="bg-white rounded-[2rem] p-4 border border-slate-100 shadow-sm">
+                        <MenuOption 
+                            icon={Bell}
+                            color="bg-red-500"
+                            label="Notifications"
+                            subLabel="Alert preferences"
+                            to="/delivery/notifications"
+                        />
+                        <MenuOption 
+                            icon={Globe}
+                            color="bg-blue-600"
+                            label="Language"
+                            extra={<span className="text-[10px] font-bold text-gray-400 mr-1">EN</span>}
+                            to="/delivery/language"
+                        />
+                        <MenuOption 
+                            icon={FileText}
+                            color="bg-amber-600"
+                            label="KYC Documents"
+                            subLabel={kycStatus}
+                            onClick={() => setShowKYCModal(true)}
+                        />
+                        <MenuOption 
+                            icon={LifeBuoy}
+                            color="bg-cyan-500"
+                            label="Help & Support"
+                            onClick={() => setShowSupport(true)}
+                        />
                     </div>
-
-                    <div className="h-px bg-slate-100 w-full"></div>
-
-                    <div onClick={() => setShowSupport(true)} className="flex items-center justify-between cursor-pointer group">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-slate-600 group-hover:text-white transition-colors">
-                                <LifeBuoy size={18} />
-                            </div>
-                            <div>
-                                <p className="text-sm font-black text-slate-900 tracking-tight">Help & Support</p>
-                                <p className="text-[9px] font-bold text-slate-400 tracking-widest mt-0.5 uppercase">Raise a Ticket</p>
-                            </div>
-                        </div>
-                        <ChevronRight size={16} className="text-slate-300 group-hover:text-slate-600 transition-colors" />
-                    </div>
-                </div>
-
-                {/* Interactive KYC Documents */}
-                <div onClick={() => setShowKYCModal(true)} className="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-center justify-between cursor-pointer group hover:bg-white hover:shadow-sm transition-all">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-amber-600 group-hover:border-amber-100 transition-colors">
-                            <FileText size={16} />
-                        </div>
-                        <div>
-                            <p className="text-sm font-black text-slate-900 tracking-tight">KYC Documents</p>
-                            <p className={`text-[9px] font-bold uppercase tracking-widest mt-0.5 ${kycStatus === 'Verified' ? 'text-[#FF5C8A]' :
-                                kycStatus === 'Under Review' ? 'text-amber-500' : 'text-rose-500'
-                                }`}>
-                                {kycStatus}
-                            </p>
-                        </div>
-                    </div>
-                    <ChevronRight size={16} className="text-slate-300 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
                 </div>
             </div>
 
-            {/* Logout Action */}
-            <div className="pt-4 pb-0">
+            {/* Logout Action - Premium Style */}
+            <div className="pt-6 pb-4">
                 <button
                     onClick={() => {
                         logout();
                         navigate('/delivery/login');
                     }}
-                    className="w-full bg-rose-50 text-rose-500 py-3 rounded-xl font-black text-sm tracking-widest border border-rose-100 hover:bg-rose-500 hover:text-white transition-all shadow-sm active:scale-95 flex items-center justify-center gap-3 group"
+                    className="w-full bg-red-50/50 p-5 rounded-[2rem] border border-red-100 flex items-center justify-between group active:scale-[0.98] transition-all"
                 >
-                    <LogOut size={20} className="group-hover:-translate-x-1 transition-transform" />
-                    Secure Logout
+                    <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 bg-red-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-200 group-hover:rotate-6 transition-transform">
+                            <LogOut size={22} strokeWidth={2.5} />
+                        </div>
+                        <div className="text-left">
+                            <h4 className="text-sm font-black text-red-600 uppercase tracking-widest italic leading-none">Secure Logout</h4>
+                            <p className="text-[10px] font-bold text-red-400 mt-1">Sign out of Silaiwala</p>
+                        </div>
+                    </div>
+                    <ChevronRight size={18} className="text-red-300" />
                 </button>
-                <p className="text-center mt-6 text-[11px] font-bold text-slate-400">Delivery partner app of RoyalTailor<br />v1.2</p>
+                <p className="text-center mt-8 text-[11px] font-black text-slate-400 uppercase tracking-widest opacity-50">Silaiwala • Version 1.2 (Beta)</p>
             </div>
 
             {/* Platform Rules Modal */}

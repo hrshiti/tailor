@@ -19,7 +19,7 @@ import { io } from 'socket.io-client';
 import { SOCKET_URL } from '../../../config/constants';
 import useAuthStore from '../../../store/authStore';
 
-import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
+const silaiwalaLogo = '/logo.png';
 
 const DeliveryLayout = () => {
     const [isOnline, setIsOnline] = useState(false);
@@ -205,7 +205,7 @@ const DeliveryLayout = () => {
             <header className="fixed top-0 left-0 right-0 h-20 bg-white/90 backdrop-blur-xl border-b border-slate-100 flex items-center justify-between px-6 z-50">
                 <div className="flex items-center gap-3">
                     <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-slate-200/50 overflow-hidden border border-gray-100">
-                        <img src={silaiwalaLogo} alt="Silaiwala" className="w-9 h-9 object-contain p-1" />
+                        <img src={silaiwalaLogo} alt="Silaiwala" className="w-full h-full object-contain p-1.5" />
                     </div>
                     <div className="flex flex-col">
                         <span className="font-black text-slate-900 text-lg tracking-tighter leading-none">Silaiwala</span>

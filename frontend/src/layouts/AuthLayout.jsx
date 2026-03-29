@@ -1,7 +1,5 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import silaiwalaLogo from '../assets/silaiwala-logo.png';
-
 const AuthLayout = () => {
     return (
         <div className="min-h-screen relative flex flex-col">
@@ -15,7 +13,7 @@ const AuthLayout = () => {
             </div>
 
             <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-4">
-                <div className="w-full max-w-md bg-white shadow-2xl rounded-[2.5rem] p-8 md:p-10 border border-slate-100">
+                <div className="w-full max-w-md bg-white shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] rounded-[2.5rem] p-8 md:p-10 border border-slate-100">
                     <Outlet />
                 </div>
             </div>

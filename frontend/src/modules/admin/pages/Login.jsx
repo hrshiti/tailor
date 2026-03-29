@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, ArrowRight, ShieldCheck, RefreshCw } from 'lucide-react';
 import useAuthStore from '../../../store/authStore';
-import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
-
 const AdminLogin = () => {
     const navigate = useNavigate();
     const { sendOTP, otpLogin, isLoading } = useAuthStore();
@@ -107,8 +105,8 @@ const AdminLogin = () => {
                 <div className="p-8 sm:p-12 flex flex-col items-center">
                     
                     {/* Brand Identity */}
-                    <div className="w-20 h-20 bg-[#FF5C8A] rounded-2xl flex items-center justify-center p-4 shadow-xl shadow-pink-500/30 mb-8 border-4 border-white transform hover:rotate-6 transition-transform">
-                         <img src={silaiwalaLogo} alt="Logo" className="w-full h-full object-contain filter brightness-0 invert" />
+                    <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center p-3 shadow-2xl border border-gray-50 mb-8 transform transition-all hover:scale-105 active:rotate-6">
+                         <img src="/logo.png" alt="Logo" className="w-14 h-14 object-contain" />
                     </div>
                     
                     <div className="text-center space-y-1 mb-10">
@@ -169,7 +167,7 @@ const AdminLogin = () => {
                                         <input
                                             key={index}
                                             ref={el => otpInputs.current[index] = el}
-                                            className="w-12 h-14 text-center text-xl font-black bg-gray-50 border-2 border-transparent rounded-xl outline-none focus:border-[#FF5C8A] focus:bg-white transition-all text-gray-900 shadow-inner"
+                                            className="w-12 h-14 text-center text-xl font-black bg-gray-50 border-2 border-gray-100 rounded-xl outline-none focus:border-[#FF5C8A] focus:bg-white focus:ring-4 focus:ring-pink-50 transition-all text-gray-900 shadow-sm"
                                             type="text"
                                             maxLength="1"
                                             value={data}

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
 import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
 import useAuthStore from '../../../store/authStore';
-import silaiwalaLogo from '../../../assets/silaiwala-logo.png';
-
 const DeliveryLogin = () => {
     const navigate = useNavigate();
     const { otpLogin, sendOTP, isLoading } = useAuthStore();
@@ -53,7 +52,7 @@ const DeliveryLogin = () => {
     return (
         <div className="w-full">
             <div className="flex flex-col items-center mb-10">
-                <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center shadow-xl border border-slate-50 mb-6">
+                <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center shadow-xl border border-slate-50 mb-6 group-hover:rotate-3 transition-transform">
                     <img src={silaiwalaLogo} alt="Silaiwala" className="w-14 h-14 object-contain" />
                 </div>
                 <h2 className="text-3xl font-bold text-slate-900 tracking-tight text-center">Partner Login</h2>

@@ -5,7 +5,11 @@ const CMSContent = require("../../../models/CMSContent");
 
 exports.getActiveBanners = async (req, res) => {
   try {
-    const banners = await Banner.find({ status: "Active" }).sort("-createdAt");
+    const { location } = req.query;
+    const query = { status: "Active" };
+    if (location) query.targetLocation = location;
+
+    const banners = await Banner.find(query).sort("-createdAt");
     res.status(200).json({ success: true, count: banners.length, data: banners });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

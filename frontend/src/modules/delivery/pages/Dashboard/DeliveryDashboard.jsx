@@ -114,8 +114,6 @@ const DeliveryDashboard = () => {
                 toast.success('Task accepted successfully!');
                 setSelectedAvailableTask(null);
                 fetchDashboardData();
-                // Optionally navigate to tasks page
-                // navigate('/delivery/tasks');
             } else {
                 toast.error(res.message || 'Failed to accept task');
             }
@@ -125,6 +123,33 @@ const DeliveryDashboard = () => {
         } finally {
             setIsAccepting(false);
         }
+    };
+
+    const handleOpenMap = (task) => {
+        if (!task) return;
+
+        // Logic to determine destination address
+        const isFabricPickup = task.taskType === 'fabric-pickup';
+        const isPickupStage = ['fabric-ready-for-pickup', 'ready-for-pickup'].includes(task.status);
+        
+        let destination;
+        if (isPickupStage) {
+            destination = isFabricPickup ? task.deliveryAddress : task.tailor?.address;
+        } else {
+            destination = isFabricPickup ? task.tailor?.address : task.deliveryAddress;
+        }
+
+        if (!destination) {
+            toast.error("Destination address not found");
+            return;
+        }
+
+        const addressStr = typeof destination === 'string' 
+            ? destination 
+            : `${destination.street || ''}, ${destination.city || ''}, ${destination.state || ''} ${destination.zipCode || ''}`;
+        
+        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addressStr)}`;
+        window.open(mapsUrl, '_blank');
     };
 
     if (loading) {
@@ -293,7 +318,10 @@ const DeliveryDashboard = () => {
             </div>
 
             {/* Operational Map Background Indicator */}
-            <div className="bg-slate-50 rounded-[2.5rem] border-2 border-dashed border-slate-200 h-60 relative overflow-hidden flex items-center justify-center group cursor-pointer hover:border-pink-200 transition-all">
+            <div 
+                onClick={() => currentTask ? handleOpenMap(currentTask) : toast.error("No active task to navigate")}
+                className="bg-slate-50 rounded-[2.5rem] border-2 border-dashed border-slate-200 h-60 relative overflow-hidden flex items-center justify-center group cursor-pointer hover:border-pink-200 transition-all"
+            >
                  <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#FF5C8A 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
                  <div className="relative z-10 flex flex-col items-center gap-3">
                     <div className="w-16 h-16 bg-white rounded-[2rem] shadow-xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
@@ -375,7 +403,7 @@ const DeliveryDashboard = () => {
                                         <span className="text-[11px] font-bold tracking-wider text-slate-400 capitalize">Arriving Soon</span>
                                     </div>
                                     <button
-                                        onClick={() => setShowMapModal(true)}
+                                        onClick={() => handleOpenMap(currentTask)}
                                         className="bg-primary text-white px-8 py-3.5 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-pink-900/10"
                                     >
                                         Open Map
@@ -592,6 +620,51 @@ const DeliveryDashboard = () => {
                                 Please reach pickup location within 15 mins.<br />Earnings will be credited after delivery.
                             </p>
                         </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Map Preview Modal */}
+            <AnimatePresence>
+                {showMapModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[150] bg-white flex flex-col"
+                    >
+                        <div className="p-4 flex items-center justify-between border-b bg-white relative z-10">
+                            <button onClick={() => setShowMapModal(false)} className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600">
+                                <ChevronLeft size={20} />
+                            </button>
+                            <h2 className="text-sm font-black uppercase tracking-widest text-slate-900">Task Route</h2>
+                            <div className="w-10 h-10" />
+                        </div>
+                        
+                        <div className="flex-1 bg-slate-50 relative overflow-hidden">
+                            {/* Detailed Map View - Currently Placeholder */}
+                            <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-slate-50">
+                                <div className="w-20 h-20 bg-white rounded-[2rem] shadow-xl flex items-center justify-center text-primary mb-4">
+                                    <Navigation size={40} className="animate-bounce" />
+                                </div>
+                                <h3 className="text-xl font-black text-slate-900 mb-2">Live Navigation</h3>
+                                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest leading-relaxed mb-8">
+                                    Calculating fastest route to <br/>
+                                    {getTaskAddress(currentTask)}
+                                </p>
+                                
+                                <button 
+                                    onClick={() => {
+                                        handleOpenMap(currentTask);
+                                        setShowMapModal(false);
+                                    }}
+                                    className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl flex items-center gap-3"
+                                >
+                                    Launch External Map
+                                    <ArrowUpRight size={16} />
+                                </button>
+                            </div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
